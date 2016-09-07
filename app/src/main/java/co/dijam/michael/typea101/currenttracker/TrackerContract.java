@@ -24,7 +24,7 @@ public interface TrackerContract {
         void stopTimer();
         void editCurrentTask();
         void addNotesToCurrentTask();
-        void finishTracking;
+        void finishTracking();
     }
 
 
