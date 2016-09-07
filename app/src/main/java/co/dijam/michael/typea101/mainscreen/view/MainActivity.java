@@ -124,7 +124,8 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     @Override
     public void hideTracker() {
         if (trackerFragment.isAdded() && trackerFragment.isVisible()) {
-            getSupportFragmentManager().beginTransaction().hide(trackerFragment).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .hide(trackerFragment).commit();
         }
     }
 

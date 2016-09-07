@@ -41,25 +41,44 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
     public boolean isToday(long dateTime) {
         DateTime midnightToday =  DateTime.now().withTimeAtStartOfDay();
         DateTime dayInQuestion = new DateTime(dateTime);
+
+        // App disallows browsing future days
         return dayInQuestion.isAfter(midnightToday);
     }
 
     @Override
     public void presentCorrectMainView(long dateTime) {
         if (isToday(dateTime)){
-            view.hideSnackbar();
-            view.disableNextDayButton();
-            if (currentTaskManager.currentTaskExists()){
-                view.showTracker();
-            }
+            showTodayView();
         } else {
-            if (currentTaskManager.currentTaskExists()){
-                view.showSnackbar();
-            }
-            view.hideTracker();
+            showPastDayView();
         }
         view.showDate(TimeFormattingUtil.dateFormatter.print(dateTime));
         view.updateList(dateTime);
+        styleFab();
+    }
+
+    private void showTodayView() {
+        view.hideSnackbar();
+        view.disableNextDayButton();
+        if (currentTaskExists()){
+            view.showTracker();
+        }
+    }
+
+    private void showPastDayView() {
+        if (currentTaskExists()){
+            view.showSnackbar();
+        }
+        view.hideTracker();
+    }
+
+    private void styleFab() {
+        if (currentTaskExists()){
+            view.styleFabFinish();
+        } else {
+            view.styleFabFinish();
+        }
     }
 
     @Override
@@ -68,11 +87,15 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tick -> {
-                    CurrentTask ct = currentTaskManager.getCurrentTask();
-                    Period period = new Period(ct.startTime, System.currentTimeMillis());
-                    String formattedDuration = TimeFormattingUtil.durationFormatter.print(period);
-                    view.updateTimerSnackbar(ct.taskName, ct.tag, formattedDuration);
+                    updateSnackbarText();
                 },throwable -> Log.e(TAG, "runSnackbarTimer: ", throwable));
+    }
+
+    private void updateSnackbarText() {
+        CurrentTask ct = currentTaskManager.getCurrentTask();
+        Period period = new Period(ct.startTime, System.currentTimeMillis());
+        String formattedDuration = TimeFormattingUtil.durationFormatter.print(period);
+        view.updateTimerSnackbar(ct.taskName, ct.tag, formattedDuration);
     }
 
     @Override
