@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             trackerFragment = (TrackerFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TRACKER);
         }
-
-//        CurrentTaskManager currentTaskManager = new SharedPrefCurrentTaskManager(getApplicationContext());
-//        String formattedTime = TimeFormattingUtil.dateTimeFormatter.print(currentTaskManager.getCurrentTask().startTime);
-//        Toast.makeText(MainActivity.this, currentTaskManager.getCurrentTask().toString() + formattedTime, Toast.LENGTH_SHORT).show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
