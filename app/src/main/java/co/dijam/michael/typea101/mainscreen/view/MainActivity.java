@@ -79,6 +79,14 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     private void initSnackbar() {
         snackbar = Snackbar.make(mainRootLayout, "", Snackbar.LENGTH_INDEFINITE);
         getSnackbarTextView().setMaxLines(2);
+        disableSnackbarSwipeToDismiss();
+    }
+
+    private void disableSnackbarSwipeToDismiss() {
+        snackbar.getView().getViewTreeObserver().addOnPreDrawListener(() -> {
+            ((CoordinatorLayout.LayoutParams)snackbar.getView().getLayoutParams()).setBehavior(null);
+            return true;
+        });
     }
 
     private TextView getSnackbarTextView() {
@@ -182,9 +190,11 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     }
 
+    @OnClick(R.id.today_button)
     @Override
     public void onToday() {
-
+        viewingDateTime = System.currentTimeMillis();
+        presenter.presentCorrectMainView(viewingDateTime);
     }
 
     @Override
