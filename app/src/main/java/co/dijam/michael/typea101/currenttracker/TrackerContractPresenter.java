@@ -28,4 +28,9 @@ public class TrackerContractPresenter implements TrackerContract.Presenter {
     public void addNotesToCurrentTask() {
 
     }
+
+    @Override
+    public void finishTracking() {
+
+    }
 }
