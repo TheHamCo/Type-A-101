@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import co.dijam.michael.typea101.model.CurrentTask;
-import co.dijam.michael.typea101.util.CurrentTaskConstantsUtil;
 
+import static co.dijam.michael.typea101.util.CurrentTaskConstantsUtil.NO_CURRENT_TASK;
+import static co.dijam.michael.typea101.util.CurrentTaskConstantsUtil.NO_START_TIME;
 import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.CURRENT_TASK;
-import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.ID;
 import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.START_TIME;
 import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.TAG;
 import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.TASK_NAME;
@@ -26,17 +26,15 @@ public class SharedPrefCurrentTaskManager implements CurrentTaskManager {
     @Override
     public CurrentTask getCurrentTask() {
         CurrentTask currentTask = new CurrentTask();
-        currentTask.id = settings.getInt(ID, CurrentTaskConstantsUtil.NO_CURRENT_TASK_ID);
-        currentTask.taskName = settings.getString(TASK_NAME, "");
-        currentTask.tag = settings.getString(TAG, "");
-        currentTask.startTime = settings.getLong(START_TIME, 0);
+        currentTask.taskName = settings.getString(TASK_NAME, NO_CURRENT_TASK);
+        currentTask.tag = settings.getString(TAG, NO_CURRENT_TASK);
+        currentTask.startTime = settings.getLong(START_TIME, NO_START_TIME);
         return currentTask;
     }
 
     @Override
     public void setCurrentTask(CurrentTask currentTask) {
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(ID, currentTask.id);
         editor.putString(TASK_NAME, currentTask.taskName);
         editor.putString(TAG, currentTask.tag);
         editor.putLong(START_TIME, currentTask.startTime);
@@ -46,10 +44,9 @@ public class SharedPrefCurrentTaskManager implements CurrentTaskManager {
     @Override
     public void clearCurrentTask() {
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt(ID, CurrentTaskConstantsUtil.NO_CURRENT_TASK_ID);
-        editor.putString(TASK_NAME, "");
-        editor.putString(TAG, "");
-        editor.putLong(START_TIME, 0);
+        editor.putString(TASK_NAME, NO_CURRENT_TASK);
+        editor.putString(TAG, NO_CURRENT_TASK);
+        editor.putLong(START_TIME, NO_START_TIME);
         editor.apply();
     }
 }

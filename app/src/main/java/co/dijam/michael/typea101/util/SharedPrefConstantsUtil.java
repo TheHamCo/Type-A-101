@@ -5,7 +5,6 @@ package co.dijam.michael.typea101.util;
  */
 public class SharedPrefConstantsUtil {
     public static final String CURRENT_TASK = "CURRENT_TASK";
-    public static final String ID = "ID";
     public static final String TASK_NAME = "TASK_NAME";
     public static final String TAG = "TAG";
     public static final String START_TIME = "START_TIME";
