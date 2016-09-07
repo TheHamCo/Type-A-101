@@ -13,7 +13,9 @@ import butterknife.OnClick;
 import co.dijam.michael.typea101.MainActivity;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
+import co.dijam.michael.typea101.addcurrenttask.interactor.AddCurrentTaskInteractorImpl;
 import co.dijam.michael.typea101.addcurrenttask.presenter.AddCurrentTaskPresenter;
+import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
 public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurrentTaskContract.View {
@@ -44,7 +46,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
         setContentView(R.layout.activity_add_current_task);
         ButterKnife.bind(this);
 
-        presenter = new AddCurrentTaskPresenter(this);
+        presenter = new AddCurrentTaskPresenter(this, new AddCurrentTaskInteractorImpl(new SharedPrefCurrentTaskManager(getApplicationContext())));
         startTime = System.currentTimeMillis();
         startingTimeText.setText(TimeFormattingUtil.dateTimeFormatter.print(startTime));
     }
