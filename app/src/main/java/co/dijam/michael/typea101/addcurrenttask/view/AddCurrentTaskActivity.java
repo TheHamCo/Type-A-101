@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
+import co.dijam.michael.typea101.addcurrenttask.presenter.AddCurrentTaskPresenter;
 
 public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurrentTaskContract.View {
 
@@ -39,6 +40,8 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_current_task);
         ButterKnife.bind(this);
+
+        presenter = new AddCurrentTaskPresenter(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,6 +67,6 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
 
     @Override
     public void closeAddTaskView() {
-
+        
     }
 }
