@@ -15,8 +15,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
+import co.dijam.michael.typea101.currenttracker.TrackerInteractor.TrackerInteractorImpl;
 import co.dijam.michael.typea101.currenttracker.presenter.TrackerPresenter;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
+import co.dijam.michael.typea101.entities.SqlTaskManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,7 +61,8 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
         View view = inflater.inflate(R.layout.fragment_tracker, container, false);
         ButterKnife.bind(this, view);
 
-        presenter = new TrackerPresenter(this, new SharedPrefCurrentTaskManager(getContext()));
+        presenter = new TrackerPresenter(this,
+                new TrackerInteractorImpl(new SharedPrefCurrentTaskManager(getContext()), new SqlTaskManager()));
         presenter.getCurrentTask();
         return view;
     }

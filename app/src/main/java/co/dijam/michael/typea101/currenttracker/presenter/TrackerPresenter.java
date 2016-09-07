@@ -7,8 +7,9 @@ import org.joda.time.Period;
 import java.util.concurrent.TimeUnit;
 
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
-import co.dijam.michael.typea101.entities.CurrentTaskManager;
+import co.dijam.michael.typea101.currenttracker.TrackerInteractor.TrackerInteractor;
 import co.dijam.michael.typea101.model.CurrentTask;
+import co.dijam.michael.typea101.model.Task;
 import co.dijam.michael.typea101.util.TimeFormattingUtil;
 import rx.Observable;
 import rx.Subscription;
@@ -22,20 +23,20 @@ public class TrackerPresenter implements TrackerContract.Presenter {
     private static final String TAG = TrackerPresenter.class.getName();
 
     TrackerContract.View view;
-    CurrentTaskManager currentTaskManager;
+    TrackerInteractor interactor;
     Subscription timerSubscription;
 
     CurrentTask ct;
 
-    public TrackerPresenter(TrackerContract.View view, CurrentTaskManager currentTaskManager) {
+    public TrackerPresenter(TrackerContract.View view, TrackerInteractor interactor) {
         this.view = view;
-        this.currentTaskManager = currentTaskManager;
+        this.interactor = interactor;
     }
 
     @Override
     public void getCurrentTask() {
-        if (currentTaskManager.currentTaskExists()) {
-            ct = currentTaskManager.getCurrentTask();
+        if (interactor.currentTaskExists()) {
+            ct = interactor.getCurrentTask();
             view.showTracker();
             view.showTaskName(ct.taskName);
             view.showTag(ct.tag);
@@ -79,7 +80,12 @@ public class TrackerPresenter implements TrackerContract.Presenter {
     public void finishTracking() {
         stopTimer();
         view.hideTracker();
-        currentTaskManager.clearCurrentTask();
+        Task finishedTask = new Task();
+        finishedTask.taskName = ct.taskName;
+        finishedTask.tag = ct.tag;
+        finishedTask.startTime = ct.startTime;
+        finishedTask.endTime = System.currentTimeMillis();
+        interactor.saveFinishedTask(finishedTask);
         //TODO Persist data
     }
 }
