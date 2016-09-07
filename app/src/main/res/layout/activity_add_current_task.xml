@@ -50,10 +50,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/starting_time"
+        android:id="@+id/textView2"
         android:layout_below="@+id/tag_name_edit"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView2" />
+        android:layout_alignRight="@+id/starting_time_text"
+        android:layout_alignEnd="@+id/starting_time_text" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,6 +62,5 @@
         tools:text="7:23:12 AM"
         android:id="@+id/starting_time_text"
         android:layout_below="@+id/textView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

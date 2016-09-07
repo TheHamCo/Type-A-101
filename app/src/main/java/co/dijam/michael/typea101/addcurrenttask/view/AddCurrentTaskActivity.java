@@ -1,5 +1,6 @@
 package co.dijam.michael.typea101.addcurrenttask.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import co.dijam.michael.typea101.MainActivity;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
 import co.dijam.michael.typea101.addcurrenttask.presenter.AddCurrentTaskPresenter;
@@ -67,6 +69,6 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
 
     @Override
     public void closeAddTaskView() {
-        
+        startActivity(new Intent(this, MainActivity.class));
     }
 }
