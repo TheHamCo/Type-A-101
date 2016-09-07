@@ -134,6 +134,11 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     }
 
     @Override
+    public void finishTrackingClicked() {
+        presenter.finishTracking();
+    }
+
+    @Override
     public void startEditTask() {
 
     }

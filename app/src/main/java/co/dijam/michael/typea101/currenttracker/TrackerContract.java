@@ -14,6 +14,8 @@ public interface TrackerContract {
 
         void updateTimer(String timerText);
 
+        void finishTrackingClicked();
+
         void startEditTask();
         void startAddNotes();
     }

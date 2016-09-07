@@ -11,6 +11,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.addcurrenttask.view.AddCurrentTaskActivity;
 import co.dijam.michael.typea101.currenttracker.view.TrackerFragment;
+import co.dijam.michael.typea101.entities.CurrentTaskManager;
+import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String FRAGMENT_TRACKER = "FRAGMENT_TRACKER";
     TrackerFragment trackerFragment;
 
+    CurrentTaskManager currentTaskManager;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
 
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        currentTaskManager = new SharedPrefCurrentTaskManager(getApplicationContext());
 
         if (savedInstanceState == null){
             trackerFragment = new TrackerFragment();
@@ -47,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.add_task_button)
     void onAddTaskButton(FloatingActionButton b) {
-        startActivity(new Intent(this, AddCurrentTaskActivity.class));
+        if (currentTaskManager.currentTaskExists()){
+            trackerFragment.finishTrackingClicked();
+        } else {
+            startActivity(new Intent(this, AddCurrentTaskActivity.class));
+        }
     }
 }
