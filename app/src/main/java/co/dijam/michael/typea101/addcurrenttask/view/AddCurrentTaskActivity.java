@@ -8,13 +8,13 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
 
 public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurrentTaskContract.View {
 
-    AddCurrentTaskContract.Presenter presenter;
-    
+
     @BindView(R.id.task_name_edit)
     EditText taskNameEdit;
     @BindView(R.id.tag_name_edit)
@@ -28,6 +28,9 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     @BindView(R.id.starting_time_text)
     TextView startingTimeText;
 
+    long startTime;
+    AddCurrentTaskContract.Presenter presenter;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
 
@@ -37,6 +40,24 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
         setContentView(R.layout.activity_add_current_task);
         ButterKnife.bind(this);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // BUTTON BINDINGS
+
+    @OnClick(R.id.cancel_button)
+    void onCancelButton(Button b){
+        closeAddTaskView();
+    }
+
+    @OnClick(R.id.start_task_button)
+    void onFinishButton(Button b){
+        presenter.setCurrentTask(
+                  taskNameEdit.getText().toString()
+                , tagNameEdit.getText().toString()
+                , startTime
+        );
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // VIEW METHODS
