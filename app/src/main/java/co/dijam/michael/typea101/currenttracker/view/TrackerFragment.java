@@ -2,6 +2,7 @@ package co.dijam.michael.typea101.currenttracker.view;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +45,9 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     @BindView(R.id.done_button)
     Button doneButton;
 
-    TrackerContract.Presenter presenter;
+    private static final String STATE_TIMERTEXT = "STATE_TIMERTEXT";
 
+    TrackerContract.Presenter presenter;
 
     public TrackerFragment() {
         // Required empty public constructor
@@ -65,6 +67,20 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
                 new TrackerInteractorImpl(new SharedPrefCurrentTaskManager(getContext()), new SqlTaskManager()));
         presenter.getCurrentTask();
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(STATE_TIMERTEXT, runningTimeTextView.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            updateTimer(savedInstanceState.getString(STATE_TIMERTEXT));
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
