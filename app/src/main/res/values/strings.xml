@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Type A 101</string>
+    <string name="task_name">Task Name</string>
+    <string name="tag_name">Tag Name</string>
+    <string name="cancel">Cancel</string>
+    <string name="start_task">Start Task</string>
+    <string name="starting_time">Starting Time:</string>
 </resources>
