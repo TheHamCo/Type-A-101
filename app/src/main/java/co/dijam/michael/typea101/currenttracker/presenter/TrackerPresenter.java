@@ -13,6 +13,7 @@ import co.dijam.michael.typea101.util.TimeFormattingUtil;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by mdd23 on 9/6/2016.
@@ -39,6 +40,7 @@ public class TrackerPresenter implements TrackerContract.Presenter {
             view.showTaskName(ct.taskName);
             view.showTag(ct.tag);
             view.showTaskStartTime(TimeFormattingUtil.dateTimeFormatter.print(ct.startTime));
+            runTimer();
         } else {
             view.hideTracker();
         }
@@ -47,6 +49,7 @@ public class TrackerPresenter implements TrackerContract.Presenter {
     @Override
     public void runTimer() {
         timerSubscription = Observable.interval(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tick -> {
                     Period period = new Period(ct.startTime, System.currentTimeMillis());

@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
+import co.dijam.michael.typea101.currenttracker.presenter.TrackerPresenter;
+import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,8 +27,8 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     LinearLayout trackerLayout;
     @BindView(R.id.task_text_view)
     TextView taskTextView;
-    @BindView(R.id.category_text_view)
-    TextView categoryTextView;
+    @BindView(R.id.tag_text_view)
+    TextView tagTextView;
     @BindView(R.id.started_on)
     TextView startedOn;
     @BindView(R.id.starting_time_text_view)
@@ -57,6 +59,8 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
         View view = inflater.inflate(R.layout.fragment_tracker, container, false);
         ButterKnife.bind(this, view);
 
+        presenter = new TrackerPresenter(this, new SharedPrefCurrentTaskManager(getContext()));
+        presenter.getCurrentTask();
         return view;
     }
 
@@ -71,6 +75,8 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
             case R.id.edit_button:
                 break;
             case R.id.done_button:
+                //TODO Move this to the FAB
+                presenter.finishTracking();
                 break;
         }
     }
@@ -80,32 +86,32 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
 
     @Override
     public void showTracker() {
-
+        trackerLayout.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideTracker() {
-
+        trackerLayout.setVisibility(View.GONE);
     }
 
     @Override
     public void showTaskName(String taskName) {
-
+        taskTextView.setText(taskName);
     }
 
     @Override
     public void showTag(String taskTagName) {
-
+        tagTextView.setText(taskTagName);
     }
 
     @Override
     public void showTaskStartTime(String taskStartTime) {
-
+        startingTimeTextView.setText(taskStartTime);
     }
 
     @Override
     public void updateTimer(String timerText) {
-
+        runningTimeTextView.setText(timerText);
     }
 
     @Override

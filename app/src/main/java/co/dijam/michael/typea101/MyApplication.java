@@ -14,8 +14,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        JodaTimeAndroid.init(this);
         context = this;
+        JodaTimeAndroid.init(this);
+
     }
 
     public static Context getContext(){

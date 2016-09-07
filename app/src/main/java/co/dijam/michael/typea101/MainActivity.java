@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.addcurrenttask.view.AddCurrentTaskActivity;
 import co.dijam.michael.typea101.currenttracker.view.TrackerFragment;
-import co.dijam.michael.typea101.entities.CurrentTaskManager;
-import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
-import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
             trackerFragment = (TrackerFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TRACKER);
         }
 
-        CurrentTaskManager currentTaskManager = new SharedPrefCurrentTaskManager(getApplicationContext());
-        String formattedTime = TimeFormattingUtil.dateTimeFormatter.print(currentTaskManager.getCurrentTask().startTime);
-        Toast.makeText(MainActivity.this, currentTaskManager.getCurrentTask().toString() + formattedTime, Toast.LENGTH_SHORT).show();
+//        CurrentTaskManager currentTaskManager = new SharedPrefCurrentTaskManager(getApplicationContext());
+//        String formattedTime = TimeFormattingUtil.dateTimeFormatter.print(currentTaskManager.getCurrentTask().startTime);
+//        Toast.makeText(MainActivity.this, currentTaskManager.getCurrentTask().toString() + formattedTime, Toast.LENGTH_SHORT).show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

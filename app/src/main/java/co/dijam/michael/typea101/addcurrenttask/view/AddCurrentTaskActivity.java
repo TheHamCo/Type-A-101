@@ -46,7 +46,8 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
         setContentView(R.layout.activity_add_current_task);
         ButterKnife.bind(this);
 
-        presenter = new AddCurrentTaskPresenter(this, new AddCurrentTaskInteractorImpl(new SharedPrefCurrentTaskManager(getApplicationContext())));
+        presenter = new AddCurrentTaskPresenter(this,
+                new AddCurrentTaskInteractorImpl(new SharedPrefCurrentTaskManager(getApplicationContext())));
 
         startTime = System.currentTimeMillis();
         startingTimeText.setText(TimeFormattingUtil.dateTimeFormatter.print(startTime));
