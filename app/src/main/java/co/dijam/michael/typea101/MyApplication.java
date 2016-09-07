@@ -21,9 +21,6 @@ public class MyApplication extends Application {
     }
 
     public static Context getContext(){
-        if (context == null){
-            context = this;
-        }
         return context;
     }
 
