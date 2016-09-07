@@ -94,7 +94,7 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     }
 
     @Override
-    public void showTaskTag(String taskTagName) {
+    public void showTag(String taskTagName) {
 
     }
 

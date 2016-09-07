@@ -9,7 +9,7 @@ public interface TrackerContract {
         void hideTracker();
 
         void showTaskName(String taskName);
-        void showTaskTag(String taskTagName);
+        void showTag(String taskTagName);
         void showTaskStartTime(String taskStartTime);
 
         void updateTimer(String timerText);
