@@ -42,8 +42,6 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     Button addNotesButton;
     @BindView(R.id.edit_button)
     Button editButton;
-    @BindView(R.id.done_button)
-    Button doneButton;
 
     private static final String STATE_TIMERTEXT = "STATE_TIMERTEXT";
 
@@ -86,16 +84,12 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // BUTTON BINDINGS
 
-    @OnClick({R.id.add_notes_button, R.id.edit_button, R.id.done_button})
+    @OnClick({R.id.add_notes_button, R.id.edit_button})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_notes_button:
                 break;
             case R.id.edit_button:
-                break;
-            case R.id.done_button:
-                //TODO Move this to the FAB
-                presenter.finishTracking();
                 break;
         }
     }
