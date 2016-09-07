@@ -47,6 +47,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
         ButterKnife.bind(this);
 
         presenter = new AddCurrentTaskPresenter(this, new AddCurrentTaskInteractorImpl(new SharedPrefCurrentTaskManager(getApplicationContext())));
+
         startTime = System.currentTimeMillis();
         startingTimeText.setText(TimeFormattingUtil.dateTimeFormatter.print(startTime));
     }
