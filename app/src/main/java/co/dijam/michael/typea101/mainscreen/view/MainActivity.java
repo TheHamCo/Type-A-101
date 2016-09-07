@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     private void initSnackbar() {
         snackbar = Snackbar.make(mainRootLayout, "", Snackbar.LENGTH_INDEFINITE);
-        getSnackbarTextView().setMaxLines(2);
         disableSnackbarSwipeToDismiss();
     }
 
@@ -223,8 +222,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         String snackbarMessage = taskName.toUpperCase() +
                 ConstantsUtil.SPACE +
                 "(" + tag + ")" +
-                ConstantsUtil.LINE_SEPARATOR +
-                formattedTime;
+                 ConstantsUtil.SPACE + "-" + ConstantsUtil.SPACE + formattedTime;
         snackbar.setText(snackbarMessage);
     }
 
