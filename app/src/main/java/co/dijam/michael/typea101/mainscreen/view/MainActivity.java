@@ -1,6 +1,7 @@
 package co.dijam.michael.typea101.mainscreen.view;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -76,8 +77,14 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         presenter.presentCorrectMainView(viewingDateTime);
     }
 
+    private boolean isPortrait(){
+        return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
     private void initSnackbar() {
         snackbar = Snackbar.make(mainRootLayout, "", Snackbar.LENGTH_INDEFINITE);
+        if(isPortrait()){
+            getSnackbarTextView().setMaxLines(2);
+        }
         disableSnackbarSwipeToDismiss();
     }
 
@@ -219,10 +226,16 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     @Override
     public void updateTimerSnackbar(String taskName, String tag, String formattedTime) {
+        String labelDurationSeparator;
+        if (isPortrait()){
+            labelDurationSeparator = ConstantsUtil.LINE_SEPARATOR;
+        } else {
+            labelDurationSeparator = ConstantsUtil.SPACE + "-" + ConstantsUtil.SPACE;
+        }
         String snackbarMessage = taskName.toUpperCase() +
                 ConstantsUtil.SPACE +
                 "(" + tag + ")" +
-                 ConstantsUtil.SPACE + "-" + ConstantsUtil.SPACE + formattedTime;
+                labelDurationSeparator + formattedTime;
         snackbar.setText(snackbarMessage);
     }
 
