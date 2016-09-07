@@ -5,6 +5,8 @@ package co.dijam.michael.typea101.mainscreen;
  */
 public interface MainScreenContract {
     interface View {
+        //Main View
+        void swapMainView(long dateTime);
         void onFABclick();
 
         // Nav drawer
@@ -19,13 +21,11 @@ public interface MainScreenContract {
         void openDatePicker();
         void onToday();
         void onNextDay();
+        void disableNextDayButton();
 
         //Snackbar
         void showTimerSnackbar(String taskName, String tag, String formattedTime);
         void hideSnackbar();
-
-        //Main View
-        void swapMainView(long dateTime);
     }
 
     interface Presenter {

@@ -40,7 +40,7 @@ public class TrackerPresenter implements TrackerContract.Presenter {
             view.showTracker();
             view.showTaskName(ct.taskName);
             view.showTag(ct.tag);
-            view.showTaskStartTime(TimeFormattingUtil.dateTimeFormatter.print(ct.startTime));
+            view.showTaskStartTime(TimeFormattingUtil.timeFormatter.print(ct.startTime));
             runTimer();
         } else {
             view.hideTracker();

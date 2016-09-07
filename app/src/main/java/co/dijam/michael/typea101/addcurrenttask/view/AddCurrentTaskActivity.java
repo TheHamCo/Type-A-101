@@ -50,7 +50,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
                 new AddCurrentTaskInteractorImpl(new SharedPrefCurrentTaskManager(getApplicationContext())));
 
         startTime = System.currentTimeMillis();
-        startingTimeText.setText(TimeFormattingUtil.dateTimeFormatter.print(startTime));
+        startingTimeText.setText(TimeFormattingUtil.timeFormatter.print(startTime));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
