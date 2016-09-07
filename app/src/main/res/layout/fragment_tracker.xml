@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tracker_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -53,25 +54,25 @@
                     android:background="@color/lightThemeDivider" />
 
                 <LinearLayout
-                    android:layout_gravity="center"
-                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/started_on"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/started_on_margin_right"
+                        android:layout_marginRight="@dimen/started_on_margin_right"
                         android:text="@string/started_on"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_marginRight="@dimen/started_on_margin_right" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
                         android:id="@+id/starting_time_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="12:23 AM"/>
+                        tools:text="12:23 AM" />
                 </LinearLayout>
 
                 <TextView

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -20,7 +21,8 @@ import co.dijam.michael.typea101.currenttracker.TrackerContract;
  */
 public class TrackerFragment extends Fragment implements TrackerContract.View {
 
-    TrackerContract.Presenter presenter;
+    @BindView(R.id.tracker_layout)
+    LinearLayout trackerLayout;
     @BindView(R.id.task_text_view)
     TextView taskTextView;
     @BindView(R.id.category_text_view)
@@ -37,6 +39,9 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     Button editButton;
     @BindView(R.id.done_button)
     Button doneButton;
+
+    TrackerContract.Presenter presenter;
+
 
     public TrackerFragment() {
         // Required empty public constructor
