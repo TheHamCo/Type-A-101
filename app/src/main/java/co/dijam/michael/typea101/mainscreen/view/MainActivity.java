@@ -17,7 +17,6 @@ import co.dijam.michael.typea101.entities.CurrentTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.mainscreen.MainScreenContract;
 import co.dijam.michael.typea101.mainscreen.presenter.MainScreenPresenter;
-import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
 public class MainActivity extends AppCompatActivity implements MainScreenContract.View {
 
@@ -59,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
             viewingDateTime = savedInstanceState.getLong(STATE_VIEWING_DATETIME);
         }
 
-        swapMainView(viewingDateTime);
+        presenter.presentCorrectMainView(viewingDateTime);
     }
 
     @Override
@@ -73,30 +72,49 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     // MAIN VIEW
     @Override
-    public void swapMainView(long dateTime) {
-        if (presenter.isToday(dateTime)){
-            this.hideSnackbar();
-            this.disableNextDayButton();
+    public void showTracker() {
+        if (trackerFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.tracker_frame, trackerFragment, FRAGMENT_TRACKER).commit();
-            trackerFragment.showTracker();
+            .show(trackerFragment).commit();
         } else {
-            trackerFragment.hideTracker();
-            Bundle bundle = new Bundle();
-            bundle.putLong(BUNDLE_DATETIME, dateTime);
-            // TODO: Replace list with data
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.tracker_frame, trackerFragment, FRAGMENT_TRACKER).commit();
         }
-        this.showDate(TimeFormattingUtil.dateFormatter.print(dateTime));
     }
 
+    @Override
+    public void hideTracker() {
+        if (trackerFragment.isAdded() && trackerFragment.isVisible()) {
+            getSupportFragmentManager().beginTransaction().hide(trackerFragment).commit();
+        }
+    }
+
+    @Override
+    public void updateList(long dateTime) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(BUNDLE_DATETIME, dateTime);
+        // TODO: Replace list with proper data
+    }
+
+    // FAB
     @OnClick(R.id.main_screen_fab)
     @Override
-    public void onFABclick() {
+    public void onFabClick() {
         if (presenter.currentTaskExists()){
             trackerFragment.finishTrackingClicked();
         } else {
             startActivity(new Intent(this, AddCurrentTaskActivity.class));
         }
+    }
+
+    @Override
+    public void styleFabAdd() {
+
+    }
+
+    @Override
+    public void styleFabFinish() {
+
     }
 
     // NAV DRAWER
@@ -152,9 +170,19 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     }
 
+    @Override
+    public void enableNextDayButton() {
+
+    }
+
     // SNACKBAR
     @Override
-    public void showTimerSnackbar(String taskName, String tag, String formattedTime) {
+    public void showSnackbar() {
+        
+    }
+
+    @Override
+    public void updateTimerSnackbar(String taskName, String tag, String formattedTime) {
 
     }
 

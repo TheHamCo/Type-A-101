@@ -6,8 +6,14 @@ package co.dijam.michael.typea101.mainscreen;
 public interface MainScreenContract {
     interface View {
         //Main View
-        void swapMainView(long dateTime);
-        void onFABclick();
+        void showTracker();
+        void hideTracker();
+        void updateList(long dateTime);
+
+        // FAB
+        void onFabClick();
+        void styleFabAdd();
+        void styleFabFinish();
 
         // Nav drawer
         void startTagListFeature();
@@ -22,9 +28,11 @@ public interface MainScreenContract {
         void onToday();
         void onNextDay();
         void disableNextDayButton();
+        void enableNextDayButton();
 
         //Snackbar
-        void showTimerSnackbar(String taskName, String tag, String formattedTime);
+        void showSnackbar();
+        void updateTimerSnackbar(String taskName, String tag, String formattedTime);
         void hideSnackbar();
     }
 
@@ -32,7 +40,9 @@ public interface MainScreenContract {
         boolean currentTaskExists();
         boolean isToday(long dateTime);
 
-        void runTimer();
-        void stopTimer();
+        void presentCorrectMainView(long dateTime);
+
+        void runSnackbarTimer();
+        void stopSnackBarTimer();
     }
 }
