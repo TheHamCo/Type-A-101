@@ -14,6 +14,7 @@ import co.dijam.michael.typea101.MainActivity;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
 import co.dijam.michael.typea101.addcurrenttask.presenter.AddCurrentTaskPresenter;
+import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
 public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurrentTaskContract.View {
 
@@ -45,7 +46,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
 
         presenter = new AddCurrentTaskPresenter(this);
         startTime = System.currentTimeMillis();
-        startingTimeText.setText(startTime);
+        startingTimeText.setText(TimeFormattingUtil.dateTimeFormatter.print(startTime));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
