@@ -30,38 +30,20 @@
                 android:paddingTop="@dimen/current_task_cardview_padding">
 
                 <TextView
-                    android:id="@+id/task"
+                    android:id="@+id/task_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     tools:text="TASK" />
 
-                <EditText
-                    android:id="@+id/edit_task"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:inputType="textCapWords"
-                    android:visibility="gone" />
-
                 <TextView
-                    android:id="@+id/category"
+                    android:id="@+id/category_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     tools:text="CATEGORY" />
-
-                <EditText
-                    android:id="@+id/edit_category"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:inputType="textCapWords"
-                    android:visibility="gone" />
 
                 <View
                     android:layout_width="match_parent"
@@ -86,14 +68,14 @@
                         android:layout_marginRight="@dimen/started_on_margin_right" />
 
                     <TextView
-                        android:id="@+id/started_time"
+                        android:id="@+id/starting_time_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         tools:text="12:23 AM"/>
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/running_time"
+                    android:id="@+id/running_time_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -115,19 +97,19 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/start_stop"
+                    android:id="@+id/add_notes_button"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
+                    android:layout_gravity="end|center_vertical"
                     android:text="@string/add_notes" />
 
                 <Button
-                    android:id="@+id/edit"
+                    android:id="@+id/edit_button"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left|center_vertical"
+                    android:layout_gravity="start|center_vertical"
                     android:text="@string/edit" />
             </FrameLayout>
         </LinearLayout>
