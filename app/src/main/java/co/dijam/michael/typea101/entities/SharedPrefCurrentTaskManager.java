@@ -2,13 +2,15 @@ package co.dijam.michael.typea101.entities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.icu.text.IDNA;
 
 import co.dijam.michael.typea101.model.CurrentTask;
 import co.dijam.michael.typea101.util.CurrentTaskConstantsUtil;
-import co.dijam.michael.typea101.util.SharedPrefConstantsUtil;
 
-import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.*;
+import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.CURRENT_TASK;
+import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.ID;
+import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.START_TIME;
+import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.TAG;
+import static co.dijam.michael.typea101.util.SharedPrefConstantsUtil.TASK_NAME;
 
 /**
  * Created by mdd23 on 9/6/2016.
@@ -28,6 +30,7 @@ public class SharedPrefCurrentTaskManager implements CurrentTaskManager {
         currentTask.taskName = settings.getString(TASK_NAME, "");
         currentTask.tag = settings.getString(TAG, "");
         currentTask.startTime = settings.getLong(START_TIME, 0);
+        return currentTask;
     }
 
     @Override
