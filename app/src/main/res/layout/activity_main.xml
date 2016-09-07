@@ -2,6 +2,7 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -19,6 +20,11 @@
             android:id="@+id/tracker_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/previous_day_button"
+            android:text="Prev Day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <FrameLayout
             android:id="@+id/list_frame"
             android:layout_width="match_parent"

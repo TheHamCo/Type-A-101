@@ -34,7 +34,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
 
     @Override
     public boolean currentTaskExists() {
-        return  currentTaskManager.currentTaskExists();
+        return currentTaskManager.currentTaskExists();
     }
 
     @Override
@@ -57,9 +57,9 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
                 view.showSnackbar();
             }
             view.hideTracker();
-            view.updateList(dateTime);
         }
         view.showDate(TimeFormattingUtil.dateFormatter.print(dateTime));
+        view.updateList(dateTime);
     }
 
     @Override
