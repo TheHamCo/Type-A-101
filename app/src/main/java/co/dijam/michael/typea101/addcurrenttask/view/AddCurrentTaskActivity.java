@@ -10,7 +10,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import co.dijam.michael.typea101.MainActivity;
+import co.dijam.michael.typea101.mainscreen.view.MainActivity;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
 import co.dijam.michael.typea101.addcurrenttask.interactor.AddCurrentTaskInteractorImpl;
