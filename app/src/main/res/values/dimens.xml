@@ -6,4 +6,5 @@
     <dimen name="current_task_cardview_padding">16dp</dimen>
     <dimen name="cardview_divider_margin">16dp</dimen>
     <dimen name="started_on_margin_right">16dp</dimen>
+    <dimen name="two_line_snackbar_height">122dp</dimen>
 </resources>

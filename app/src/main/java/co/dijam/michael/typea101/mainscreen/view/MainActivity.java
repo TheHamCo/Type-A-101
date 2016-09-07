@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     @Override
     public void styleFabFinish() {
-
     }
 
     // NAV DRAWER
