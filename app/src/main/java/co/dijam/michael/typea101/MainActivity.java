@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import co.dijam.michael.typea101.addcurrenttask.view.AddCurrentTaskActivity;
 import co.dijam.michael.typea101.entities.CurrentTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
+import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         CurrentTaskManager currentTaskManager = new SharedPrefCurrentTaskManager(getApplicationContext());
-        Toast.makeText(MainActivity.this, currentTaskManager.getCurrentTask().toString(), Toast.LENGTH_SHORT).show();
+        String formattedTime = TimeFormattingUtil.dateTimeFormatter.print(currentTaskManager.getCurrentTask().startTime);
+        Toast.makeText(MainActivity.this, currentTaskManager.getCurrentTask().toString() + formattedTime, Toast.LENGTH_SHORT).show();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
