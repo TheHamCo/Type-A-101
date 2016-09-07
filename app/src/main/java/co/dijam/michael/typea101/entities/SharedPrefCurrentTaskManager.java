@@ -49,4 +49,11 @@ public class SharedPrefCurrentTaskManager implements CurrentTaskManager {
         editor.putLong(START_TIME, NO_START_TIME);
         editor.apply();
     }
+
+    @Override
+    public boolean currentTaskExists() {
+        return settings.getString(TASK_NAME, NO_CURRENT_TASK).equals(NO_CURRENT_TASK)
+                && settings.getString(TAG, NO_CURRENT_TASK).equals(NO_CURRENT_TASK)
+                && settings.getLong(START_TIME, NO_START_TIME) == NO_START_TIME;
+    }
 }

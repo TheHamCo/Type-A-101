@@ -9,4 +9,5 @@ public interface CurrentTaskManager {
     CurrentTask getCurrentTask();
     void setCurrentTask(CurrentTask currentTask);
     void clearCurrentTask();
+    boolean currentTaskExists();
 }
