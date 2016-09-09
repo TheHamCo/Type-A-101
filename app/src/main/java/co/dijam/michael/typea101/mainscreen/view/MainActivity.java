@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     public void onFabClick() {
         if (presenter.currentTaskExists()) {
             trackerFragment.finishTrackingClicked();
+            hideSnackbar();
         } else {
             startActivity(new Intent(this, AddCurrentTaskActivity.class));
         }
