@@ -72,9 +72,21 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            presenter.stopTimer();
+        } else {
+            onResume();
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
-        presenter.runTimer();
+        if (!isHidden()) {
+            presenter.runTimer();
+        }
     }
 
     @Override
