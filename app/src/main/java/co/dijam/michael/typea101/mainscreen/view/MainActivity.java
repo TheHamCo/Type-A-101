@@ -278,11 +278,13 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     @Override
     public void disableNextDayButton() {
+        nextDayButton.setAlpha(0.25f);
         nextDayButton.setEnabled(false);
     }
 
     @Override
     public void enableNextDayButton() {
+        nextDayButton.setAlpha(1f);
         nextDayButton.setEnabled(true);
     }
 
