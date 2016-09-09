@@ -81,7 +81,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         if (currentTaskExists()){
             view.styleFabFinish();
         } else {
-            view.styleFabFinish();
+            view.styleFabAdd();
         }
     }
 

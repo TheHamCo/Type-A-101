@@ -2,6 +2,7 @@ package co.dijam.michael.typea101.mainscreen.view;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import org.joda.time.DateTimeConstants;
 
+import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,6 +66,11 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     TextView dateTextView;
     @BindView(R.id.next_day_button)
     ImageButton nextDayButton;
+
+    @BindDrawable(R.drawable.ic_add_alarm)
+    Drawable addCurrentTask;
+    @BindDrawable(R.drawable.ic_check)
+    Drawable finishCurrentTask;
 
 
     private long viewingDateTime = 0;
@@ -211,18 +218,21 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         if (presenter.currentTaskExists()) {
             trackerFragment.finishTrackingClicked();
             hideSnackbar();
+            styleFabAdd();
         } else {
             startActivity(new Intent(this, AddCurrentTaskActivity.class));
+            styleFabFinish();
         }
     }
 
     @Override
     public void styleFabAdd() {
-
+        mainScreenFab.setImageDrawable(addCurrentTask);
     }
 
     @Override
     public void styleFabFinish() {
+        mainScreenFab.setImageDrawable(finishCurrentTask);
     }
 
     // NAV DRAWER
