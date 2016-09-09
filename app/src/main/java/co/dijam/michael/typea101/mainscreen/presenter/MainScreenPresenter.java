@@ -96,6 +96,8 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         Period period = new Period(ct.startTime, System.currentTimeMillis());
         String formattedDuration = TimeFormattingUtil.durationFormatter.print(period);
         view.updateTimerSnackbar(ct.taskName, ct.tag, formattedDuration);
+
+        Log.d(TAG, "updateSnackbarText: " + formattedDuration);
     }
 
     @Override
@@ -103,5 +105,6 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         if (timerSubscription != null && !timerSubscription.isUnsubscribed()){
             timerSubscription.unsubscribe();
         }
+        Log.d(TAG, "stopSnackBarTimer: STOP SNACKBAR");
     }
 }

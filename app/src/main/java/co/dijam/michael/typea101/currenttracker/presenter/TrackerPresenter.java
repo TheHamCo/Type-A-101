@@ -54,7 +54,9 @@ public class TrackerPresenter implements TrackerContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(tick -> {
                     Period period = new Period(ct.startTime, System.currentTimeMillis());
-                    view.updateTimer(TimeFormattingUtil.durationFormatter.print(period));
+                    String formattedDuration = TimeFormattingUtil.durationFormatter.print(period);
+                    view.updateTimer(formattedDuration);
+                    Log.d(TAG, "runTimer: " + formattedDuration);
                 },throwable -> Log.e(TAG, "runTimer: ", throwable));
 
     }
@@ -63,6 +65,7 @@ public class TrackerPresenter implements TrackerContract.Presenter {
     public void stopTimer() {
         if (timerSubscription != null && !timerSubscription.isUnsubscribed()){
             timerSubscription.unsubscribe();
+            Log.d(TAG, "stopTimer: STOP TRACKER");
         }
     }
 

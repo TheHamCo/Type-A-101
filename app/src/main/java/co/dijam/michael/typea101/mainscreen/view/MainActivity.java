@@ -28,6 +28,8 @@ import co.dijam.michael.typea101.util.ConstantsUtil;
 
 public class MainActivity extends AppCompatActivity implements MainScreenContract.View {
 
+    private static final String TAG = MainActivity.class.getName();
+
     @BindView(R.id.main_root_layout)
     CoordinatorLayout mainRootLayout;
     @BindView(R.id.nested_scroll_view)

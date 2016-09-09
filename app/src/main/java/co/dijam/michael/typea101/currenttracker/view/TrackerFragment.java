@@ -27,6 +27,8 @@ import co.dijam.michael.typea101.entities.SqlTaskManager;
  */
 public class TrackerFragment extends Fragment implements TrackerContract.View {
 
+    private static final String TAG = TrackerFragment.class.getName();
+
     @BindView(R.id.tracker_layout)
     LinearLayout trackerLayout;
     @BindView(R.id.task_text_view)
