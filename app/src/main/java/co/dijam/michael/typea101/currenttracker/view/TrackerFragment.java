@@ -14,6 +14,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
 import co.dijam.michael.typea101.currenttracker.TrackerInteractor.TrackerInteractorImpl;
@@ -46,6 +47,7 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     private static final String STATE_TIMERTEXT = "STATE_TIMERTEXT";
 
     TrackerContract.Presenter presenter;
+    private Unbinder unbinder;
 
     public TrackerFragment() {
         // Required empty public constructor
@@ -59,7 +61,7 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_tracker, container, false);
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         presenter = new TrackerPresenter(this,
                 new TrackerInteractorImpl(new SharedPrefCurrentTaskManager(getContext()), new SqlTaskManager()));
@@ -79,6 +81,12 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
         if (savedInstanceState != null) {
             updateTimer(savedInstanceState.getString(STATE_TIMERTEXT));
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
