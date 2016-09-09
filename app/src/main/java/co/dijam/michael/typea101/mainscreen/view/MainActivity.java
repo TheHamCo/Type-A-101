@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         return (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
     }
 
-    private void adjustMainViewBottomMarginToAccountForSnackbar(int bottomMargin) {
+    private void adjustMainViewBottomMargin(int bottomMargin) {
         CoordinatorLayout.LayoutParams lp = ((CoordinatorLayout.LayoutParams) nestedScrollView.getLayoutParams());
         lp.setMargins(0, 0, 0, bottomMargin);
         nestedScrollView.setLayoutParams(lp);
@@ -236,9 +236,6 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     public void showSnackbar() {
         snackbar.show();
         presenter.runSnackbarTimer();
-
-//        int twoLineSnackbarHeight = (int) getResources().getDimension(R.dimen.two_line_snackbar_height);
-//        adjustMainViewBottomMarginToAccountForSnackbar(twoLineSnackbarHeight);
     }
 
     @Override
@@ -250,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
                 labelDurationSeparator + formattedTime;
         snackbar.setText(snackbarMessage);
         int snackbarHeight = snackbar.getView().getHeight();
-        adjustMainViewBottomMarginToAccountForSnackbar(snackbarHeight);
+        adjustMainViewBottomMargin(snackbarHeight);
     }
 
     private String getConfigurationDependentSeparator() {
@@ -265,6 +262,6 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     public void hideSnackbar() {
         snackbar.dismiss();
         presenter.stopSnackBarTimer();
-        adjustMainViewBottomMarginToAccountForSnackbar(0);
+        adjustMainViewBottomMargin(0);
     }
 }
