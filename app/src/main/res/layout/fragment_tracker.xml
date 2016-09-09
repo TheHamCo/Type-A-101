@@ -1,119 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tracker_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    style="@style/DialogCardView"
     tools:context="co.dijam.michael.typea101.currenttracker.view.TrackerFragment">
 
-    <android.support.v7.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <LinearLayout style="@style/DialogCardViewLLMainContent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/task_text_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:gravity="top"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/current_task_cardview_padding"
-                android:paddingRight="@dimen/current_task_cardview_padding"
-                android:paddingTop="@dimen/current_task_cardview_padding">
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                tools:text="TASK" />
 
-                <TextView
-                    android:id="@+id/task_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    tools:text="TASK" />
-
-                <TextView
-                    android:id="@+id/tag_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    tools:text="CATEGORY" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="@dimen/cardview_divider_margin"
-                    android:layout_marginTop="@dimen/cardview_divider_margin"
-                    android:background="@color/lightThemeDivider" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/started_on"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/started_on_margin_right"
-                        android:layout_marginRight="@dimen/started_on_margin_right"
-                        android:text="@string/started_on"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                    <TextView
-                        android:id="@+id/starting_time_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="12:23 AM" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/running_time_text_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    tools:text="00 hr 00 min 00 sec" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tag_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:text="CATEGORY" />
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/cardview_divider_margin"
-                android:background="@color/lightThemeDivider" />
+                style="@style/CardViewDivider"
+                android:layout_marginBottom="@dimen/cardview_divider_margin"
+                android:layout_marginTop="@dimen/cardview_divider_margin" />
 
-            <FrameLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/add_notes_button"
-                    style="?android:attr/borderlessButtonStyle"
+                <TextView
+                    android:id="@+id/started_on"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:text="@string/add_notes" />
+                    android:layout_marginEnd="@dimen/started_on_margin_right"
+                    android:layout_marginRight="@dimen/started_on_margin_right"
+                    android:text="@string/started_on"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <Button
-                    android:id="@+id/edit_button"
-                    style="?android:attr/borderlessButtonStyle"
+                <TextView
+                    android:id="@+id/starting_time_text_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start|center_vertical"
-                    android:text="@string/edit" />
-            </FrameLayout>
+                    tools:text="12:23 AM" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/running_time_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                tools:text="00 hr 00 min 00 sec" />
+
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+
+        <View
+            style="@style/CardViewDivider"
+            android:layout_marginTop="@dimen/cardview_divider_margin" />
+
+        <FrameLayout style="@style/DialogBottomButtomFrame">
+
+            <Button
+                android:id="@+id/add_notes_button"
+                style="@style/DialogButtonEnd"
+                android:text="@string/add_notes" />
+
+            <Button
+                android:id="@+id/edit_button"
+                style="@style/DialogButtonStart"
+                android:text="@string/edit" />
+        </FrameLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
 

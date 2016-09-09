@@ -4,11 +4,11 @@ package co.dijam.michael.typea101.currenttracker.view;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -30,7 +30,7 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     private static final String TAG = TrackerFragment.class.getName();
 
     @BindView(R.id.tracker_layout)
-    LinearLayout trackerLayout;
+    CardView trackerLayout;
     @BindView(R.id.task_text_view)
     TextView taskTextView;
     @BindView(R.id.tag_text_view)

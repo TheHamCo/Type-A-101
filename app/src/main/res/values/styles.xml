@@ -8,4 +8,55 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="DialogButton" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DialogButtonStart" parent="DialogButton">
+        <item name="android:layout_gravity">start|center_vertical</item>
+    </style>
+
+    <style name="DialogButtonEnd" parent="DialogButton">
+        <item name="android:layout_gravity">end|center_vertical</item>
+    </style>
+
+    <style name="DialogBottomButtomFrame">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="CardViewDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/lightThemeDivider</item>
+    </style>
+
+    <style name="DialogCardViewLLMainContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">top</item>
+
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingLeft">@dimen/current_task_cardview_padding</item>
+        <item name="android:paddingRight">@dimen/current_task_cardview_padding</item>
+        <item name="android:paddingTop">@dimen/current_task_cardview_padding</item>
+    </style>
+
+    <style name="DialogCardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
+        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginStart">@dimen/activity_horizontal_margin</item>
+        <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
+    </style>
+
 </resources>

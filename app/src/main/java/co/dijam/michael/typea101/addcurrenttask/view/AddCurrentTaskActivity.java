@@ -2,29 +2,29 @@ package co.dijam.michael.typea101.addcurrenttask.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import co.dijam.michael.typea101.mainscreen.view.MainActivity;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
 import co.dijam.michael.typea101.addcurrenttask.interactor.AddCurrentTaskInteractorImpl;
 import co.dijam.michael.typea101.addcurrenttask.presenter.AddCurrentTaskPresenter;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
+import co.dijam.michael.typea101.mainscreen.view.MainActivity;
 import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
 public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurrentTaskContract.View {
 
 
     @BindView(R.id.task_name_edit)
-    EditText taskNameEdit;
+    TextInputEditText taskNameEdit;
     @BindView(R.id.tag_name_edit)
-    EditText tagNameEdit;
+    TextInputEditText tagNameEdit;
     @BindView(R.id.cancel_button)
     Button cancelButton;
     @BindView(R.id.start_task_button)
