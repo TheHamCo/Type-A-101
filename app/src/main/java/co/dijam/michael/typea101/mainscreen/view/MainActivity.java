@@ -31,31 +31,11 @@ import co.dijam.michael.typea101.mainscreen.presenter.MainScreenPresenter;
 import co.dijam.michael.typea101.util.ConstantsUtil;
 
 public class MainActivity extends AppCompatActivity implements MainScreenContract.View {
-
     private static final String TAG = MainActivity.class.getName();
 
-
-    @BindView(R.id.main_root_layout)
-    CoordinatorLayout mainRootLayout;
-    @BindView(R.id.nested_scroll_view)
-    NestedScrollView nestedScrollView;
-    @BindView(R.id.main_screen_fab)
-    FloatingActionButton mainScreenFab;
-    @BindView(R.id.tracker_frame)
-    FrameLayout trackerFrame;
-    @BindView(R.id.list_frame)
-    FrameLayout listFrame;
-
-    private static final String FRAGMENT_TRACKER = "FRAGMENT_TRACKER";
-    TrackerFragment trackerFragment;
-
-    private static final String BUNDLE_DATETIME = "BUNDLE_DATETIME";
-
-    private static final String STATE_VIEWING_DATETIME = "STATE_VIEWING_DATETIME";
-    private static final String STATE_SNACKBAR_TEXT = "STATE_SNACKBAR_TEXT";
-
-    MainScreenContract.Presenter presenter;
-
+    // Toolbar Bindings
+    @BindView(R.id.nav_drawer_button)
+    ImageButton navDrawerButton;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.previous_day_button)
@@ -67,15 +47,39 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     @BindView(R.id.next_day_button)
     ImageButton nextDayButton;
 
-    @BindDrawable(R.drawable.ic_add_alarm)
+    // Main Screen Bindings
+    @BindView(R.id.main_root_layout)
+    CoordinatorLayout mainRootLayout;
+    @BindView(R.id.nested_scroll_view)
+    NestedScrollView nestedScrollView;
+    @BindView(R.id.main_screen_fab)
+    FloatingActionButton mainScreenFab;
+    @BindView(R.id.tracker_frame)
+    FrameLayout trackerFrame;
+    @BindView(R.id.list_frame)
+    FrameLayout listFrame;
+
+    // FAB Icons
+    @BindDrawable(R.drawable.ic_add_task)
     Drawable addCurrentTask;
     @BindDrawable(R.drawable.ic_check)
     Drawable finishCurrentTask;
 
+    // Fragments
+    private static final String FRAGMENT_TRACKER = "FRAGMENT_TRACKER";
+    TrackerFragment trackerFragment;
+    private static final String BUNDLE_DATETIME = "BUNDLE_DATETIME";
 
+    // State
+    private static final String STATE_VIEWING_DATETIME = "STATE_VIEWING_DATETIME";
+    private static final String STATE_SNACKBAR_TEXT = "STATE_SNACKBAR_TEXT";
+
+    // Fields
     private long viewingDateTime = 0;
-
     Snackbar snackbar;
+
+    // Dependencies
+    MainScreenContract.Presenter presenter;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE

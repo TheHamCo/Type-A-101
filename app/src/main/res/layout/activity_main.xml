@@ -26,6 +26,7 @@
             app:contentInsetStart="0dp">
 
             <ImageButton
+                android:id="@+id/nav_drawer_button"
                 style="@style/ToolbarImageButton"
                 android:contentDescription="@string/navigation_drawer"
                 android:src="@drawable/ic_menu" />
