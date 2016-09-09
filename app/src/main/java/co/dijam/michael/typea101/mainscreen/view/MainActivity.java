@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     @BindView(R.id.main_root_layout)
     CoordinatorLayout mainRootLayout;
+    @BindView(R.id.nested_scroll_view)
+    NestedScrollView nestedScrollView;
     @BindView(R.id.main_screen_fab)
     FloatingActionButton mainScreenFab;
     @BindView(R.id.tracker_frame)
@@ -77,12 +80,24 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         presenter.presentCorrectMainView(viewingDateTime);
     }
 
-    private boolean isPortrait(){
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putLong(STATE_VIEWING_DATETIME, viewingDateTime);
+        outState.putString(STATE_SNACKBAR_TEXT, getSnackbarTextView().getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // LAYOUT UTILS
+
+    private boolean isPortrait() {
         return getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
     }
+
     private void initSnackbar() {
         snackbar = Snackbar.make(mainRootLayout, "", Snackbar.LENGTH_INDEFINITE);
-        if(isPortrait()){
+        if (isPortrait()) {
+            // If this is changed, change R.dimen.two_line_snackbar_height
             getSnackbarTextView().setMaxLines(2);
         }
         disableSnackbarSwipeToDismiss();
@@ -90,20 +105,19 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     private void disableSnackbarSwipeToDismiss() {
         snackbar.getView().getViewTreeObserver().addOnPreDrawListener(() -> {
-            ((CoordinatorLayout.LayoutParams)snackbar.getView().getLayoutParams()).setBehavior(null);
+            ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams()).setBehavior(null);
             return true;
         });
     }
 
     private TextView getSnackbarTextView() {
-        return (TextView)snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        return (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putLong(STATE_VIEWING_DATETIME, viewingDateTime);
-        outState.putString(STATE_SNACKBAR_TEXT, getSnackbarTextView().getText().toString());
-        super.onSaveInstanceState(outState);
+    private void adjustMainViewBottomMarginToAccountForSnackbar(int bottomMargin) {
+        CoordinatorLayout.LayoutParams lp = ((CoordinatorLayout.LayoutParams) nestedScrollView.getLayoutParams());
+        lp.setMargins(0, 0, 0, bottomMargin);
+        nestedScrollView.setLayoutParams(lp);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -222,26 +236,35 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     public void showSnackbar() {
         snackbar.show();
         presenter.runSnackbarTimer();
+
+//        int twoLineSnackbarHeight = (int) getResources().getDimension(R.dimen.two_line_snackbar_height);
+//        adjustMainViewBottomMarginToAccountForSnackbar(twoLineSnackbarHeight);
     }
 
     @Override
     public void updateTimerSnackbar(String taskName, String tag, String formattedTime) {
-        String labelDurationSeparator;
-        if (isPortrait()){
-            labelDurationSeparator = ConstantsUtil.LINE_SEPARATOR;
-        } else {
-            labelDurationSeparator = ConstantsUtil.SPACE + "-" + ConstantsUtil.SPACE;
-        }
+        String labelDurationSeparator = getConfigurationDependentSeparator();
         String snackbarMessage = taskName.toUpperCase() +
                 ConstantsUtil.SPACE +
                 "(" + tag + ")" +
                 labelDurationSeparator + formattedTime;
         snackbar.setText(snackbarMessage);
+        int snackbarHeight = snackbar.getView().getHeight();
+        adjustMainViewBottomMarginToAccountForSnackbar(snackbarHeight);
+    }
+
+    private String getConfigurationDependentSeparator() {
+        if (isPortrait()) {
+            return ConstantsUtil.LINE_SEPARATOR;
+        } else {
+            return ConstantsUtil.SPACE + "-" + ConstantsUtil.SPACE;
+        }
     }
 
     @Override
     public void hideSnackbar() {
         snackbar.dismiss();
         presenter.stopSnackBarTimer();
+        adjustMainViewBottomMarginToAccountForSnackbar(0);
     }
 }

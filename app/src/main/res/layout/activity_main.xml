@@ -10,7 +10,6 @@
     tools:context=".mainscreen.view.MainActivity">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -27,11 +26,10 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="co.dijam.michael.typea101.mainscreen.view.MoveUpIfSnackbarBehavior"
-        >
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <include layout="@layout/main_screen_content" />
     </android.support.v4.widget.NestedScrollView>
