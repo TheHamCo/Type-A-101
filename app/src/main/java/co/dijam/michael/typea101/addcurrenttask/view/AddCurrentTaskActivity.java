@@ -3,7 +3,9 @@ package co.dijam.michael.typea101.addcurrenttask.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -23,19 +25,21 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
 
     @BindView(R.id.task_name_edit)
     TextInputEditText taskNameEdit;
-    @BindView(R.id.tag_name_edit)
-    TextInputEditText tagNameEdit;
+    @BindView(R.id.tag_edit)
+    TextInputEditText tagEdit;
     @BindView(R.id.cancel_button)
     Button cancelButton;
     @BindView(R.id.start_task_button)
     Button startTaskButton;
-    @BindView(R.id.textView2)
-    TextView textView2;
     @BindView(R.id.starting_time_text)
     TextView startingTimeText;
 
     long startTime;
     AddCurrentTaskContract.Presenter presenter;
+    @BindView(R.id.task_name_edit_layout)
+    TextInputLayout taskNameEditLayout;
+    @BindView(R.id.tag_edit_layout)
+    TextInputLayout tagEditLayout;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
@@ -56,20 +60,21 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // BUTTON BINDINGS
 
-    @OnClick(R.id.cancel_button)
-    void onCancelButton(Button b){
-        closeAddTaskView();
+    @OnClick({R.id.start_task_button, R.id.cancel_button})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.start_task_button:
+                presenter.setCurrentTask(
+                        taskNameEdit.getText().toString()
+                        , tagEdit.getText().toString()
+                        , startTime
+                );
+                break;
+            case R.id.cancel_button:
+                closeAddTaskView();
+                break;
+        }
     }
-
-    @OnClick(R.id.start_task_button)
-    void onFinishButton(Button b){
-        presenter.setCurrentTask(
-                  taskNameEdit.getText().toString()
-                , tagNameEdit.getText().toString()
-                , startTime
-        );
-    }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // VIEW METHODS
