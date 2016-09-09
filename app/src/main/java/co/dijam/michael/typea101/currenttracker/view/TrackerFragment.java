@@ -71,6 +71,8 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
         return view;
     }
 
+    // If onHiddenChanged() + the onResume() conditional is ommitted,
+    // then both tracker and snackbar will run every time MainActivity is active
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
