@@ -50,6 +50,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
     public void presentCorrectMainView(long dateTime) {
         // Reset the snackbar timer to prevent multiple timers being spawned on date change
         stopSnackBarTimer();
+
         if (isToday(dateTime)){
             showTodayView();
         } else {

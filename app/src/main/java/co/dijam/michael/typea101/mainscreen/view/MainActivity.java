@@ -113,7 +113,6 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     private void initSnackbar() {
         snackbar = Snackbar.make(mainRootLayout, "", Snackbar.LENGTH_INDEFINITE);
         if (isPortrait()) {
-            // If this is changed, change R.dimen.two_line_snackbar_height
             getSnackbarTextView().setMaxLines(2);
         }
         disableSnackbarSwipeToDismiss();
