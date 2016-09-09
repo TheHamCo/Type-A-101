@@ -54,7 +54,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
                 new AddCurrentTaskInteractorImpl(new SharedPrefCurrentTaskManager(getApplicationContext())));
 
         startTime = System.currentTimeMillis();
-        startingTimeText.setText(TimeFormattingUtil.timeFormatter.print(startTime));
+        showStartTime(TimeFormattingUtil.timeFormatter.print(startTime));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,11 +64,30 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.start_task_button:
-                presenter.setCurrentTask(
-                        taskNameEdit.getText().toString()
-                        , tagEdit.getText().toString()
-                        , startTime
-                );
+                String taskName = taskNameEdit.getText().toString();
+                String tag = tagEdit.getText().toString();
+
+                if (!taskNameIsValid(taskName)){
+                    taskNameEditLayout.setErrorEnabled(true);
+                    taskNameEditLayout.setError(getString(R.string.this_field_is_required));
+                } else {
+                    taskNameEditLayout.setErrorEnabled(false);
+                }
+
+                if (!tagIsValid(tag)){
+                    tagEditLayout.setErrorEnabled(true);
+                    tagEditLayout.setError(getString(R.string.this_field_is_required));
+                } else {
+                    tagEditLayout.setErrorEnabled(false);
+                }
+
+                if (taskNameIsValid(taskName) && tagIsValid(tag)){
+                    presenter.setCurrentTask(
+                            taskName
+                            , tag
+                            , startTime
+                    );
+                }
                 break;
             case R.id.cancel_button:
                 closeAddTaskView();
@@ -80,7 +99,22 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     // VIEW METHODS
 
     @Override
+    public void showStartTime(String formattedStartTime) {
+        startingTimeText.setText(formattedStartTime);
+    }
+
+    @Override
     public void closeAddTaskView() {
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public boolean taskNameIsValid(String taskName) {
+        return !taskName.trim().isEmpty();
+    }
+
+    @Override
+    public boolean tagIsValid(String tag) {
+        return !tag.trim().isEmpty();
     }
 }

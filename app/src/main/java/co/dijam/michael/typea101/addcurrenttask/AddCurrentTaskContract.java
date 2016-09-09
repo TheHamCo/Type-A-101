@@ -5,8 +5,10 @@ package co.dijam.michael.typea101.addcurrenttask;
  */
 public interface AddCurrentTaskContract {
     interface View {
-//        void showStartTime(String formattedStartTime);
+        void showStartTime(String formattedStartTime);
         void closeAddTaskView();
+        boolean taskNameIsValid(String taskName);
+        boolean tagIsValid(String tag);
     }
 
     interface Presenter {
