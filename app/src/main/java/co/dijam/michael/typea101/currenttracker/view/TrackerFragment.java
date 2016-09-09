@@ -72,9 +72,9 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putString(STATE_TIMERTEXT, runningTimeTextView.getText().toString());
-        super.onSaveInstanceState(outState);
+    public void onResume() {
+        super.onResume();
+        presenter.runTimer();
     }
 
     @Override
@@ -83,6 +83,18 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
         if (savedInstanceState != null) {
             updateTimer(savedInstanceState.getString(STATE_TIMERTEXT));
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(STATE_TIMERTEXT, runningTimeTextView.getText().toString());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        presenter.stopTimer();
+        super.onPause();
     }
 
     @Override

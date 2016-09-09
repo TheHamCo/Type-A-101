@@ -83,10 +83,24 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (snackbar.isShown()){
+            presenter.runSnackbarTimer();
+        }
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putLong(STATE_VIEWING_DATETIME, viewingDateTime);
         outState.putString(STATE_SNACKBAR_TEXT, getSnackbarTextView().getText().toString());
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        presenter.stopSnackBarTimer();
+        super.onPause();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
