@@ -8,9 +8,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.joda.time.DateTimeConstants;
 
@@ -29,6 +31,7 @@ import co.dijam.michael.typea101.util.ConstantsUtil;
 public class MainActivity extends AppCompatActivity implements MainScreenContract.View {
 
     private static final String TAG = MainActivity.class.getName();
+
 
     @BindView(R.id.main_root_layout)
     CoordinatorLayout mainRootLayout;
@@ -51,6 +54,17 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     MainScreenContract.Presenter presenter;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.previous_day_button)
+    ImageButton previousDayButton;
+    @BindView(R.id.date_picker_button)
+    ImageButton datePickerButton;
+    @BindView(R.id.date_text_view)
+    TextView dateTextView;
+    @BindView(R.id.next_day_button)
+    ImageButton nextDayButton;
+
 
     private long viewingDateTime = 0;
 
@@ -64,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
 
         CurrentTaskManager currentTaskManager = new SharedPrefCurrentTaskManager(getApplicationContext());
         presenter = new MainScreenPresenter(currentTaskManager, this);
@@ -85,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     @Override
     protected void onResume() {
         super.onResume();
-        if (snackbar.isShown()){
+        if (snackbar.isShown()) {
             presenter.runSnackbarTimer();
         }
     }
@@ -101,6 +119,27 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     protected void onPause() {
         presenter.stopSnackBarTimer();
         super.onPause();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // ONCLICK BINDINGS
+
+    @OnClick({R.id.previous_day_button, R.id.date_picker_button, R.id.date_text_view, R.id.next_day_button})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.previous_day_button:
+                onPreviousDay();
+                break;
+            case R.id.date_picker_button:
+                //TODO: Add date picker dialog
+                break;
+            case R.id.date_text_view:
+                onToday();
+                break;
+            case R.id.next_day_button:
+                onNextDay();
+                break;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -210,11 +249,9 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     // TOOLBAR
     @Override
     public void showDate(String formattedDate) {
-        // For debugging only
-        Toast.makeText(MainActivity.this, formattedDate, Toast.LENGTH_SHORT).show();
+        dateTextView.setText(formattedDate);
     }
 
-    @OnClick(R.id.previous_day_button)
     @Override
     public void onPreviousDay() {
         viewingDateTime -= DateTimeConstants.MILLIS_PER_DAY;
@@ -226,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     }
 
-    @OnClick(R.id.today_button)
+    @OnClick(R.id.date_text_view)
     @Override
     public void onToday() {
         viewingDateTime = System.currentTimeMillis();
@@ -235,16 +272,18 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     @Override
     public void onNextDay() {
+        viewingDateTime += DateTimeConstants.MILLIS_PER_DAY;
+        presenter.presentCorrectMainView(viewingDateTime);
     }
 
     @Override
     public void disableNextDayButton() {
-
+        nextDayButton.setEnabled(false);
     }
 
     @Override
     public void enableNextDayButton() {
-
+        nextDayButton.setEnabled(true);
     }
 
     // SNACKBAR

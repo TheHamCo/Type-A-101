@@ -73,6 +73,7 @@ public class MainScreenPresenter implements MainScreenContract.Presenter {
         if (currentTaskExists()){
             view.showSnackbar();
         }
+        view.enableNextDayButton();
         view.hideTracker();
     }
 
