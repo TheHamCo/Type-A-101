@@ -23,10 +23,15 @@ public class RealmTaskManager implements TaskManager {
 
     @Override
     public Observable<Task> getAllTasks() {
+        // Need to call first() (along with filter(RealmResults::isLoaded)
+        // to make hot observable call onComplete() and make the list.
+        // (Live updates implemented separately)
+        // Source: https://github.com/realm/realm-java/issues/2010
          return realm.where(Task.class)
-                 .findAllAsync()
+                 .findAll()
                  .asObservable()
                  .filter(RealmResults::isLoaded)
+                 .first()
                  .flatMap(Observable::from);
     }
 
