@@ -90,6 +90,5 @@ public class TrackerPresenter implements TrackerContract.Presenter {
         finishedTask.startTime = ct.startTime;
         finishedTask.endTime = System.currentTimeMillis();
         interactor.saveFinishedTask(finishedTask);
-        //TODO Persist data
     }
 }
