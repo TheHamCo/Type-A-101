@@ -2,12 +2,10 @@ package co.dijam.michael.typea101.dailylist.interactor;
 
 import org.joda.time.Period;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import co.dijam.michael.typea101.dailylist.model.TaskListItem;
 import co.dijam.michael.typea101.entities.TaskManager;
 import co.dijam.michael.typea101.model.Task;
+import rx.Observable;
 
 import static co.dijam.michael.typea101.util.TimeFormattingUtil.durationFormatter;
 import static co.dijam.michael.typea101.util.TimeFormattingUtil.timeFormatter;
@@ -24,13 +22,9 @@ public class DailyListInteractorImpl implements DailyListInteractor {
     }
 
     @Override
-    public List<TaskListItem> getFormattedTaskListForDay(long dateTime) {
-        List<TaskListItem> formattedTaskList = new ArrayList<>();
-        taskManager.getAllTasksForOneDay(dateTime)
-                .map(this::formatTask)
-                .subscribe(formattedTaskList::add)
-                .unsubscribe();
-        return formattedTaskList;
+    public Observable<TaskListItem> getFormattedTaskListForDay(long dateTime) {
+        return taskManager.getAllTasksForOneDay(dateTime)
+                .map(this::formatTask);
     }
 
     @Override
