@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.view.AddCurrentTaskActivity;
 import co.dijam.michael.typea101.currenttracker.view.TrackerFragment;
+import co.dijam.michael.typea101.dailylist.view.DailyListFragment;
 import co.dijam.michael.typea101.entities.CurrentTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.mainscreen.MainScreenContract;
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     private static final String FRAGMENT_TRACKER = "FRAGMENT_TRACKER";
     TrackerFragment trackerFragment;
     private static final String BUNDLE_DATETIME = "BUNDLE_DATETIME";
+    DailyListFragment dailyListFragment;
 
     // State
     private static final String STATE_VIEWING_DATETIME = "STATE_VIEWING_DATETIME";

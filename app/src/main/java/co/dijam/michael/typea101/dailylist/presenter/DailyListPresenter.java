@@ -20,6 +20,7 @@ public class DailyListPresenter implements DailyListContract.Presenter {
     public void getTaskListForDay(long dateTime) {
         view.showTaskList(
                 interactor.getFormattedTaskListForDay(dateTime)
+                        .toList()
         );
     }
 }

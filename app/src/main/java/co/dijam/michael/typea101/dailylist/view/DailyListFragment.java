@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +37,8 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
     DailyListAdapter adapter;
     Subscription taskListItemSubscription;
 
+    private long viewingDateTime = 0;
+
     public DailyListFragment() {
         // Required empty public constructor
     }
@@ -55,18 +58,36 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
         presenter = new DailyListPresenter(this, new DailyListInteractorImpl(new RealmTaskManager(realmConfiguration, realm)));
 
         adapter = new DailyListAdapter(getActivity(), new ArrayList<>());
+        dayTasksListView.setAdapter(adapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.getTaskListForDay(viewingDateTime);
+    }
+
+    @Override
+    public void onPause() {
+        if (taskListItemSubscription != null && !taskListItemSubscription.isUnsubscribed()) {
+            taskListItemSubscription.unsubscribe();
+        }
+        super.onPause();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // VIEW METHODS
 
     @Override
-    public void showTaskList(Observable<TaskListItem> taskListItems) {
-        taskListItemSubscription = taskListItems
+    public void showTaskList(Observable<List<TaskListItem>> taskListItemsObservable) {
+        taskListItemSubscription = taskListItemsObservable
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(taskListItems -> {
+                    adapter.clear();
+                    adapter.addAll(taskListItems);
+                });
     }
 
     @Override
