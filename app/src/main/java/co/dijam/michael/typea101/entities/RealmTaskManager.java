@@ -28,7 +28,7 @@ public class RealmTaskManager implements TaskManager {
         // (Live updates implemented separately)
         // Source: https://github.com/realm/realm-java/issues/2010
          return realm.where(Task.class)
-                 .findAll()
+                 .findAllAsync()
                  .asObservable()
                  .filter(RealmResults::isLoaded)
                  .first()
@@ -46,6 +46,7 @@ public class RealmTaskManager implements TaskManager {
                 .findAllAsync()
                 .asObservable()
                 .filter(RealmResults::isLoaded)
+                .first()
                 .flatMap(Observable::from);
     }
 
@@ -53,10 +54,8 @@ public class RealmTaskManager implements TaskManager {
     public Observable<Task> getTask(int id) {
         return realm.where(Task.class)
                 .equalTo("id", id)
-                .findAllAsync()
-                .asObservable()
-                .filter(RealmResults::isLoaded)
-                .flatMap(Observable::from);
+                .findFirst()
+                .asObservable();
     }
 
     @Override
