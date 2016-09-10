@@ -11,7 +11,7 @@ public interface TaskManager {
     Observable<Task> getAllTasksForOneDay(long dateTime);
     Observable<Task> getTask(int id);
 
-    int insertTask(Task task);
-    void editTask(Task editedTask);
+    int insertTask(Task newTask);
+    void editTask(Task editedTask) throws Exception;
     void deleteTask(int id);
 }
