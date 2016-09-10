@@ -1,7 +1,5 @@
 package co.dijam.michael.typea101.entities;
 
-import org.joda.time.DateTime;
-
 import co.dijam.michael.typea101.model.Task;
 import rx.Observable;
 
@@ -16,5 +14,4 @@ public interface TaskManager {
     int insertTask(Task task);
     void editTask(Task editedTask);
     void deleteTask(int id);
-}
 }
