@@ -22,6 +22,7 @@ import co.dijam.michael.typea101.dailylist.model.TaskListItem;
 import co.dijam.michael.typea101.dailylist.presenter.DailyListPresenter;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.eventbus.TaskListChangeEvent;
+import co.dijam.michael.typea101.mainscreen.view.MainActivity;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rx.Observable;
@@ -58,6 +59,11 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_daily_list, container, false);
         ButterKnife.bind(this, view);
+
+        Bundle args = getArguments();
+        if (args != null){
+            viewingDateTime = args.getLong(MainActivity.BUNDLE_DATETIME);
+        }
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity()).build();
         Realm realm = Realm.getInstance(realmConfiguration);

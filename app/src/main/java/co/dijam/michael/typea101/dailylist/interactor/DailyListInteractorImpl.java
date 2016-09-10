@@ -23,9 +23,9 @@ public class DailyListInteractorImpl implements DailyListInteractor {
 
     @Override
     public Observable<TaskListItem> getFormattedTaskListForDay(long dateTime) {
-//        return taskManager.getAllTasksForOneDay(dateTime)
+        return taskManager.getAllTasksForOneDay(dateTime)
         // For debugging only
-        return taskManager.getAllTasks()
+//        return taskManager.getAllTasks()
                 .map(this::formatTask);
     }
 
