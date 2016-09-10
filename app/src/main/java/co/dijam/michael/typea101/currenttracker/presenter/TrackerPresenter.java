@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
 import co.dijam.michael.typea101.currenttracker.TrackerInteractor.TrackerInteractor;
+import co.dijam.michael.typea101.eventbus.TaskListChangeEvent;
 import co.dijam.michael.typea101.model.CurrentTask;
 import co.dijam.michael.typea101.model.Task;
 import co.dijam.michael.typea101.util.TimeFormattingUtil;
@@ -90,5 +91,6 @@ public class TrackerPresenter implements TrackerContract.Presenter {
         finishedTask.startTime = ct.startTime;
         finishedTask.endTime = System.currentTimeMillis();
         interactor.saveFinishedTask(finishedTask);
+        TaskListChangeEvent.publishChange();
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +21,25 @@ import co.dijam.michael.typea101.dailylist.interactor.DailyListInteractorImpl;
 import co.dijam.michael.typea101.dailylist.model.TaskListItem;
 import co.dijam.michael.typea101.dailylist.presenter.DailyListPresenter;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
+import co.dijam.michael.typea101.eventbus.TaskListChangeEvent;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DailyListFragment extends Fragment implements DailyListContract.View {
+    private static final String TAG = DailyListFragment.class.getName();
 
     @BindView(R.id.day_tasks_list_view)
     RecyclerView dayTasksListView;
 
     DailyListContract.Presenter presenter;
     DailyListAdapter adapter;
-    Subscription taskListItemSubscription;
+    CompositeSubscription s;
 
     private long viewingDateTime = 0;
 
@@ -65,6 +68,11 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
         dayTasksListView.setAdapter(adapter);
         dayTasksListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        s = new CompositeSubscription();
+        s.add(
+                TaskListChangeEvent.onChange().subscribe(__ -> presenter.getTaskListForDay(viewingDateTime))
+        );
+
         return view;
     }
 
@@ -76,8 +84,8 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
 
     @Override
     public void onPause() {
-        if (taskListItemSubscription != null && !taskListItemSubscription.isUnsubscribed()) {
-            taskListItemSubscription.unsubscribe();
+        if (s != null && s.hasSubscriptions() && !s.isUnsubscribed()) {
+            s.unsubscribe();
         }
         super.onPause();
     }
@@ -87,13 +95,20 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
 
     @Override
     public void showTaskList(Observable<List<TaskListItem>> taskListItemsObservable) {
-        taskListItemSubscription = taskListItemsObservable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(taskListItems1 -> {
-                    taskListItems.clear();
-                    taskListItems.addAll(taskListItems1);
-                    adapter.notifyDataSetChanged();
-                });
+        Log.d(TAG, "showTaskList: UPDATE LIST");
+        s.add(
+                taskListItemsObservable
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(taskListItems1 -> {
+                            taskListItems.clear();
+                            taskListItems.addAll(taskListItems1);
+                            for (TaskListItem tli :
+                                    taskListItems1) {
+                                Log.d(TAG, "showTaskList: " + tli.taskName);
+                            }
+                            adapter.notifyDataSetChanged();
+                        })
+        );
     }
 
     @Override
