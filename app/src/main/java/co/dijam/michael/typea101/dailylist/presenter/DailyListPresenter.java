@@ -20,6 +20,9 @@ public class DailyListPresenter implements DailyListContract.Presenter {
     public void getTaskListForDay(long dateTime) {
         view.showTaskList(
                 interactor.getFormattedTaskListForDay(dateTime)
+                        //Need to call first (along with filter(RealmResults::isLoaded)
+                        //to make hot observable call onComplete() and make the list
+                        .first()
                         .toList()
         );
     }
