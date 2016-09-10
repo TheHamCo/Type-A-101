@@ -56,7 +56,7 @@ public class RealmTaskManager implements TaskManager {
 
     @Override
     public int insertTask(Task newTask) {
-        realm.executeTransactionAsync(realm1 -> {
+        realm.executeTransaction(realm1 -> {
             newTask.id = autoIncrementId();
             realm1.copyToRealm(newTask);
         });
@@ -65,7 +65,7 @@ public class RealmTaskManager implements TaskManager {
 
     @Override
     public void editTask(Task editedTask) throws Exception {
-        realm.executeTransactionAsync(realm1 -> {
+        realm.executeTransaction(realm1 -> {
             Task result = realm1.where(Task.class)
                    .equalTo("id", editedTask.id)
                    .findFirst();

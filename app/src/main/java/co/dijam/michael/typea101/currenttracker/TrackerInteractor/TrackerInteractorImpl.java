@@ -31,6 +31,7 @@ public class TrackerInteractorImpl implements TrackerInteractor {
     @Override
     public void saveFinishedTask(Task task) {
         currentTaskManager.clearCurrentTask();
+        taskManager.insertTask(task);
         //TODO persist data
     }
 }

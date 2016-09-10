@@ -19,8 +19,10 @@ import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
 import co.dijam.michael.typea101.currenttracker.TrackerInteractor.TrackerInteractorImpl;
 import co.dijam.michael.typea101.currenttracker.presenter.TrackerPresenter;
+import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
-import co.dijam.michael.typea101.entities.SqlTaskManager;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,8 +67,10 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
         View view = inflater.inflate(R.layout.fragment_tracker, container, false);
         unbinder = ButterKnife.bind(this, view);
 
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(getActivity()).build();
+        Realm realm = Realm.getInstance(realmConfiguration);
         presenter = new TrackerPresenter(this,
-                new TrackerInteractorImpl(new SharedPrefCurrentTaskManager(getContext()), new SqlTaskManager()));
+                new TrackerInteractorImpl(new SharedPrefCurrentTaskManager(getContext()), new RealmTaskManager(realmConfiguration, realm)));
         presenter.getCurrentTask();
         return view;
     }
