@@ -3,11 +3,12 @@ package co.dijam.michael.typea101.dailylist.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,15 @@ import rx.android.schedulers.AndroidSchedulers;
 public class DailyListFragment extends Fragment implements DailyListContract.View {
 
     @BindView(R.id.day_tasks_list_view)
-    ListView dayTasksListView;
+    RecyclerView dayTasksListView;
 
     DailyListContract.Presenter presenter;
     DailyListAdapter adapter;
     Subscription taskListItemSubscription;
 
     private long viewingDateTime = 0;
+
+    ArrayList<TaskListItem> taskListItems;
 
     public DailyListFragment() {
         // Required empty public constructor
@@ -58,8 +61,10 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
         Realm realm = Realm.getInstance(realmConfiguration);
         presenter = new DailyListPresenter(this, new DailyListInteractorImpl(new RealmTaskManager(realmConfiguration, realm)));
 
-        adapter = new DailyListAdapter(getActivity(), new ArrayList<>());
+        taskListItems = new ArrayList<>();
+        adapter = new DailyListAdapter(getActivity(), taskListItems);
         dayTasksListView.setAdapter(adapter);
+        dayTasksListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
     }
@@ -85,9 +90,14 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
     public void showTaskList(Observable<List<TaskListItem>> taskListItemsObservable) {
         taskListItemSubscription = taskListItemsObservable
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(taskListItems -> {
-                    adapter.clear();
-                    adapter.addAll(taskListItems);
+                .subscribe(taskListItems1 -> {
+                    taskListItems.clear();
+                    taskListItems.addAll(taskListItems1);
+                    for (TaskListItem tli :
+                            taskListItems1) {
+                        Log.d("RECYCLER", "showTaskList: " + tli.taskName);
+                    }
+                    adapter.notifyDataSetChanged();
                 });
     }
 

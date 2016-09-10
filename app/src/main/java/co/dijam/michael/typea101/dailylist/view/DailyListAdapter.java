@@ -1,10 +1,10 @@
 package co.dijam.michael.typea101.dailylist.view;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,33 +17,38 @@ import co.dijam.michael.typea101.dailylist.model.TaskListItem;
 /**
  * Created by mdd23 on 9/10/2016.
  */
-public class DailyListAdapter extends ArrayAdapter<TaskListItem> {
+public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.ViewHolder> {
 
-    public DailyListAdapter(Context context, List<TaskListItem> tasks) {
-        super(context, 0, tasks);
+    private List<TaskListItem> taskListItems;
+    private Context context;
+
+    public DailyListAdapter(Context context, List<TaskListItem> taskListItems) {
+        this.taskListItems = taskListItems;
+        this.context = context;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        TaskListItem t = getItem(position);
-        ViewHolder vh;
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_daily, parent, false);
-            vh = new ViewHolder(convertView);
-            convertView.setTag(vh);
-        }
-        vh = (ViewHolder) convertView.getTag();
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View taskListItemView = LayoutInflater.from(context).inflate(R.layout.list_item_daily, parent, false);
+        return new ViewHolder(taskListItemView);
+    }
 
+    @Override
+    public void onBindViewHolder(ViewHolder vh, int position) {
+        TaskListItem t = taskListItems.get(position);
         vh.startTimeTextView.setText(t.formattedStartTime);
         vh.endTimeTextView.setText(t.formattedEndTime);
         vh.taskNameTextView.setText(t.taskName);
         vh.tagTextView.setText(t.tag);
         vh.durationTextView.setText(t.formattedDuration);
-
-        return convertView;
     }
 
-    static class ViewHolder {
+    @Override
+    public int getItemCount() {
+        return taskListItems.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.start_time_text_view)
         TextView startTimeTextView;
         @BindView(R.id.end_time_text_view)
@@ -56,6 +61,7 @@ public class DailyListAdapter extends ArrayAdapter<TaskListItem> {
         TextView durationTextView;
 
         ViewHolder(View view) {
+            super(view);
             ButterKnife.bind(this, view);
         }
     }
