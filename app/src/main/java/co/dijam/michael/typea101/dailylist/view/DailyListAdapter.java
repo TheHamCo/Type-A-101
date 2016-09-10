@@ -39,7 +39,7 @@ public class DailyListAdapter extends ArrayAdapter<TaskListItem> {
         vh.taskNameTextView.setText(t.taskName);
         vh.tagTextView.setText(t.tag);
         vh.durationTextView.setText(t.formattedDuration);
-        
+
         return convertView;
     }
 
