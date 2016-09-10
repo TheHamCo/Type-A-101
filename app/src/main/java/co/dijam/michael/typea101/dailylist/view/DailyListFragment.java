@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,10 +92,6 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
                 .subscribe(taskListItems1 -> {
                     taskListItems.clear();
                     taskListItems.addAll(taskListItems1);
-                    for (TaskListItem tli :
-                            taskListItems1) {
-                        Log.d("RECYCLER", "showTaskList: " + tli.taskName);
-                    }
                     adapter.notifyDataSetChanged();
                 });
     }
