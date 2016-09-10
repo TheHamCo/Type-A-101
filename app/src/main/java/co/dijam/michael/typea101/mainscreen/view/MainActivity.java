@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     // Fragments
     private static final String FRAGMENT_TRACKER = "FRAGMENT_TRACKER";
     TrackerFragment trackerFragment;
-    private static final String BUNDLE_DATETIME = "BUNDLE_DATETIME";
+    public static final String BUNDLE_DATETIME = "BUNDLE_DATETIME";
+    private static final String FRAGMENT_DAILYLIST = "FRAGMENT_DAILYLIST";
     DailyListFragment dailyListFragment;
 
     // State
@@ -103,9 +104,11 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
         if (savedInstanceState == null) {
             trackerFragment = new TrackerFragment();
+            dailyListFragment = new DailyListFragment();
             viewingDateTime = System.currentTimeMillis();
         } else {
             trackerFragment = (TrackerFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_TRACKER);
+            dailyListFragment = (DailyListFragment) getSupportFragmentManager().findFragmentByTag(FRAGMENT_DAILYLIST);
             viewingDateTime = savedInstanceState.getLong(STATE_VIEWING_DATETIME);
             getSnackbarTextView().setText(savedInstanceState.getString(STATE_SNACKBAR_TEXT));
         }
@@ -214,7 +217,10 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     public void updateList(long dateTime) {
         Bundle bundle = new Bundle();
         bundle.putLong(BUNDLE_DATETIME, dateTime);
-        // TODO: Replace list with proper data
+        dailyListFragment = new DailyListFragment();
+        dailyListFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.list_frame, dailyListFragment, FRAGMENT_DAILYLIST).commit();
     }
 
     // FAB
