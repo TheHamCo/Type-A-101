@@ -1,6 +1,10 @@
 package co.dijam.michael.typea101.dailylist.interactor;
 
+import org.joda.time.DateTime;
 import org.joda.time.Period;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import co.dijam.michael.typea101.dailylist.model.TaskListItem;
 import co.dijam.michael.typea101.entities.TaskManager;
@@ -14,6 +18,7 @@ import static co.dijam.michael.typea101.util.TimeFormattingUtil.timeFormatter;
  * Created by mdd23 on 9/10/2016.
  */
 public class DailyListInteractorImpl implements DailyListInteractor {
+    private static final String TAG = DailyListInteractorImpl.class.getName();
 
     TaskManager taskManager;
 
@@ -23,10 +28,53 @@ public class DailyListInteractorImpl implements DailyListInteractor {
 
     @Override
     public Observable<TaskListItem> getFormattedTaskListForDay(long dateTime) {
-        return taskManager.getAllTasksForOneDay(dateTime)
-        // For debugging only
-//        return taskManager.getAllTasks()
+        DateTime dayMidnight = new DateTime(dateTime).withTimeAtStartOfDay();
+        DateTime nextDayMidnight = dayMidnight.plusDays(1);
+
+        List<Task> splitTasks = new ArrayList<>();
+
+        taskManager.getAllTasksForOneDay(dateTime)
+                .toList()
+                .subscribe(tasks -> {
+                    for (Task t : tasks) {
+                        boolean timeRollsOverFromYesterday =
+                                t.startTime < dayMidnight.getMillis() && t.endTime > dayMidnight.getMillis();
+                        boolean timeSpillsIntoTomorrow =
+                                t.startTime < nextDayMidnight.getMillis() && t.endTime > nextDayMidnight.getMillis();
+
+                        if (timeRollsOverFromYesterday) {
+                            Task earlierTask = copyTask(t);
+
+                            earlierTask.startTime = dayMidnight.getMillis();
+                            splitTasks.add(earlierTask);
+
+                        } else if (timeSpillsIntoTomorrow) {
+                            Task laterTask = copyTask(t);
+
+                            laterTask.endTime = nextDayMidnight.minusSeconds(1).getMillis();
+                            splitTasks.add(laterTask);
+
+                        } else {
+                            splitTasks.add(t);
+                        }
+                    }
+
+                });
+
+        return Observable.from(splitTasks)
                 .map(this::formatTask);
+
+
+    }
+
+    private Task copyTask(Task task) {
+        Task newTask = new Task();
+        newTask.id = task.id;
+        newTask.taskName = task.taskName;
+        newTask.tag = task.tag;
+        newTask.startTime = task.startTime;
+        newTask.endTime = task.endTime;
+        return newTask;
     }
 
     @Override

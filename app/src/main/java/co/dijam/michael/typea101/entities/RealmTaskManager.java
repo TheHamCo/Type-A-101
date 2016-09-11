@@ -44,7 +44,7 @@ public class RealmTaskManager implements TaskManager {
                 .between("startTime", dayMidnight.getMillis(), nextDayMidnight.getMillis())
                 .or()
                 .between("endTime", dayMidnight.getMillis(), nextDayMidnight.getMillis())
-                .findAllAsync()
+                .findAll()
                 .asObservable()
                 .filter(RealmResults::isLoaded)
                 .first()
