@@ -1,6 +1,7 @@
 package co.dijam.michael.typea101.currenttracker.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,10 +18,11 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
-import co.dijam.michael.typea101.currenttracker.TrackerInteractor.TrackerInteractorImpl;
+import co.dijam.michael.typea101.currenttracker.interactor.TrackerInteractorImpl;
 import co.dijam.michael.typea101.currenttracker.presenter.TrackerPresenter;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
+import co.dijam.michael.typea101.modifycurrenttask.view.ModifyCurrentTaskActivity;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -128,8 +130,10 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.add_notes_button:
+                startAddNotes();
                 break;
             case R.id.edit_button:
+                startEditTask();
                 break;
         }
     }
@@ -174,7 +178,7 @@ public class TrackerFragment extends Fragment implements TrackerContract.View {
 
     @Override
     public void startEditTask() {
-
+        startActivity(new Intent(getActivity(), ModifyCurrentTaskActivity.class));
     }
 
     @Override

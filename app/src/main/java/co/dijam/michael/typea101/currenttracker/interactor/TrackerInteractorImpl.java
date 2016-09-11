@@ -1,4 +1,4 @@
-package co.dijam.michael.typea101.currenttracker.TrackerInteractor;
+package co.dijam.michael.typea101.currenttracker.interactor;
 
 import co.dijam.michael.typea101.entities.CurrentTaskManager;
 import co.dijam.michael.typea101.entities.TaskManager;

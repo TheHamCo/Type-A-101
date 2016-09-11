@@ -8,16 +8,25 @@ import java.util.List;
 public interface ModifyCurrentTaskContract {
     interface View {
         void showStartTime(String formattedStartTime);
-        void closeAddTaskView();
+        void closeModifyTaskView();
         boolean taskNameIsValid(String taskName);
         boolean tagIsValid(String tag);
         void autoCompleteTaskNames(List<String> taskNames);
         void autoCompleteTags(List<String> tags);
+        void setCurrentTaskTaskName(String taskName);
+        void setCurrentTaskTag(String tag);
+        void showAddButtonsOnly();
+        void showEditButtonsOnly();
     }
 
     interface Presenter {
         void setCurrentTask(String taskName, String tagName, long startTime);
+        void clearCurrentTask();
         void autoCompleteTaskNames();
         void autoCompleteTags();
+        boolean currentTaskExists();
+        void setupEditView();
+        void setupAddView(long startTime);
+        long getCurrentTaskStartTime();
     }
 }

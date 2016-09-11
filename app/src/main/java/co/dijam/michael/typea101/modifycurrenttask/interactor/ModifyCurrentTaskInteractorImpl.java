@@ -28,4 +28,19 @@ public class ModifyCurrentTaskInteractorImpl implements ModifyCurrentTaskInterac
     public Observable<Task> getAllTasks() {
         return taskManager.getAllTasks();
     }
+
+    @Override
+    public boolean currentTaskExists() {
+        return currentTaskManager.currentTaskExists();
+    }
+
+    @Override
+    public CurrentTask getCurrentTask() {
+        return currentTaskManager.getCurrentTask();
+    }
+
+    @Override
+    public void clearCurrentTask() {
+        currentTaskManager.clearCurrentTask();
+    }
 }

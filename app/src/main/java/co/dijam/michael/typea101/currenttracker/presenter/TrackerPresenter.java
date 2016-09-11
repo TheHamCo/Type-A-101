@@ -7,7 +7,7 @@ import org.joda.time.Period;
 import java.util.concurrent.TimeUnit;
 
 import co.dijam.michael.typea101.currenttracker.TrackerContract;
-import co.dijam.michael.typea101.currenttracker.TrackerInteractor.TrackerInteractor;
+import co.dijam.michael.typea101.currenttracker.interactor.TrackerInteractor;
 import co.dijam.michael.typea101.eventbus.TaskListChangeEvent;
 import co.dijam.michael.typea101.model.CurrentTask;
 import co.dijam.michael.typea101.model.Task;

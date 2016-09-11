@@ -21,6 +21,10 @@
         <item name="android:layout_gravity">start|center_vertical</item>
     </style>
 
+    <style name="DialogButtonCenter" parent="DialogButton">
+        <item name="android:layout_gravity">center</item>
+    </style>
+
     <style name="DialogButtonEnd" parent="DialogButton">
         <item name="android:layout_gravity">end|center_vertical</item>
     </style>

@@ -10,4 +10,7 @@ import rx.Observable;
 public interface ModifyCurrentTaskInteractor {
     void setOngoingTask(CurrentTask currentTask);
     Observable<Task> getAllTasks();
+    boolean currentTaskExists();
+    CurrentTask getCurrentTask();
+    void clearCurrentTask();
 }

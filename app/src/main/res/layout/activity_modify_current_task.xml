@@ -56,7 +56,9 @@
             style="@style/CardViewDivider"
             android:layout_marginTop="@dimen/cardview_divider_margin" />
 
-        <FrameLayout style="@style/DialogBottomButtomFrame">
+        <FrameLayout
+            android:id="@+id/add_task_buttons"
+            style="@style/DialogBottomButtomFrame">
 
             <Button
                 android:id="@+id/start_task_button"
@@ -68,5 +70,26 @@
                 style="@style/DialogButtonStart"
                 android:text="@string/cancel" />
         </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/edit_task_buttons"
+            style="@style/DialogBottomButtomFrame">
+
+            <Button
+                android:id="@+id/delete_task_button"
+                style="@style/DialogButtonStart"
+                android:text="@string/delete_task" />
+
+            <Button
+                android:id="@+id/cancel_edit_button"
+                style="@style/DialogButtonCenter"
+                android:text="@string/cancel" />
+
+            <Button
+                android:id="@+id/finish_editing_button"
+                style="@style/DialogButtonEnd"
+                android:text="@string/finish_editing" />
+        </FrameLayout>
+
     </LinearLayout>
 </android.support.v7.widget.CardView>
