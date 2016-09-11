@@ -37,6 +37,7 @@ public class ModifyCurrentTaskPresenter implements ModifyCurrentTaskContract.Pre
     public void autoCompleteTaskNames() {
         interactor.getAllTasks()
                 .map(task -> task.taskName)
+                .distinct()
                 .toList()
                 .subscribe(tasks -> view.autoCompleteTaskNames(tasks));
     }
@@ -45,6 +46,7 @@ public class ModifyCurrentTaskPresenter implements ModifyCurrentTaskContract.Pre
     public void autoCompleteTags() {
         interactor.getAllTasks()
                 .map(task -> task.tag)
+                .distinct()
                 .toList()
                 .subscribe(tags -> view.autoCompleteTags(tags));
     }
