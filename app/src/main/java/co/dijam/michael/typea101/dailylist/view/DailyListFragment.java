@@ -74,17 +74,16 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
         dayTasksListView.setAdapter(adapter);
         dayTasksListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        s = new CompositeSubscription();
-        s.add(
-                TaskListChangeEvent.onChange().subscribe(__ -> presenter.getTaskListForDay(viewingDateTime))
-        );
-
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        s = new CompositeSubscription();
+        s.add(
+                TaskListChangeEvent.onChange().subscribe(__ -> presenter.getTaskListForDay(viewingDateTime))
+        );
         presenter.getTaskListForDay(viewingDateTime);
     }
 
