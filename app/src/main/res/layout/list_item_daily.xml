@@ -3,51 +3,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/daily_list_item_padding"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="@dimen/daily_list_item_padding">
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="match_parent"
+        android:layout_weight="1.1"
+        android:gravity="center"
         android:orientation="vertical">
+
         <TextView
-            tools:text="7:32:17 AM"
             android:id="@+id/start_time_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:text="7:32:17 AM" />
+
         <TextView
-            tools:text="7:35:32 AM"
             android:id="@+id/end_time_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:text="7:35:32 AM" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_weight="1.5"
         android:layout_height="match_parent"
+        android:layout_weight="1.5"
         android:orientation="vertical">
+
         <TextView
-            tools:text="Task Name"
-            android:textAppearance="?android:textAppearanceMedium"
             android:id="@+id/task_name_text_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
+            tools:text="Task Name" />
+
         <TextView
-            tools:text="Tag Name"
             android:id="@+id/tag_name_text_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:text="Tag Name" />
     </LinearLayout>
 
-    <TextView
-        android:gravity="center"
-        tools:text="00 hr 00 min 00 sec"
-        android:id="@+id/duration_text_view"
+    <LinearLayout
         android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1.5"
-        android:layout_height="match_parent" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/duration_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="00 hr 00 min 00 sec" />
+
+        <TextView
+            android:id="@+id/percentage_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            tools:text="37.233% of day" />
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -1,6 +1,9 @@
 package co.dijam.michael.typea101.dailylist.interactor;
 
+import android.util.Log;
+
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.joda.time.Period;
 
 import java.util.ArrayList;
@@ -85,7 +88,15 @@ public class DailyListInteractorImpl implements DailyListInteractor {
         taskListItem.tag = task.tag;
         taskListItem.formattedStartTime = timeFormatter.print(task.startTime);
         taskListItem.formattedEndTime = timeFormatter.print(task.endTime);
-        taskListItem.formattedDuration = durationFormatter.print(new Period(task.startTime, task.endTime));
+
+        long durationMillis = task.endTime - task.startTime;
+
+        taskListItem.formattedDuration = durationFormatter.print(new Period(durationMillis));
+
+        float percentage = (durationMillis / ((float) DateTimeConstants.MILLIS_PER_DAY)) * 100;
+        Log.d(TAG, "formatTask: " + percentage);
+        taskListItem.setFormattedPercentage(percentage);
+
         return taskListItem;
     }
 }

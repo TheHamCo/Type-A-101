@@ -41,6 +41,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
         vh.taskNameTextView.setText(t.taskName);
         vh.tagTextView.setText(t.tag);
         vh.durationTextView.setText(t.formattedDuration);
+        vh.percentageTextView.setText(t.getFormattedPercentage());
     }
 
     @Override
@@ -59,6 +60,8 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
         TextView tagTextView;
         @BindView(R.id.duration_text_view)
         TextView durationTextView;
+        @BindView(R.id.percentage_text_view)
+        TextView percentageTextView;
 
         ViewHolder(View view) {
             super(view);
