@@ -1,4 +1,4 @@
-package co.dijam.michael.typea101.addcurrenttask.interactor;
+package co.dijam.michael.typea101.modifycurrenttask.interactor;
 
 import co.dijam.michael.typea101.entities.CurrentTaskManager;
 import co.dijam.michael.typea101.entities.TaskManager;
@@ -9,12 +9,12 @@ import rx.Observable;
 /**
  * Created by mdd23 on 9/6/2016.
  */
-public class AddCurrentTaskInteractorImpl implements AddCurrentTaskInteractor {
+public class ModifyCurrentTaskInteractorImpl implements ModifyCurrentTaskInteractor {
 
     CurrentTaskManager currentTaskManager;
     TaskManager taskManager;
 
-    public AddCurrentTaskInteractorImpl(CurrentTaskManager currentTaskManager, TaskManager taskManager) {
+    public ModifyCurrentTaskInteractorImpl(CurrentTaskManager currentTaskManager, TaskManager taskManager) {
         this.currentTaskManager = currentTaskManager;
         this.taskManager = taskManager;
     }

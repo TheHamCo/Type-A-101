@@ -1,11 +1,11 @@
-package co.dijam.michael.typea101.addcurrenttask;
+package co.dijam.michael.typea101.modifycurrenttask;
 
 import java.util.List;
 
 /**
  * Created by mdd23 on 9/6/2016.
  */
-public interface AddCurrentTaskContract {
+public interface ModifyCurrentTaskContract {
     interface View {
         void showStartTime(String formattedStartTime);
         void closeAddTaskView();

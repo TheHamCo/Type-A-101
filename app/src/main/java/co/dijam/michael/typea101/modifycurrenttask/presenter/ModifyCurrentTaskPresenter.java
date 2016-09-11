@@ -1,17 +1,17 @@
-package co.dijam.michael.typea101.addcurrenttask.presenter;
+package co.dijam.michael.typea101.modifycurrenttask.presenter;
 
-import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
-import co.dijam.michael.typea101.addcurrenttask.interactor.AddCurrentTaskInteractor;
+import co.dijam.michael.typea101.modifycurrenttask.ModifyCurrentTaskContract;
+import co.dijam.michael.typea101.modifycurrenttask.interactor.ModifyCurrentTaskInteractor;
 import co.dijam.michael.typea101.model.CurrentTask;
 
 /**
  * Created by mdd23 on 9/6/2016.
  */
-public class AddCurrentTaskPresenter implements AddCurrentTaskContract.Presenter {
-    AddCurrentTaskContract.View view;
-    AddCurrentTaskInteractor interactor;
+public class ModifyCurrentTaskPresenter implements ModifyCurrentTaskContract.Presenter {
+    ModifyCurrentTaskContract.View view;
+    ModifyCurrentTaskInteractor interactor;
 
-    public AddCurrentTaskPresenter(AddCurrentTaskContract.View view, AddCurrentTaskInteractor interactor) {
+    public ModifyCurrentTaskPresenter(ModifyCurrentTaskContract.View view, ModifyCurrentTaskInteractor interactor) {
         this.view = view;
         this.interactor = interactor;
     }

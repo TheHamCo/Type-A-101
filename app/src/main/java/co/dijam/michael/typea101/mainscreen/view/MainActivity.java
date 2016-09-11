@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
-import co.dijam.michael.typea101.addcurrenttask.view.AddCurrentTaskActivity;
+import co.dijam.michael.typea101.modifycurrenttask.view.ModifyCurrentTaskActivity;
 import co.dijam.michael.typea101.currenttracker.view.TrackerFragment;
 import co.dijam.michael.typea101.dailylist.view.DailyListFragment;
 import co.dijam.michael.typea101.entities.CurrentTaskManager;
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
             hideSnackbar();
             styleFabAdd();
         } else {
-            startActivity(new Intent(this, AddCurrentTaskActivity.class));
+            startActivity(new Intent(this, ModifyCurrentTaskActivity.class));
             styleFabFinish();
         }
     }

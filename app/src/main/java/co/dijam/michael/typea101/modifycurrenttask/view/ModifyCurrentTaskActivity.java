@@ -1,4 +1,4 @@
-package co.dijam.michael.typea101.addcurrenttask.view;
+package co.dijam.michael.typea101.modifycurrenttask.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
-import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
-import co.dijam.michael.typea101.addcurrenttask.interactor.AddCurrentTaskInteractorImpl;
-import co.dijam.michael.typea101.addcurrenttask.presenter.AddCurrentTaskPresenter;
+import co.dijam.michael.typea101.modifycurrenttask.ModifyCurrentTaskContract;
+import co.dijam.michael.typea101.modifycurrenttask.interactor.ModifyCurrentTaskInteractorImpl;
+import co.dijam.michael.typea101.modifycurrenttask.presenter.ModifyCurrentTaskPresenter;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.mainscreen.view.MainActivity;
@@ -26,7 +26,7 @@ import co.dijam.michael.typea101.util.TimeFormattingUtil;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurrentTaskContract.View {
+public class ModifyCurrentTaskActivity extends AppCompatActivity implements ModifyCurrentTaskContract.View {
 
 
     @BindView(R.id.task_name_edit)
@@ -41,7 +41,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     TextView startingTimeText;
 
     long startTime;
-    AddCurrentTaskContract.Presenter presenter;
+    ModifyCurrentTaskContract.Presenter presenter;
     @BindView(R.id.task_name_edit_layout)
     TextInputLayout taskNameEditLayout;
     @BindView(R.id.tag_edit_layout)
@@ -53,13 +53,13 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_current_task);
+        setContentView(R.layout.activity_modify_current_task);
         ButterKnife.bind(this);
-
+        
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
         Realm realm = Realm.getInstance(realmConfiguration);
-        presenter = new AddCurrentTaskPresenter(this,
-                new AddCurrentTaskInteractorImpl(
+        presenter = new ModifyCurrentTaskPresenter(this,
+                new ModifyCurrentTaskInteractorImpl(
                         new SharedPrefCurrentTaskManager(getApplicationContext()),
                         new RealmTaskManager(realmConfiguration, realm)));
 
