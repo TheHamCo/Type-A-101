@@ -25,4 +25,12 @@ public class AddCurrentTaskPresenter implements AddCurrentTaskContract.Presenter
         interactor.setOngoingTask(currentTask);
         view.closeAddTaskView();
     }
+
+    @Override
+    public void autoCompleteTaskNames() {
+        interactor.getAllTasks()
+                .map(task -> task.taskName)
+                .toList()
+                .subscribe(tasks -> view.autoCompleteTaskNames(tasks));
+    }
 }

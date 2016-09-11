@@ -6,8 +6,12 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,15 +20,18 @@ import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.addcurrenttask.AddCurrentTaskContract;
 import co.dijam.michael.typea101.addcurrenttask.interactor.AddCurrentTaskInteractorImpl;
 import co.dijam.michael.typea101.addcurrenttask.presenter.AddCurrentTaskPresenter;
+import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.mainscreen.view.MainActivity;
 import co.dijam.michael.typea101.util.TimeFormattingUtil;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurrentTaskContract.View {
 
 
     @BindView(R.id.task_name_edit)
-    TextInputEditText taskNameEdit;
+    AutoCompleteTextView taskNameEdit;
     @BindView(R.id.tag_edit)
     TextInputEditText tagEdit;
     @BindView(R.id.cancel_button)
@@ -50,11 +57,21 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
         setContentView(R.layout.activity_add_current_task);
         ButterKnife.bind(this);
 
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(this).build();
+        Realm realm = Realm.getInstance(realmConfiguration);
         presenter = new AddCurrentTaskPresenter(this,
-                new AddCurrentTaskInteractorImpl(new SharedPrefCurrentTaskManager(getApplicationContext())));
+                new AddCurrentTaskInteractorImpl(
+                        new SharedPrefCurrentTaskManager(getApplicationContext()),
+                        new RealmTaskManager(realmConfiguration, realm)));
 
         startTime = System.currentTimeMillis();
         showStartTime(TimeFormattingUtil.timeFormatter.print(startTime));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.autoCompleteTaskNames();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -116,5 +133,13 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     @Override
     public boolean tagIsValid(String tag) {
         return !tag.trim().isEmpty();
+    }
+
+    @Override
+    public void autoCompleteTaskNames(List<String> taskNames) {
+        ArrayAdapter<String> taskNameAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, taskNames);
+        taskNameEdit.setAdapter(taskNameAdapter);
+        taskNameEdit.setThreshold(1);
     }
 }
