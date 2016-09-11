@@ -2,7 +2,6 @@ package co.dijam.michael.typea101.addcurrenttask.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -33,7 +32,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     @BindView(R.id.task_name_edit)
     AutoCompleteTextView taskNameEdit;
     @BindView(R.id.tag_edit)
-    TextInputEditText tagEdit;
+    AutoCompleteTextView tagEdit;
     @BindView(R.id.cancel_button)
     Button cancelButton;
     @BindView(R.id.start_task_button)
@@ -72,6 +71,7 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     protected void onResume() {
         super.onResume();
         presenter.autoCompleteTaskNames();
+        presenter.autoCompleteTags();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,8 +138,16 @@ public class AddCurrentTaskActivity extends AppCompatActivity implements AddCurr
     @Override
     public void autoCompleteTaskNames(List<String> taskNames) {
         ArrayAdapter<String> taskNameAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, taskNames);
+                new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, taskNames);
         taskNameEdit.setAdapter(taskNameAdapter);
         taskNameEdit.setThreshold(1);
+    }
+
+    @Override
+    public void autoCompleteTags(List<String> tags) {
+        ArrayAdapter<String> tagAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, tags);
+        tagEdit.setAdapter(tagAdapter);
+        tagEdit.setThreshold(1);
     }
 }

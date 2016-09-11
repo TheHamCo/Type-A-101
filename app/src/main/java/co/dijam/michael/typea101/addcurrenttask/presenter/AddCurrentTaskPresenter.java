@@ -33,4 +33,12 @@ public class AddCurrentTaskPresenter implements AddCurrentTaskContract.Presenter
                 .toList()
                 .subscribe(tasks -> view.autoCompleteTaskNames(tasks));
     }
+
+    @Override
+    public void autoCompleteTags() {
+        interactor.getAllTasks()
+                .map(task -> task.tag)
+                .toList()
+                .subscribe(tags -> view.autoCompleteTags(tags));
+    }
 }

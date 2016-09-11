@@ -12,10 +12,12 @@ public interface AddCurrentTaskContract {
         boolean taskNameIsValid(String taskName);
         boolean tagIsValid(String tag);
         void autoCompleteTaskNames(List<String> taskNames);
+        void autoCompleteTags(List<String> tags);
     }
 
     interface Presenter {
         void setCurrentTask(String taskName, String tagName, long startTime);
         void autoCompleteTaskNames();
+        void autoCompleteTags();
     }
 }
