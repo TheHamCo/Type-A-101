@@ -41,8 +41,9 @@ public class RealmTaskManager implements TaskManager {
         DateTime nextDayMidnight = dayMidnight.plusDays(1);
 
         return realm.where(Task.class)
-                .greaterThanOrEqualTo("startTime", dayMidnight.getMillis())
-                .lessThan("endTime", nextDayMidnight.getMillis())
+                .between("startTime", dayMidnight.getMillis(), nextDayMidnight.getMillis())
+                .or()
+                .between("endTime", dayMidnight.getMillis(), nextDayMidnight.getMillis())
                 .findAllAsync()
                 .asObservable()
                 .filter(RealmResults::isLoaded)
