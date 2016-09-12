@@ -6,7 +6,7 @@
     <color name="lightThemeDivider">#1f000000</color>
     <color name="presentFab">#388E3C</color>
     <color name="presentLabel">#1B5E20</color>
-    <color name="confirmFab">#388E3C</color>
+    <color name="finishTaskFab">#388E3C</color>
     <color name="pastFab">#FBC02D</color>
     <color name="pastLabel">#F57F17</color>
     <color name="addFab">#F44336</color>

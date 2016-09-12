@@ -1,6 +1,7 @@
 package co.dijam.michael.typea101.mainscreen.view;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import org.joda.time.DateTimeConstants;
 
+import butterknife.BindColor;
 import butterknife.BindDrawable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +69,12 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     Drawable addCurrentTask;
     @BindDrawable(R.drawable.ic_check)
     Drawable finishCurrentTask;
+
+    // Colors
+    @BindColor(R.color.addFab)
+    int addFabColor;
+    @BindColor(R.color.finishTaskFab)
+    int finishTaskFabColor;
 
     // Fragments
     private static final String FRAGMENT_TRACKER = "FRAGMENT_TRACKER";
@@ -246,11 +254,15 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     @Override
     public void styleFabAdd() {
         mainScreenFab.setImageDrawable(addCurrentTask);
+        ColorStateList addTaskTint = ColorStateList.valueOf(addFabColor);
+        mainScreenFab.setBackgroundTintList(addTaskTint);
     }
 
     @Override
     public void styleFabFinish() {
         mainScreenFab.setImageDrawable(finishCurrentTask);
+        ColorStateList finishTaskTint = ColorStateList.valueOf(finishTaskFabColor);
+        mainScreenFab.setBackgroundTintList(finishTaskTint);
     }
 
     // NAV DRAWER
