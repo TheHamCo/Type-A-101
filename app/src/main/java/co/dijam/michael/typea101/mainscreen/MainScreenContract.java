@@ -14,6 +14,8 @@ public interface MainScreenContract {
         void onFabClick();
         void styleFabAdd();
         void styleFabFinish();
+        void showAddFabs();
+        void hideAddFabs();
 
         // Nav drawer
         void startTagListFeature();

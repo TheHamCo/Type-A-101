@@ -57,12 +57,31 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     CoordinatorLayout mainRootLayout;
     @BindView(R.id.nested_scroll_view)
     NestedScrollView nestedScrollView;
-    @BindView(R.id.main_screen_fab)
-    FloatingActionButton mainScreenFab;
     @BindView(R.id.tracker_frame)
     FrameLayout trackerFrame;
     @BindView(R.id.list_frame)
     FrameLayout listFrame;
+
+    // Floating Action Buttons
+    @BindView(R.id.main_screen_fab)
+    FloatingActionButton mainScreenFab;
+    @BindView(R.id.add_past_fab)
+    FloatingActionButton addPastFab;
+    @BindView(R.id.past_label)
+    TextView pastLabel;
+    @BindView(R.id.add_present_fab)
+    FloatingActionButton addPresentFab;
+    @BindView(R.id.present_label)
+    TextView presentLabel;
+    // FAB dummies
+    @BindView(R.id.fab_positioning_dummy_past)
+    View fabPositioningDummyPast;
+    @BindView(R.id.label_positioning_dummy_past)
+    View labelPositioningDummyPast;
+    @BindView(R.id.fab_positioning_dummy_present)
+    View fabPositioningDummyPresent;
+    @BindView(R.id.label_positioning_dummy_present)
+    View labelPositioningDummyPresent;
 
     // FAB Icons
     @BindDrawable(R.drawable.ic_add_task)
@@ -86,10 +105,12 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     // State
     private static final String STATE_VIEWING_DATETIME = "STATE_VIEWING_DATETIME";
     private static final String STATE_SNACKBAR_TEXT = "STATE_SNACKBAR_TEXT";
+    private static final String STATE_ADD_FABS_SHOWN = "STATE_ADD_FABS_SHOWN";
 
     // Fields
     private long viewingDateTime = 0;
     Snackbar snackbar;
+    boolean addFabsShown = false;
 
     // Dependencies
     MainScreenContract.Presenter presenter;
@@ -245,9 +266,23 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
             trackerFragment.finishTrackingClicked();
             hideSnackbar();
             styleFabAdd();
+        } else if (addFabsShown) {
+            hideAddFabs();
         } else {
-            startActivity(new Intent(this, ModifyCurrentTaskActivity.class));
-            styleFabFinish();
+            showAddFabs();
+        }
+    }
+
+    @OnClick({R.id.add_past_fab, R.id.add_present_fab})
+    public void onAddFabsClick(View view) {
+        switch (view.getId()) {
+            case R.id.add_past_fab:
+                break;
+            case R.id.add_present_fab:
+                startActivity(new Intent(this, ModifyCurrentTaskActivity.class));
+                styleFabFinish();
+                hideAddFabs();
+                break;
         }
     }
 
@@ -263,6 +298,37 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         mainScreenFab.setImageDrawable(finishCurrentTask);
         ColorStateList finishTaskTint = ColorStateList.valueOf(finishTaskFabColor);
         mainScreenFab.setBackgroundTintList(finishTaskTint);
+    }
+
+    @Override
+    public void showAddFabs() {
+//        fabPositioningDummyPresent.setVisibility(View.VISIBLE);
+//        labelPositioningDummyPresent.setVisibility(View.VISIBLE);
+//        fabPositioningDummyPast.setVisibility(View.VISIBLE);
+//        labelPositioningDummyPast.setVisibility(View.VISIBLE);
+
+        addPresentFab.show();
+        addPastFab.show();
+        pastLabel.setVisibility(View.VISIBLE);
+        presentLabel.setVisibility(View.VISIBLE);
+
+
+        addFabsShown = true;
+    }
+
+    @Override
+    public void hideAddFabs() {
+//        fabPositioningDummyPresent.setVisibility(View.GONE);
+//        labelPositioningDummyPresent.setVisibility(View.GONE);
+//        fabPositioningDummyPast.setVisibility(View.GONE);
+//        labelPositioningDummyPast.setVisibility(View.GONE);
+
+        addPresentFab.hide();
+        addPastFab.hide();
+        pastLabel.setVisibility(View.INVISIBLE);
+        presentLabel.setVisibility(View.INVISIBLE);
+
+        addFabsShown = false;
     }
 
     // NAV DRAWER
@@ -363,5 +429,4 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         presenter.stopSnackBarTimer();
         adjustMainViewBottomMargin(0);
     }
-
 }
