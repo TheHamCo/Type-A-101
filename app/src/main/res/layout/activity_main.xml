@@ -72,6 +72,7 @@
     </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
+        app:backgroundTint="@color/addFab"
         android:id="@+id/main_screen_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -90,6 +91,8 @@
 
 
     <android.support.design.widget.FloatingActionButton
+        android:src="@drawable/ic_history"
+        app:backgroundTint="@color/pastFab"
         android:id="@+id/add_past_fab"
         style="@style/small_fab"
         app:elevation="6dp"
@@ -108,7 +111,7 @@
         android:id="@+id/past_label"
         style="@style/FabLabel"
         android:text="@string/past"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/pastLabel"
         app:layout_anchor="@id/label_positioning_dummy_past"
         app:layout_anchorGravity="bottom|left" />
 
@@ -119,6 +122,8 @@
         app:layout_anchorGravity="top|right|end" />
 
     <android.support.design.widget.FloatingActionButton
+        android:src="@drawable/ic_timer"
+        app:backgroundTint="@color/presentFab"
         android:id="@+id/add_present_fab"
         style="@style/small_fab"
         app:elevation="6dp"
@@ -137,7 +142,7 @@
         android:id="@+id/present_label"
         style="@style/FabLabel"
         android:text="@string/present"
-        app:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/presentLabel"
         app:layout_anchor="@id/label_positioning_dummy_present"
         app:layout_anchorGravity="bottom|left" />
 
