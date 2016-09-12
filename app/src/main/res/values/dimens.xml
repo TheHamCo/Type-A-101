@@ -8,4 +8,6 @@
     <dimen name="started_on_margin_right">16dp</dimen>
     <dimen name="daily_list_item_padding">16dp</dimen>
     <dimen name="small_fab_margin">24dp</dimen>
+    <dimen name="add_present_fab_margin_bottom">160dp</dimen>
+    <dimen name="add_past_fab_margin_bottom">100dp</dimen>
 </resources>

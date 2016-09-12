@@ -83,24 +83,17 @@
         app:layout_anchorGravity="bottom|right|end"
         app:pressedTranslationZ="12dp" />
 
-    <View
-        android:id="@+id/fab_positioning_dummy_past"
-        style="@style/FabLayoutDummy"
-        app:layout_anchor="@id/main_screen_fab"
-        app:layout_anchorGravity="top|right|end" />
-
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_past_fab"
-        style="@style/small_fab"
         android:src="@drawable/ic_history"
-        android:visibility="gone"
         app:backgroundTint="@color/pastFab"
         app:elevation="6dp"
         app:fabSize="mini"
-        app:layout_anchor="@id/fab_positioning_dummy_past"
-        app:layout_anchorGravity="top|right|end"
-        app:pressedTranslationZ="12dp" />
+        app:layout_anchorGravity="bottom|end"
+        app:pressedTranslationZ="12dp"
+        android:layout_marginBottom="@dimen/add_past_fab_margin_bottom"
+        style="@style/SmallFab" />
 
     <View
         android:id="@+id/label_positioning_dummy_past"
@@ -117,23 +110,16 @@
         app:layout_anchor="@id/label_positioning_dummy_past"
         app:layout_anchorGravity="bottom|left" />
 
-    <View
-        android:id="@+id/fab_positioning_dummy_present"
-        style="@style/FabLayoutDummy"
-        app:layout_anchor="@id/add_past_fab"
-        app:layout_anchorGravity="top|right|end" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_present_fab"
-        style="@style/small_fab"
         android:src="@drawable/ic_timer"
-        android:visibility="gone"
         app:backgroundTint="@color/presentFab"
         app:elevation="6dp"
         app:fabSize="mini"
-        app:layout_anchor="@id/fab_positioning_dummy_present"
-        app:layout_anchorGravity="top|right|end"
-        app:pressedTranslationZ="12dp" />
+        app:pressedTranslationZ="12dp"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginBottom="@dimen/add_present_fab_margin_bottom"
+        style="@style/SmallFab" />
 
     <View
         android:id="@+id/label_positioning_dummy_present"

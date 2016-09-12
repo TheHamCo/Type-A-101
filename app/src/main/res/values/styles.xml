@@ -59,10 +59,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginBottom">@dimen/activity_vertical_margin</item>
-        <item name="android:layout_marginEnd">@dimen/activity_horizontal_margin</item>
+        <item name="app:layout_marginEnd">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginStart">@dimen/activity_horizontal_margin</item>
+        <item name="app:layout_marginStart">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginTop">@dimen/activity_vertical_margin</item>
     </style>
 
@@ -129,7 +129,7 @@
 
     <style name="FabLabel">
         <item name="android:layout_marginRight">70dp</item>
-        <item name="android:layout_marginEnd">70dp</item>
+        <item name="app:layout_marginEnd">70dp</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/fab_label_bg</item>
         <item name="android:layout_width">wrap_content</item>
@@ -139,6 +139,18 @@
     <style name="FabLabelDummy">
         <item name="android:layout_width">10dp</item>
         <item name="android:layout_height">40dp</item>
+    </style>
+
+    <style name="SmallFab">
+        <item name="android:visibility">gone</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">bottom|end</item>
+        <item name="app:layout_marginEnd">@dimen/small_fab_margin</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:layout_marginRight">@dimen/small_fab_margin</item>
+        <item name="app:layout_marginStart">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_width">wrap_content</item>
     </style>
 
 </resources>
