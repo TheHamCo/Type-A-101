@@ -19,4 +19,6 @@
     <string name="finish_editing">Finish editing</string>
     <string name="to">to</string>
     <string name="returned_to_today">"Returned to today: "</string>
+    <string name="present">Present</string>
+    <string name="past">Past</string>
 </resources>

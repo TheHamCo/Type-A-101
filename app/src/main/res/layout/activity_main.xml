@@ -83,33 +83,62 @@
         app:pressedTranslationZ="12dp" />
 
     <View
-        android:id="@+id/fab_positioning_dummy1"
+        android:id="@+id/fab_positioning_dummy_past"
         style="@style/FabLayoutDummy"
         app:layout_anchor="@id/main_screen_fab"
         app:layout_anchorGravity="top|right|end" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_past_fab"
         style="@style/small_fab"
         app:elevation="6dp"
         app:fabSize="mini"
-        app:layout_anchor="@id/fab_positioning_dummy1"
+        app:layout_anchor="@id/fab_positioning_dummy_past"
         app:layout_anchorGravity="top|right|end"
         app:pressedTranslationZ="12dp" />
 
     <View
-        android:id="@+id/fab_positioning_dummy2"
+        android:id="@+id/label_positioning_dummy_past"
+        app:layout_anchor="@id/add_past_fab"
+        app:layout_anchorGravity="left"
+        style="@style/FabLabelDummy" />
+
+    <TextView
+        android:id="@+id/past_label"
+        style="@style/FabLabel"
+        android:text="@string/past"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_anchor="@id/label_positioning_dummy_past"
+        app:layout_anchorGravity="bottom|left" />
+
+    <View
+        android:id="@+id/fab_positioning_dummy_present"
         style="@style/FabLayoutDummy"
         app:layout_anchor="@id/add_past_fab"
         app:layout_anchorGravity="top|right|end" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_present_fab_fab"
+        android:id="@+id/add_present_fab"
         style="@style/small_fab"
         app:elevation="6dp"
         app:fabSize="mini"
-        app:layout_anchor="@id/fab_positioning_dummy2"
+        app:layout_anchor="@id/fab_positioning_dummy_present"
         app:layout_anchorGravity="top|right|end"
         app:pressedTranslationZ="12dp" />
+
+    <View
+        android:id="@+id/label_positioning_dummy_present"
+        app:layout_anchor="@id/add_present_fab"
+        app:layout_anchorGravity="left"
+        style="@style/FabLabelDummy"/>
+
+    <TextView
+        android:id="@+id/present_label"
+        style="@style/FabLabel"
+        android:text="@string/present"
+        app:backgroundTint="@color/colorAccent"
+        app:layout_anchor="@id/label_positioning_dummy_present"
+        app:layout_anchorGravity="bottom|left" />
 
 </android.support.design.widget.CoordinatorLayout>

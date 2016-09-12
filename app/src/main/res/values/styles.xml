@@ -127,4 +127,18 @@
         <item name="android:layout_margin">@dimen/small_fab_margin</item>
     </style>
 
+    <style name="FabLabel">
+        <item name="android:layout_marginRight">70dp</item>
+        <item name="android:layout_marginEnd">70dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/fab_label_bg</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FabLabelDummy">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+
 </resources>
