@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     @Override
     protected void onResume() {
         super.onResume();
+        if (presenter.currentTaskExists() && presenter.isToday(viewingDateTime)){
+            int top = 0;
+            nestedScrollView.scrollTo(0,top);
+        }
         if (snackbar.isShown()) {
             presenter.runSnackbarTimer();
         }
