@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.joda.time.DateTimeConstants;
 
@@ -30,6 +31,7 @@ import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.mainscreen.MainScreenContract;
 import co.dijam.michael.typea101.mainscreen.presenter.MainScreenPresenter;
 import co.dijam.michael.typea101.util.ConstantsUtil;
+import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
 public class MainActivity extends AppCompatActivity implements MainScreenContract.View {
     private static final String TAG = MainActivity.class.getName();
@@ -294,6 +296,8 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     public void onToday() {
         viewingDateTime = System.currentTimeMillis();
         presenter.presentCorrectMainView(viewingDateTime);
+        String todayToastMessage = getString(R.string.returned_to_today) + TimeFormattingUtil.dateFormatter.print(viewingDateTime);
+        Toast.makeText(MainActivity.this, todayToastMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override
