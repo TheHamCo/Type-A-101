@@ -88,4 +88,31 @@
         <item name="android:layout_height">match_parent</item>
     </style>
 
+    <style name="TagText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Small</item>
+    </style>
+
+    <style name="TaskNameText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Large</item>
+    </style>
+
+    <style name="InlineCardViewDivider" parent="CardViewDivider">
+        <item name="android:layout_marginBottom">@dimen/cardview_divider_margin</item>
+        <item name="android:layout_marginTop">@dimen/cardview_divider_margin</item>
+    </style>
+
+    <style name="ButtonCardViewDivider" parent="CardViewDivider">
+        <item name="android:layout_marginTop">@dimen/cardview_divider_margin</item>
+    </style>
+
+    <style name="StartEndTimeText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
 </resources>

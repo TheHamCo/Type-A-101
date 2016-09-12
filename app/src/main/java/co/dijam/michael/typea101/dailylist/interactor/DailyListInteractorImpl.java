@@ -66,8 +66,6 @@ public class DailyListInteractorImpl implements DailyListInteractor {
 
         return Observable.from(splitTasks)
                 .map(this::formatTask);
-
-
     }
 
     private Task copyTask(Task task) {

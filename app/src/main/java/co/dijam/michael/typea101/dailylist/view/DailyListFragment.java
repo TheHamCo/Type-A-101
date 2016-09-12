@@ -1,6 +1,7 @@
 package co.dijam.michael.typea101.dailylist.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import co.dijam.michael.typea101.dailylist.presenter.DailyListPresenter;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.eventbus.TaskListChangeEvent;
 import co.dijam.michael.typea101.mainscreen.view.MainActivity;
+import co.dijam.michael.typea101.taskdetail.view.TaskDetailActivity;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rx.Observable;
@@ -36,7 +38,7 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
     private static final String TAG = DailyListFragment.class.getName();
 
     @BindView(R.id.day_tasks_list_view)
-    RecyclerView dayTasksListView;
+    RecyclerView dayTasksRecyclerView;
 
     DailyListContract.Presenter presenter;
     DailyListAdapter adapter;
@@ -45,6 +47,8 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
     private long viewingDateTime = 0;
 
     ArrayList<TaskListItem> taskListItems;
+
+    public static final String BUNDLE_TASKID = "BUNDLE_TASKID";
 
     public DailyListFragment() {
         // Required empty public constructor
@@ -71,8 +75,11 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
 
         taskListItems = new ArrayList<>();
         adapter = new DailyListAdapter(getActivity(), taskListItems);
-        dayTasksListView.setAdapter(adapter);
-        dayTasksListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        setOnItemClickListener();
+
+        dayTasksRecyclerView.setAdapter(adapter);
+        dayTasksRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
     }
@@ -93,6 +100,13 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
             s.unsubscribe();
         }
         super.onPause();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // BUTTON BINDINGS
+
+    private void setOnItemClickListener() {
+        adapter.setOnItemClickListener((itemView, position) -> startDetailView(adapter.getItem(position).id));
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,6 +132,8 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
 
     @Override
     public void startDetailView(int id) {
-
+        Intent detailIntent = new Intent(getActivity(), TaskDetailActivity.class);
+        detailIntent.putExtra(BUNDLE_TASKID, id);
+        startActivity(detailIntent);
     }
 }

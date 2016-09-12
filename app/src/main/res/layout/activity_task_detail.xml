@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogCardView"
+    tools:context=".modifycurrenttask.view.ModifyCurrentTaskActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout style="@style/DialogCardViewLLMainContent">
+
+            <TextView
+                android:id="@+id/task_name_text_view"
+                style="@style/TaskNameText" />
+
+            <TextView
+                android:id="@+id/tag_text_view"
+                style="@style/TagText" />
+
+            <View style="@style/InlineCardViewDivider" />
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:text="@string/starting_time" />-->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <!--TODO: Check if any cultures read time RTL-->
+                <TextView
+                    android:id="@+id/starting_time_text"
+                    android:layout_gravity="start"
+                    style="@style/StartEndTimeText"
+                    tools:text="7:23:12 AM" />
+
+                <TextView
+                    android:text="@string/to"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/ending_time_text"
+                    android:layout_gravity="end"
+                    style="@style/StartEndTimeText"
+                    tools:text="11:33:52 AM" />
+            </FrameLayout>
+
+
+            <View style="@style/InlineCardViewDivider" />
+
+            <TextView
+                android:id="@+id/duration_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                tools:text="00 hr 00 min 00 sec" />
+
+            <TextView
+                android:id="@+id/percentage_text_view"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:text="12 % of day"/>
+        </LinearLayout>
+
+        <View style="@style/ButtonCardViewDivider" />
+
+        <FrameLayout
+            style="@style/DialogBottomButtomFrame">
+
+            <Button
+                android:id="@+id/delete_task_button"
+                style="@style/DialogButtonStart"
+                android:text="@string/delete_task" />
+
+            <Button
+                android:id="@+id/edit_button"
+                style="@style/DialogButtonEnd"
+                android:text="@string/edit" />
+        </FrameLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

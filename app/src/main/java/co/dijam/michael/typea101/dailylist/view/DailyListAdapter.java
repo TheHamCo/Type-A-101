@@ -22,6 +22,23 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
     private List<TaskListItem> taskListItems;
     private Context context;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // OnItemClickListener (also see ViewHolder constructor)
+
+    private OnItemClickListener listener;
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+    public TaskListItem getItem(int position){
+        return taskListItems.get(position);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     public DailyListAdapter(Context context, List<TaskListItem> taskListItems) {
         this.taskListItems = taskListItems;
         this.context = context;
@@ -49,7 +66,10 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
         return taskListItems.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    // This does not need to be static because even though the static one will take less memory,
+    // the recycler will recycle the instances, so memory impact is not a problem.
+    // Source: http://stackoverflow.com/a/31302613/5302182
+    public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.start_time_text_view)
         TextView startTimeTextView;
         @BindView(R.id.end_time_text_view)
@@ -63,9 +83,15 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
         @BindView(R.id.percentage_text_view)
         TextView percentageTextView;
 
-        ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(v -> {
+                if (listener != null){
+                    listener.onItemClick(itemView, getLayoutPosition());
+                }
+            });
         }
     }
 }

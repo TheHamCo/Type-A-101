@@ -19,9 +19,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/task_name_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+                    style="@style/TaskNameText" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -32,9 +30,7 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/tag_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+                    style="@style/TagText" />
             </android.support.design.widget.TextInputLayout>
 
             <TextView
@@ -45,16 +41,12 @@
 
             <TextView
                 android:id="@+id/starting_time_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/StartEndTimeText"
                 android:layout_gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
                 tools:text="7:23:12 AM" />
         </LinearLayout>
 
-        <View
-            style="@style/CardViewDivider"
-            android:layout_marginTop="@dimen/cardview_divider_margin" />
+        <View style="@style/ButtonCardViewDivider" />
 
         <FrameLayout
             android:id="@+id/add_task_buttons"

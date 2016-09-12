@@ -19,4 +19,5 @@
     <string name="percent_of_day">% of day</string>
     <string name="delete_task">Delete Task</string>
     <string name="finish_editing">Finish editing</string>
+    <string name="to">to</string>
 </resources>
