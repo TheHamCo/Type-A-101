@@ -23,13 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
-import co.dijam.michael.typea101.modifycurrenttask.view.ModifyCurrentTaskActivity;
 import co.dijam.michael.typea101.currenttracker.view.TrackerFragment;
 import co.dijam.michael.typea101.dailylist.view.DailyListFragment;
 import co.dijam.michael.typea101.entities.CurrentTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.mainscreen.MainScreenContract;
 import co.dijam.michael.typea101.mainscreen.presenter.MainScreenPresenter;
+import co.dijam.michael.typea101.modifycurrenttask.view.ModifyCurrentTaskActivity;
 import co.dijam.michael.typea101.util.ConstantsUtil;
 import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
@@ -121,9 +121,9 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     @Override
     protected void onResume() {
         super.onResume();
-        if (presenter.currentTaskExists() && presenter.isToday(viewingDateTime)){
+        if (presenter.currentTaskExists() && presenter.isToday(viewingDateTime)) {
             int top = 0;
-            nestedScrollView.scrollTo(0,top);
+            nestedScrollView.scrollTo(0, top);
         }
         if (snackbar.isShown()) {
             presenter.runSnackbarTimer();
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    // ONCLICK BINDINGS
+    // TOOLBAR BINDINGS
 
     @OnClick({R.id.previous_day_button, R.id.date_picker_button, R.id.date_text_view, R.id.next_day_button})
     public void onClick(View view) {
@@ -351,4 +351,5 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
         presenter.stopSnackBarTimer();
         adjustMainViewBottomMargin(0);
     }
+
 }

@@ -71,13 +71,45 @@
         <include layout="@layout/main_screen_content" />
     </android.support.v4.widget.NestedScrollView>
 
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/main_screen_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:elevation="6dp"
         app:fabSize="normal"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end"
+        app:pressedTranslationZ="12dp" />
+
+    <View
+        android:id="@+id/fab_positioning_dummy1"
+        style="@style/FabLayoutDummy"
+        app:layout_anchor="@id/main_screen_fab"
+        app:layout_anchorGravity="top|right|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_past_fab"
+        style="@style/small_fab"
+        app:elevation="6dp"
+        app:fabSize="mini"
+        app:layout_anchor="@id/fab_positioning_dummy1"
+        app:layout_anchorGravity="top|right|end"
+        app:pressedTranslationZ="12dp" />
+
+    <View
+        android:id="@+id/fab_positioning_dummy2"
+        style="@style/FabLayoutDummy"
+        app:layout_anchor="@id/add_past_fab"
+        app:layout_anchorGravity="top|right|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_present_fab_fab"
+        style="@style/small_fab"
+        app:elevation="6dp"
+        app:fabSize="mini"
+        app:layout_anchor="@id/fab_positioning_dummy2"
+        app:layout_anchorGravity="top|right|end"
+        app:pressedTranslationZ="12dp" />
+
 </android.support.design.widget.CoordinatorLayout>
