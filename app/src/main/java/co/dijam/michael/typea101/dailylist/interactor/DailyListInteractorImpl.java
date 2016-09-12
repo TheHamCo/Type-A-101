@@ -65,6 +65,7 @@ public class DailyListInteractorImpl implements DailyListInteractor {
                 });
 
         return Observable.from(splitTasks)
+                .sorted((task, task2) -> Long.valueOf(task.startTime).compareTo(task2.startTime))
                 .map(this::formatTask);
     }
 
