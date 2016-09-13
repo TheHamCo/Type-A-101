@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     // MAIN VIEW
     @Override
     public void showTracker() {
-        if (trackerFragment.isAdded()) {
+        if (trackerFragment!= null && trackerFragment.isAdded()) {
             getSupportFragmentManager().beginTransaction()
                     .show(trackerFragment).commit();
         } else {
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
 
     @Override
     public void hideTracker() {
-        if (trackerFragment.isAdded() && trackerFragment.isVisible()) {
+        if (trackerFragment !=null && trackerFragment.isAdded() && trackerFragment.isVisible()) {
             getSupportFragmentManager().beginTransaction()
                     .hide(trackerFragment).commit();
         }
