@@ -12,14 +12,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import co.dijam.michael.typea101.R;
-import co.dijam.michael.typea101.dailylist.model.TaskListItem;
+import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
 
 /**
  * Created by mdd23 on 9/10/2016.
  */
 public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.ViewHolder> {
 
-    private List<TaskListItem> taskListItems;
+    private List<TaskPrintable> taskPrintables;
     private Context context;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,14 +33,14 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
         this.listener = listener;
     }
 
-    public TaskListItem getItem(int position){
-        return taskListItems.get(position);
+    public TaskPrintable getItem(int position){
+        return taskPrintables.get(position);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public DailyListAdapter(Context context, List<TaskListItem> taskListItems) {
-        this.taskListItems = taskListItems;
+    public DailyListAdapter(Context context, List<TaskPrintable> taskPrintables) {
+        this.taskPrintables = taskPrintables;
         this.context = context;
     }
 
@@ -52,7 +52,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        TaskListItem t = taskListItems.get(position);
+        TaskPrintable t = taskPrintables.get(position);
         vh.startTimeTextView.setText(t.formattedStartTime);
         vh.endTimeTextView.setText(t.formattedEndTime);
         vh.taskNameTextView.setText(t.taskName);
@@ -63,7 +63,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
 
     @Override
     public int getItemCount() {
-        return taskListItems.size();
+        return taskPrintables.size();
     }
 
     // This does not need to be static because even though the static one will take less memory,

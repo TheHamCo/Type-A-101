@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.dailylist.DailyListContract;
 import co.dijam.michael.typea101.dailylist.interactor.DailyListInteractorImpl;
-import co.dijam.michael.typea101.dailylist.model.TaskListItem;
+import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
 import co.dijam.michael.typea101.dailylist.presenter.DailyListPresenter;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.eventbus.TaskListChangeEvent;
@@ -46,7 +46,7 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
 
     private long viewingDateTime = 0;
 
-    ArrayList<TaskListItem> taskListItems;
+    ArrayList<TaskPrintable> taskPrintables;
 
     public static final String BUNDLE_TASKID = "BUNDLE_TASKID";
 
@@ -73,8 +73,8 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
         Realm realm = Realm.getInstance(realmConfiguration);
         presenter = new DailyListPresenter(this, new DailyListInteractorImpl(new RealmTaskManager(realmConfiguration, realm)));
 
-        taskListItems = new ArrayList<>();
-        adapter = new DailyListAdapter(getActivity(), taskListItems);
+        taskPrintables = new ArrayList<>();
+        adapter = new DailyListAdapter(getActivity(), taskPrintables);
 
         setOnItemClickListener();
 
@@ -113,15 +113,15 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
     // VIEW METHODS
 
     @Override
-    public void showTaskList(Observable<List<TaskListItem>> taskListItemsObservable) {
+    public void showTaskList(Observable<List<TaskPrintable>> taskListItemsObservable) {
         Log.d(TAG, "showTaskList: UPDATE LIST");
         s.add(
                 taskListItemsObservable
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(taskListItems1 -> {
-                            taskListItems.clear();
-                            taskListItems.addAll(taskListItems1);
-                            for (TaskListItem tli :
+                            taskPrintables.clear();
+                            taskPrintables.addAll(taskListItems1);
+                            for (TaskPrintable tli :
                                     taskListItems1) {
                                 Log.d(TAG, "showTaskList: " + tli.taskName);
                             }

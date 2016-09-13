@@ -3,6 +3,7 @@ package co.dijam.michael.typea101.modifytask;
 import java.util.List;
 
 import co.dijam.michael.typea101.model.Task;
+import co.dijam.michael.typea101.taskdetail.model.TaskDetail;
 
 /**
  * Created by mdd23 on 9/13/2016.
@@ -16,7 +17,7 @@ public interface ModifyTaskContract {
         void showEndTime(String endTime);
 
         // Errors
-        void showErrorOverlappingTask();
+        void showErrorOverlappingTask(List<TaskDetail> overlappingTasks);
         void showErrorTaskInFuture();
         void showErrorStartTimeAfterEndTime();
         void showErrorNoDuration();
@@ -34,6 +35,8 @@ public interface ModifyTaskContract {
     }
 
     interface Presenter {
+        void validateTime(long startTime, long endTime);
+
         // Errors
         boolean taskOverlapsOtherTasksError(long startTime, long endTime);
         boolean taskInFutureError(long startTime, long endTime);

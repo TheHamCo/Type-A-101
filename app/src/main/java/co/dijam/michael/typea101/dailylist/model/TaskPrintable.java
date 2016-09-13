@@ -6,7 +6,7 @@ import co.dijam.michael.typea101.R;
 /**
  * Created by mdd23 on 9/10/2016.
  */
-public class TaskListItem {
+public class TaskPrintable {
     public int id;
     public String taskName;
     public String tag;

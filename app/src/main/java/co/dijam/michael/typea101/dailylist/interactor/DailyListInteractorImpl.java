@@ -9,7 +9,7 @@ import org.joda.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.dijam.michael.typea101.dailylist.model.TaskListItem;
+import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
 import co.dijam.michael.typea101.entities.TaskManager;
 import co.dijam.michael.typea101.model.Task;
 import rx.Observable;
@@ -30,7 +30,7 @@ public class DailyListInteractorImpl implements DailyListInteractor {
     }
 
     @Override
-    public Observable<TaskListItem> getFormattedTaskListForDay(long dateTime) {
+    public Observable<TaskPrintable> getFormattedTaskListForDay(long dateTime) {
         DateTime dayMidnight = new DateTime(dateTime).withTimeAtStartOfDay();
         DateTime nextDayMidnight = dayMidnight.plusDays(1);
 
@@ -80,22 +80,22 @@ public class DailyListInteractorImpl implements DailyListInteractor {
     }
 
     @Override
-    public TaskListItem formatTask(Task task) {
-        TaskListItem taskListItem = new TaskListItem();
-        taskListItem.id = task.id;
-        taskListItem.taskName = task.taskName;
-        taskListItem.tag = task.tag;
-        taskListItem.formattedStartTime = timeFormatter.print(task.startTime);
-        taskListItem.formattedEndTime = timeFormatter.print(task.endTime);
+    public TaskPrintable formatTask(Task task) {
+        TaskPrintable taskPrintable = new TaskPrintable();
+        taskPrintable.id = task.id;
+        taskPrintable.taskName = task.taskName;
+        taskPrintable.tag = task.tag;
+        taskPrintable.formattedStartTime = timeFormatter.print(task.startTime);
+        taskPrintable.formattedEndTime = timeFormatter.print(task.endTime);
 
         long durationMillis = task.endTime - task.startTime;
 
-        taskListItem.formattedDuration = durationFormatter.print(new Period(durationMillis));
+        taskPrintable.formattedDuration = durationFormatter.print(new Period(durationMillis));
 
         float percentage = (durationMillis / ((float) DateTimeConstants.MILLIS_PER_DAY)) * 100;
         Log.d(TAG, "formatTask: " + percentage);
-        taskListItem.setFormattedPercentage(percentage);
+        taskPrintable.setFormattedPercentage(percentage);
 
-        return taskListItem;
+        return taskPrintable;
     }
 }

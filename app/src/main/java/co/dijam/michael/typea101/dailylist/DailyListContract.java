@@ -2,7 +2,7 @@ package co.dijam.michael.typea101.dailylist;
 
 import java.util.List;
 
-import co.dijam.michael.typea101.dailylist.model.TaskListItem;
+import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
 import rx.Observable;
 
 /**
@@ -10,7 +10,7 @@ import rx.Observable;
  */
 public interface DailyListContract {
     interface View {
-        void showTaskList(Observable<List<TaskListItem>> taskListItems);
+        void showTaskList(Observable<List<TaskPrintable>> taskListItems);
         void startDetailView(int id);
     }
 
