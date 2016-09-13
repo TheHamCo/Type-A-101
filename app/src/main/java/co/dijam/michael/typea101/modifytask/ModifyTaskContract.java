@@ -2,8 +2,9 @@ package co.dijam.michael.typea101.modifytask;
 
 import java.util.List;
 
+import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
 import co.dijam.michael.typea101.model.Task;
-import co.dijam.michael.typea101.taskdetail.model.TaskDetail;
+import rx.Observable;
 
 /**
  * Created by mdd23 on 9/13/2016.
@@ -17,7 +18,7 @@ public interface ModifyTaskContract {
         void showEndTime(String endTime);
 
         // Errors
-        void showErrorOverlappingTask(List<TaskDetail> overlappingTasks);
+        void showErrorOverlappingTask(Observable<List<TaskPrintable>> overlappingTasks);
         void showErrorTaskInFuture();
         void showErrorStartTimeAfterEndTime();
         void showErrorNoDuration();
@@ -27,8 +28,8 @@ public interface ModifyTaskContract {
         // Autocomplete
         void autocompleteTaskNames(List<String> taskNames);
         void autocompleteTags(List<String> tags);
-        void suggestNearestTaskBefore(long dateTime);
-        void suggestNearestTaskAfter(long dateTime);
+        void suggestNearestTaskBefore(TaskPrintable taskBefore);
+        void suggestNearestTaskAfter(TaskPrintable taskAfter);
 
         // Final
         void closeModifyTask();
