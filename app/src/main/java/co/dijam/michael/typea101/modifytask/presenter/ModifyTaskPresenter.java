@@ -31,11 +31,17 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
             view.showErrorOverlappingTask(
                     interactor.getOverlappingTasks(startTime, endTime).toList()
             );
-        } else if (taskInFutureError(startTime, endTime)){
+        }
+
+        if (taskInFutureError(startTime, endTime)){
             view.showErrorTaskInFuture();
-        } else if (taskStartTimeAfterEndTimeError(startTime, endTime)) {
+        }
+
+        if (taskStartTimeAfterEndTimeError(startTime, endTime)) {
             view.showErrorStartTimeAfterEndTime();
-        } else if (taskHasNoDurationerror(startTime, endTime)) {
+        }
+
+        if (taskHasNoDurationError(startTime, endTime)) {
             view.showErrorNoDuration();
         }
     }
@@ -66,7 +72,7 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
     }
 
     @Override
-    public boolean taskHasNoDurationerror(long startTime, long endTime) {
+    public boolean taskHasNoDurationError(long startTime, long endTime) {
         return startTime == endTime;
     }
 

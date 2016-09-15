@@ -23,6 +23,8 @@
 
         <include layout="@layout/modify_task_duration" />
 
+        <include layout="@layout/modify_task_errors" />
+
         <include layout="@layout/modify_task_button" />
     </LinearLayout>
 </ScrollView>

@@ -57,7 +57,7 @@ public interface ModifyTaskContract {
         boolean taskOverlapsOtherTasksError(long startTime, long endTime);
         boolean taskInFutureError(long startTime, long endTime);
         boolean taskStartTimeAfterEndTimeError(long startTime, long endTime);
-        boolean taskHasNoDurationerror(long startTime, long endTime);
+        boolean taskHasNoDurationError(long startTime, long endTime);
         boolean taskNameIsValid(String taskName);
         boolean tagIsValid(String tag);
 

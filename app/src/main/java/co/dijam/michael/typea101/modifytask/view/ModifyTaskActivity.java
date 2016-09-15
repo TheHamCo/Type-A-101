@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -104,6 +105,14 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     @BindView(R.id.percentage_text_view)
     TextView percentageTextView;
 
+    // ERRORS
+    @BindView(R.id.error_count_label)
+    TextView errorCountLabel;
+    @BindView(R.id.error_recycler)
+    RecyclerView errorRecycler;
+    @BindView(R.id.error_cardview)
+    CardView errorCardview;
+
     // FINISH BUTTONS
     @BindView(R.id.confirm_button)
     ImageButton confirmButton;
@@ -113,6 +122,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     ModifyTaskContract.Presenter presenter;
 
     private static final int NO_TASK_ID = -1;
+
 
     private int mTaskId = NO_TASK_ID;
     private static final long NO_START_TIME = -1;
@@ -211,7 +221,6 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
                 break;
         }
     }
-
 
 
     @OnClick({R.id.confirm_button, R.id.cancel_button})
