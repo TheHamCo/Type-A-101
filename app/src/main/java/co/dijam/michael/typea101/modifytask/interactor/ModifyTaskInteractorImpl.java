@@ -1,5 +1,7 @@
 package co.dijam.michael.typea101.modifytask.interactor;
 
+import android.util.Log;
+
 import co.dijam.michael.typea101.converter.CurrentTaskToTaskPrintableConverter;
 import co.dijam.michael.typea101.converter.TasktoTaskPrintableConverter;
 import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
@@ -33,7 +35,7 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
         getOverlappingTasks(taskId, startTime, endTime)
                 .count()
                 .subscribe(numOverlappingTasks -> {
-//                    Log.d(TAG, "taskOverlapsOtherTasksError: " + numOverlappingTasks);
+                    Log.d(TAG, "taskOverlapsOtherTasksError: " + numOverlappingTasks);
                     if (numOverlappingTasks > 0){
                         taskOverlaps[0] = true;
                     }
@@ -48,9 +50,17 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
     @Override
     public Observable<TaskPrintable> getOverlappingTasks(int taskId, long startTime, long endTime) {
         Observable<TaskPrintable> overlaps = taskManager.getAllTasks()
-                .filter(task ->
-                        (startTime < task.endTime && startTime > task.startTime)
-                                || (endTime > task.startTime && endTime < task.endTime))
+                .filter(task -> {
+                    boolean startTimeOverlaps = startTime < task.endTime && startTime > task.startTime;
+                    boolean endTimeOverlaps = endTime > task.startTime && endTime < task.endTime;
+                    boolean newTaskWithinExistingTask = startTime > task.startTime && endTime < task.endTime;
+                    boolean existingTaskWithinNewTask = task.startTime > startTime && task.endTime < endTime;
+
+                    return startTimeOverlaps ||
+                            endTimeOverlaps ||
+                            newTaskWithinExistingTask ||
+                            existingTaskWithinNewTask;
+                })
                 .filter(task1 -> task1.id != taskId)
 //                .doOnNext(task -> Log.d(TAG, "getOverlappingTasks: " + task.taskName))
                 .map(TasktoTaskPrintableConverter::formatTask);
