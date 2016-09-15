@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogCardView"
+    tools:showIn="@layout/fragment_modify_task">
+
+    <FrameLayout style="@style/DialogBottomButtomFrame">
+
+        <ImageButton
+            android:id="@+id/confirm_button"
+            style="@style/DialogButtonEnd"
+            android:contentDescription="@string/confirm"
+            android:src="@drawable/ic_done" />
+
+        <ImageButton
+            android:id="@+id/cancel_button"
+            style="@style/DialogButtonStart"
+            android:contentDescription="@string/cancel"
+            android:src="@drawable/ic_close" />
+    </FrameLayout>
+</android.support.v7.widget.CardView>
+
+    

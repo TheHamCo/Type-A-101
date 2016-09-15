@@ -19,6 +19,7 @@ import rx.Observable;
  */
 public class ModifyTaskFragment extends Fragment implements ModifyTaskContract.View {
 
+    ModifyTaskContract.Presenter presenter;
 
     public ModifyTaskFragment() {
         // Required empty public constructor

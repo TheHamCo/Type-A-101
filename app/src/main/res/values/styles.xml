@@ -55,6 +55,15 @@
         <item name="android:paddingTop">@dimen/current_task_cardview_padding</item>
     </style>
 
+    <style name="CardViewContentFullPadding" parent="DialogCardViewLLMainContent">
+        <item name="android:paddingBottom">@dimen/current_task_cardview_padding</item>
+    </style>
+
+    <style name="ClickableCardViewSection" parent="CardViewContentFullPadding">
+        <item name="android:clickable">true</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
     <style name="DialogCardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -127,13 +136,16 @@
         <item name="android:layout_margin">@dimen/small_fab_margin</item>
     </style>
 
-    <style name="FabLabel">
-        <item name="android:layout_marginRight">70dp</item>
-        <item name="android:layout_marginEnd">70dp</item>
+    <style name="Label">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:background">@drawable/fab_label_bg</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="FabLabel" parent="Label">
+        <item name="android:layout_marginRight">70dp</item>
+        <item name="android:layout_marginEnd">70dp</item>
     </style>
 
     <style name="FabLabelDummy">

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DialogCardView"
+    tools:showIn="@layout/fragment_modify_task">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout style="@style/CardViewContentFullPadding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical"
+                android:text="@string/end_time"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <TextView
+                android:id="@+id/endtime_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:text="12:32:34 AM" />
+        </FrameLayout>
+
+
+        <View style="@style/CardViewDivider" />
+
+        <FrameLayout
+            android:id="@+id/end_time_picker_clickable" style="@style/ClickableCardViewSection">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/manually_with_picker"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageView
+                android:contentDescription="@string/open_time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/ic_keyboard_arrow_right" />
+        </FrameLayout>
+
+        <View style="@style/CardViewDivider" />
+
+        <LinearLayout
+            android:id="@+id/end_time_existing_task_clickable"
+            style="@style/ClickableCardViewSection"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/before_existing_task"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/end_time_count_label"
+                style="@style/Label"
+                tools:text="12" />
+
+            <ImageView
+                android:id="@+id/end_time_existing_task_icon"
+                android:contentDescription="@string/open_existing_task_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:gravity="end"
+                android:src="@drawable/ic_keyboard_arrow_down" />
+
+
+        </LinearLayout>
+
+        <View style="@style/CardViewDivider" />
+
+        <LinearLayout
+            android:id="@+id/expandable_end_time_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/end_time_task_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/current_task_cardview_padding" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>
