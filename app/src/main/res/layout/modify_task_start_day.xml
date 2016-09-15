@@ -4,19 +4,22 @@
     style="@style/DialogCardView"
     tools:showIn="@layout/activity_modify_task">
 
-    <FrameLayout
-        android:id="@+id/day_edit_clickable"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/start_day_edit_clickable"
         style="@style/ClickableCardViewSection">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:text="@string/day"
+            android:text="@string/start_day"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
+        <View style="@style/FillerView" />
+
         <TextView
-            android:id="@+id/date_text_view"
+            android:id="@+id/start_date_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -24,11 +27,12 @@
             tools:text="Thurs, 12 Sep 2016" />
 
         <ImageView
+            android:contentDescription="@string/show_day_picker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:src="@drawable/ic_keyboard_arrow_right" />
 
-    </FrameLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

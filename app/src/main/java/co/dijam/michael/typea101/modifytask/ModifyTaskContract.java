@@ -16,14 +16,18 @@ public interface ModifyTaskContract {
         void setEndTime(long endTime);
 
         // Pickers
-        void showDayPicker();
+        void showStartDayPicker();
+        void showEndDayPicker();
+        void showStartTimePicker();
+        void showEndTimePicker();
 
         // Views
         void showTaskName(String taskName);
         void showTag(String tag);
+        void showStartDay(String formattedDay);
         void showStartTime(String startTime);
+        void showEndDay(String formattedDay);
         void showEndTime(String endTime);
-        void showDay(String formattedDay);
         void showDuration(String formattedDuration);
         void showPercentage(String formattedPercentage);
 

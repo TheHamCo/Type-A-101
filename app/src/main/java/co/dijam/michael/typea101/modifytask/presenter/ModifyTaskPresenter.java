@@ -42,8 +42,9 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
 
     @Override
     public void restoreViews(long startTime, long endTime) {
-        view.showDay(dateFormatter.print(startTime));
+        view.showStartDay(dateFormatter.print(startTime));
         view.showStartTime(timeFormatter.print(startTime));
+        view.showEndDay(dateFormatter.print(endTime));
         view.showEndTime(timeFormatter.print(endTime));
         view.showDuration(durationFormatter.print(new Period(startTime, endTime)));
         view.showPercentage(percentageFormatter(startTime, endTime));
@@ -85,8 +86,9 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
                 .subscribe(task -> {
                     view.showTaskName(task.taskName);
                     view.showTag(task.tag);
-                    view.showDay(dateFormatter.print(task.startTime));
+                    view.showStartDay(dateFormatter.print(task.startTime));
                     view.showStartTime(timeFormatter.print(task.startTime));
+                    view.showEndDay(dateFormatter.print(task.endTime));
                     view.showEndTime(timeFormatter.print(task.endTime));
                     view.showDuration(durationFormatter.print(new Period(task.startTime, task.endTime)));
                     view.showPercentage(percentageFormatter(task.startTime, task.endTime));

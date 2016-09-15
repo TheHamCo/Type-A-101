@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,9 +13,11 @@
 
         <include layout="@layout/modify_task_taskname_tag" />
 
-        <include layout="@layout/modify_task_day" />
+        <include layout="@layout/modify_task_start_day" />
 
         <include layout="@layout/modify_task_starttime" />
+
+        <include layout="@layout/modify_task_end_day" />
 
         <include layout="@layout/modify_task_endtime" />
 

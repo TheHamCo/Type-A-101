@@ -54,11 +54,11 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     @BindView(R.id.tag_edit_layout)
     TextInputLayout tagEditLayout;
 
-    // DATE
-    @BindView(R.id.date_text_view)
-    TextView dateTextView;
-    @BindView(R.id.day_edit_clickable)
-    FrameLayout dayEditClickable;
+    // START DAY
+    @BindView(R.id.start_date_text_view)
+    TextView startDateTextView;
+    @BindView(R.id.start_day_edit_clickable)
+    LinearLayout startDayEditClickable;
 
     // START TIME
     @BindView(R.id.starttime_text_view)
@@ -75,6 +75,12 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     RecyclerView startTimeTaskRecycler;
     @BindView(R.id.expandable_start_time_list)
     LinearLayout expandableStartTimeList;
+
+    // END DAY
+    @BindView(R.id.end_date_text_view)
+    TextView endDateTextView;
+    @BindView(R.id.end_day_edit_clickable)
+    LinearLayout endDayEditClickable;
 
     // END TIME
     @BindView(R.id.endtime_text_view)
@@ -95,6 +101,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     // DURATION
     @BindView(R.id.duration_text_view)
     TextView durationTextView;
+    @BindView(R.id.percentage_text_view)
+    TextView percentageTextView;
 
     // FINISH BUTTONS
     @BindView(R.id.confirm_button)
@@ -105,6 +113,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     ModifyTaskContract.Presenter presenter;
 
     private static final int NO_TASK_ID = -1;
+
     private int mTaskId = NO_TASK_ID;
     private static final long NO_START_TIME = -1;
     private long mStartTime = NO_START_TIME;
@@ -116,7 +125,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +134,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            mTaskId = extras.getInt(TaskDetailActivity.BUNDLE_TASKID);
+            mTaskId = extras.getInt(TaskDetailActivity.BUNDLE_TASKID, NO_TASK_ID);
         }
 
         RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
@@ -133,13 +142,16 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
         presenter =
                 new ModifyTaskPresenter(
                         new ModifyTaskInteractorImpl(
-                            new SharedPrefCurrentTaskManager(this), new RealmTaskManager(realmConfig, realm)
+                                new SharedPrefCurrentTaskManager(this), new RealmTaskManager(realmConfig, realm)
                         ),
                         this
                 );
 
-        if (mTaskId != NO_TASK_ID && savedInstanceState == null){
+        if (mTaskId != NO_TASK_ID && savedInstanceState == null) {
             presenter.getTaskDetails(mTaskId);
+        } else if (mTaskId == NO_TASK_ID && savedInstanceState == null) {
+            mStartTime = System.currentTimeMillis();
+            mEndTime = System.currentTimeMillis();
         }
     }
 
@@ -168,35 +180,42 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // BUTTON BINDINGS
 
-    @OnClick(R.id.day_edit_clickable)
-    public void onDayEditClick() {
-        showDayPicker();
+    @OnClick(R.id.start_day_edit_clickable)
+    public void onStartDayClick() {
+        showStartDayPicker();
     }
 
     @OnClick({R.id.start_time_picker_clickable, R.id.start_time_existing_task_clickable})
-    public void onStartTimeClick(View view) {
+    public void onStartTimeClicks(View view) {
         switch (view.getId()) {
             case R.id.start_time_picker_clickable:
-                showTimePicker();
+                showStartTimePicker();
                 break;
             case R.id.start_time_existing_task_clickable:
                 break;
         }
     }
 
+    @OnClick(R.id.end_day_edit_clickable)
+    public void onEndDayClick() {
+        showEndDayPicker();
+    }
+
     @OnClick({R.id.end_time_picker_clickable, R.id.end_time_existing_task_clickable})
-    public void onEndTimeClick(View view) {
+    public void onEndTimeClicks(View view) {
         switch (view.getId()) {
             case R.id.end_time_picker_clickable:
-                showTimePicker();
+                showEndTimePicker();
                 break;
             case R.id.end_time_existing_task_clickable:
                 break;
         }
     }
 
+
+
     @OnClick({R.id.confirm_button, R.id.cancel_button})
-    public void onConfirmCancelClick(View view) {
+    public void onFinishClicks(View view) {
         switch (view.getId()) {
             case R.id.confirm_button:
                 break;
@@ -221,21 +240,44 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     // PICKERS
     @Override
-    public void showDayPicker() {
-        DateTime shown;
-        if (mStartTime == NO_START_TIME) {
-            shown = DateTime.now();
-        } else {
-            shown = new DateTime(mStartTime);
-        }
-        DatePickerDialog dpd = new DatePickerDialog(this, this::onDateSet, shown.getYear(), shown.getMonthOfYear(), shown.getDayOfMonth());
+    public void showStartDayPicker() {
+        showDayPicker(mStartTime, this::onStartDateSet);
+    }
+
+    @Override
+    public void showEndDayPicker() {
+        showDayPicker(mEndTime, this::onEndDateSet);
+    }
+
+    private void showDayPicker(long dateTime, DatePickerDialog.OnDateSetListener listener) {
+        DateTime shown = new DateTime(dateTime);
+        DatePickerDialog dpd =
+                new DatePickerDialog(
+                        this, listener,
+                        shown.getYear(), shown.getMonthOfYear(), shown.getDayOfMonth()
+                );
         dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
         dpd.show();
     }
 
-    public void showTimePicker() {
-        DateTime shown = new DateTime(mStartTime);
-        TimePickerDialog tpd = new TimePickerDialog(this, this::onTimeSet, shown.getHourOfDay(), shown.getMinuteOfHour(), DateFormat.is24HourFormat(this));
+    @Override
+    public void showStartTimePicker() {
+        showTimePicker(mStartTime, this::onStartTimeSet);
+    }
+
+    @Override
+    public void showEndTimePicker() {
+        showTimePicker(mEndTime, this::onEndTimeSet);
+    }
+
+    private void showTimePicker(long dateTime, TimePickerDialog.OnTimeSetListener listener) {
+        DateTime shown = new DateTime(dateTime);
+        TimePickerDialog tpd =
+                new TimePickerDialog(
+                        this, listener,
+                        shown.getHourOfDay(), shown.getMinuteOfHour(),
+                        DateFormat.is24HourFormat(this)
+                );
         tpd.show();
     }
 
@@ -251,18 +293,23 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     }
 
     @Override
+    public void showStartDay(String formattedDay) {
+        startDateTextView.setText(formattedDay);
+    }
+
+    @Override
     public void showStartTime(String startTime) {
         starttimeTextView.setText(startTime);
     }
 
     @Override
-    public void showEndTime(String endTime) {
-        endtimeTextView.setText(endTime);
+    public void showEndDay(String formattedDay) {
+        endDateTextView.setText(formattedDay);
     }
 
     @Override
-    public void showDay(String formattedDay) {
-        dateTextView.setText(formattedDay);
+    public void showEndTime(String endTime) {
+        endtimeTextView.setText(endTime);
     }
 
     @Override
@@ -272,7 +319,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     @Override
     public void showPercentage(String formattedPercentage) {
-
+        percentageTextView.setText(formattedPercentage);
     }
 
     // ERRORS
@@ -337,11 +384,41 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // CALLBACKS
 
-    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-
+    public void onStartDateSet(DatePicker datePicker, int year, int month, int day) {
+        DateTime startDateTime = new DateTime(mStartTime)
+                .withYear(year)
+                // Must add 1 because DatePicker zero indexes month,
+                // but DateTime uses regular month numbers
+                .withMonthOfYear(month + 1)
+                .withDayOfMonth(day);
+        mStartTime = startDateTime.getMillis();
+        presenter.restoreViews(mStartTime, mEndTime);
     }
 
-    private void onTimeSet(TimePicker tp, int hour, int minute){
+    private void onStartTimeSet(TimePicker tp, int hour, int minute) {
+        DateTime startDateTime = new DateTime(mStartTime)
+                .withHourOfDay(hour)
+                .withMinuteOfHour(minute);
+        mStartTime = startDateTime.getMillis();
+        presenter.restoreViews(mStartTime, mEndTime);
+    }
 
+    public void onEndDateSet(DatePicker datePicker, int year, int month, int day) {
+        DateTime endDateTime = new DateTime(mEndTime)
+                .withYear(year)
+                // Must add 1 because DatePicker zero indexes month,
+                // but DateTime uses regular month numbers
+                .withMonthOfYear(month + 1)
+                .withDayOfMonth(day);
+        mEndTime = endDateTime.getMillis();
+        presenter.restoreViews(mStartTime, mEndTime);
+    }
+
+    private void onEndTimeSet(TimePicker tp, int hour, int minute) {
+        DateTime endDateTime = new DateTime(mEndTime)
+                .withHourOfDay(hour)
+                .withMinuteOfHour(minute);
+        mEndTime = endDateTime.getMillis();
+        presenter.restoreViews(mStartTime, mEndTime);
     }
 }
