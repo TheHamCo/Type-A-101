@@ -4,7 +4,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/DialogCardView"
-    tools:showIn="@layout/fragment_modify_task">
+    tools:showIn="@layout/activity_modify_task">
 
     <FrameLayout style="@style/DialogBottomButtomFrame">
 

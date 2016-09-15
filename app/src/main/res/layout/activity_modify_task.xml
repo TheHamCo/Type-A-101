@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="co.dijam.michael.typea101.modifytask.view.ModifyTaskFragment">
+    tools:context=".modifytask.view.ModifyTaskActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

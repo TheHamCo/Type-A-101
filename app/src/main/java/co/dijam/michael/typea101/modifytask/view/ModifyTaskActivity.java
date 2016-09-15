@@ -2,12 +2,12 @@ package co.dijam.michael.typea101.modifytask.view;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -28,7 +28,7 @@ import rx.Observable;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ModifyTaskFragment extends Fragment implements ModifyTaskContract.View {
+public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskContract.View {
 
     // TASK NAME + TAG
     @BindView(R.id.task_name_edit)
@@ -90,20 +90,14 @@ public class ModifyTaskFragment extends Fragment implements ModifyTaskContract.V
 
     ModifyTaskContract.Presenter presenter;
 
-    public ModifyTaskFragment() {
-        // Required empty public constructor
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
-
+    
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_modify_task, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_modify_task);
+        ButterKnife.bind(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
