@@ -33,7 +33,7 @@
     <string name="end_time">End Time</string>
     <string name="before_existing_task">Before existing task.</string>
     <string name="duration">Duration</string>
-    <string name="confirm">confirm</string>
+    <string name="confirm">Confirm</string>
     <string name="start_day">Start Day</string>
     <string name="show_day_picker">Show day picker.</string>
     <string name="end_day">End Day</string>

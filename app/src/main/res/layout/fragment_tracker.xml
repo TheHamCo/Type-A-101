@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tracker_layout"
-    style="@style/DialogCardView"
+    style="@style/DialogCardViewWithBottomMargin"
     tools:context="co.dijam.michael.typea101.currenttracker.view.TrackerFragment">
 
     <LinearLayout
