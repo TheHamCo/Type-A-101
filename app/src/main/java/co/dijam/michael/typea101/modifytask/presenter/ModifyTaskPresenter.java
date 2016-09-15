@@ -40,7 +40,9 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
             isValid = false;
         }
 
-        if (taskOverlapsOtherTasksError(taskId, startTime, endTime)){
+        // Task Overlap is irrelevant if start time is before end time
+        if (!taskStartTimeAfterEndTimeError(startTime, endTime)
+                && taskOverlapsOtherTasksError(taskId, startTime, endTime)){
             view.showErrorOverlappingTask(
                     interactor.getOverlappingTasks(taskId, startTime, endTime).toList()
             );
