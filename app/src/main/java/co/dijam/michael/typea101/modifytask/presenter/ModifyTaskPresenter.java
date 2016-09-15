@@ -3,6 +3,7 @@ package co.dijam.michael.typea101.modifytask.presenter;
 import org.joda.time.Period;
 
 import co.dijam.michael.typea101.model.Task;
+import co.dijam.michael.typea101.modifytask.ModifyTaskConstants;
 import co.dijam.michael.typea101.modifytask.ModifyTaskContract;
 import co.dijam.michael.typea101.modifytask.interactor.ModifyTaskInteractor;
 
@@ -26,24 +27,42 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
 
 
     @Override
-    public void validateTime(long startTime, long endTime) {
-        if (taskOverlapsOtherTasksError(startTime, endTime)){
+    public boolean validateInput(int taskId, String taskName, String tag, long startTime, long endTime) {
+        boolean isValid = true;
+
+        if (!taskNameIsValid(taskName)) {
+            view.showErrorTaskNameInvalid();
+            isValid = false;
+        }
+
+        if (!tagIsValid(tag)) {
+            view.showErrorTagInvalid();
+            isValid = false;
+        }
+
+        if (taskOverlapsOtherTasksError(taskId, startTime, endTime)){
             view.showErrorOverlappingTask(
-                    interactor.getOverlappingTasks(startTime, endTime).toList()
+                    interactor.getOverlappingTasks(taskId, startTime, endTime).toList()
             );
+            isValid = false;
         }
 
         if (taskInFutureError(startTime, endTime)){
             view.showErrorTaskInFuture();
+            isValid = false;
         }
 
         if (taskStartTimeAfterEndTimeError(startTime, endTime)) {
             view.showErrorStartTimeAfterEndTime();
+            isValid = false;
         }
 
         if (taskHasNoDurationError(startTime, endTime)) {
             view.showErrorNoDuration();
+            isValid = false;
         }
+
+        return isValid;
     }
 
     @Override
@@ -57,8 +76,8 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
     }
 
     @Override
-    public boolean taskOverlapsOtherTasksError(long startTime, long endTime) {
-        return interactor.taskOverlapsOtherTasksError(startTime, endTime);
+    public boolean taskOverlapsOtherTasksError(int taskId, long startTime, long endTime) {
+        return interactor.taskOverlapsOtherTasksError(taskId, startTime, endTime);
     }
 
     @Override
@@ -68,7 +87,7 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
 
     @Override
     public boolean taskStartTimeAfterEndTimeError(long startTime, long endTime) {
-        return endTime > startTime;
+        return endTime < startTime;
     }
 
     @Override
@@ -117,7 +136,18 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
     }
 
     @Override
-    public void saveTask(Task task) {
-        interactor.saveTask(task);
+    public void saveTask(int taskId, String taskName, String tag, long startDateTime, long endDateTime) {
+        Task task = new Task();
+        task.id = taskId;
+        task.taskName = taskName;
+        task.tag = tag;
+        task.startTime = startDateTime;
+        task.endTime = endDateTime;
+
+        if (taskId == ModifyTaskConstants.NO_TASK_ID) {
+            interactor.saveTask(task);
+        } else {
+            interactor.updateTask(task);
+        }
     }
 }

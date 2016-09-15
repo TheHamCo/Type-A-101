@@ -9,8 +9,8 @@ import rx.Observable;
  */
 public interface ModifyTaskInteractor {
     // Errors
-    boolean taskOverlapsOtherTasksError(long startTime, long endTime);
-    Observable<TaskPrintable> getOverlappingTasks(long startTime, long endTime);
+    boolean taskOverlapsOtherTasksError(int taskId,long startTime, long endTime);
+    Observable<TaskPrintable> getOverlappingTasks(int taskId,long startTime, long endTime);
 
     // Data
     Observable<Task> getTaskDetails(int taskId);
@@ -19,4 +19,5 @@ public interface ModifyTaskInteractor {
 
     // Final
     void saveTask(Task task);
+    void updateTask(Task editedTask);
 }

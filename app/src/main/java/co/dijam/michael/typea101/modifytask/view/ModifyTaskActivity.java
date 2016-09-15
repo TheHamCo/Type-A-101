@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
@@ -39,6 +40,8 @@ import co.dijam.michael.typea101.taskdetail.view.TaskDetailActivity;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import rx.Observable;
+
+import static co.dijam.michael.typea101.modifytask.ModifyTaskConstants.NO_TASK_ID;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -121,12 +124,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     ModifyTaskContract.Presenter presenter;
 
-    private static final int NO_TASK_ID = -1;
-
-
     private int mTaskId = NO_TASK_ID;
-    private static final long NO_START_TIME = -1;
-    private long mStartTime = NO_START_TIME;
+    private long mStartTime = 0;
     private long mEndTime = 0;
 
     private static final String STATE_TASKID = "STATE_TASKID";
@@ -227,8 +226,10 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     public void onFinishClicks(View view) {
         switch (view.getId()) {
             case R.id.confirm_button:
+                confirmModifyTask();
                 break;
             case R.id.cancel_button:
+                closeModifyTask();
                 break;
         }
     }
@@ -333,33 +334,49 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     // ERRORS
     @Override
-    public void showErrorOverlappingTask(Observable<List<TaskPrintable>> overlappingTasks) {
+    public void showErrorList() {
+        errorCardview.setVisibility(View.VISIBLE);
+    }
 
+    @Override
+    public void hideErrorList() {
+        errorCardview.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showErrorOverlappingTask(Observable<List<TaskPrintable>> overlappingTasks) {
+        Toast.makeText(ModifyTaskActivity.this, "Overlapping", Toast.LENGTH_SHORT).show();
+        overlappingTasks
+                .subscribe(taskPrintables -> {
+                    for (TaskPrintable tp : taskPrintables) {
+                        Toast.makeText(ModifyTaskActivity.this, tp.taskName, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
     public void showErrorTaskInFuture() {
-
+        Toast.makeText(ModifyTaskActivity.this, "In future", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showErrorStartTimeAfterEndTime() {
-
+        Toast.makeText(ModifyTaskActivity.this, "Negative duration", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showErrorNoDuration() {
-
+        Toast.makeText(ModifyTaskActivity.this, "No duration", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showErrorTaskNameInvalid() {
-
+        Toast.makeText(ModifyTaskActivity.this, "Task Name Invalid", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showErrorTagInvalid() {
-
+        Toast.makeText(ModifyTaskActivity.this, "Tag Invalid", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -387,7 +404,32 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     // FINAL
     @Override
     public void closeModifyTask() {
+        finish();
+    }
 
+    @Override
+    public void confirmModifyTask() {
+        boolean isValid = presenter.validateInput(
+                mTaskId,
+                taskNameEdit.getText().toString(),
+                tagEdit.getText().toString(),
+                mStartTime,
+                mEndTime
+        );
+
+        if (isValid) {
+            hideErrorList();
+            presenter.saveTask(
+                    mTaskId,
+                    taskNameEdit.getText().toString(),
+                    tagEdit.getText().toString(),
+                    mStartTime,
+                    mEndTime
+            );
+            finish();
+        } else {
+            showErrorList();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////

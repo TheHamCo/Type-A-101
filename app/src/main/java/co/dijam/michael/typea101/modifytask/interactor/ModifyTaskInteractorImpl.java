@@ -1,5 +1,6 @@
 package co.dijam.michael.typea101.modifytask.interactor;
 
+import co.dijam.michael.typea101.converter.CurrentTaskToTaskPrintableConverter;
 import co.dijam.michael.typea101.converter.TasktoTaskPrintableConverter;
 import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
 import co.dijam.michael.typea101.entities.CurrentTaskManager;
@@ -21,14 +22,14 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
     }
 
     @Override
-    public boolean taskOverlapsOtherTasksError(long startTime, long endTime) {
+    public boolean taskOverlapsOtherTasksError(int taskId, long startTime, long endTime) {
         final boolean[] taskOverlaps = {false};
 
-        if (endTime > currentTaskManager.getCurrentTask().startTime){
+        if (taskOverlapsWithCurrentTask(endTime)){
             taskOverlaps[0] = true;
         }
 
-        getOverlappingTasks(startTime, endTime)
+        getOverlappingTasks(taskId, startTime, endTime)
                 .count()
                 .subscribe(numOverlappingTasks -> {
                     if (numOverlappingTasks > 0){
@@ -39,13 +40,27 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
         return taskOverlaps[0];
     }
 
+    private boolean taskOverlapsWithCurrentTask(long endTime) {
+        return currentTaskManager.currentTaskExists() && endTime > currentTaskManager.getCurrentTask().startTime;
+    }
+
     @Override
-    public Observable<TaskPrintable> getOverlappingTasks(long startTime, long endTime) {
-        return taskManager.getAllTasks()
+    public Observable<TaskPrintable> getOverlappingTasks(int taskId, long startTime, long endTime) {
+        Observable<TaskPrintable> overlaps = taskManager.getAllTasks()
                 .filter(task ->
                         (startTime < task.endTime && startTime > task.startTime)
-                        || (endTime > task.startTime && endTime < task.endTime))
+                                || (endTime > task.startTime && endTime < task.endTime))
+                .filter(task1 -> task1.id != taskId)
                 .map(TasktoTaskPrintableConverter::formatTask);
+        if (taskOverlapsWithCurrentTask(endTime)){
+            overlaps = overlaps
+                    .concatWith(
+                            Observable.just(currentTaskManager.getCurrentTask())
+                            .map(CurrentTaskToTaskPrintableConverter::formatTask)
+                    );
+        }
+
+        return overlaps;
     }
 
     @Override
@@ -76,5 +91,14 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
     @Override
     public void saveTask(Task task) {
         taskManager.insertTask(task);
+    }
+
+    @Override
+    public void updateTask(Task editedTask) {
+        try {
+            taskManager.editTask(editedTask);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

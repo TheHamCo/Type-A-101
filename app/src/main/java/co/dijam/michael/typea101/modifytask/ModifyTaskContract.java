@@ -3,7 +3,6 @@ package co.dijam.michael.typea101.modifytask;
 import java.util.List;
 
 import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
-import co.dijam.michael.typea101.model.Task;
 import rx.Observable;
 
 /**
@@ -32,6 +31,8 @@ public interface ModifyTaskContract {
         void showPercentage(String formattedPercentage);
 
         // Errors
+        void showErrorList();
+        void hideErrorList();
         void showErrorOverlappingTask(Observable<List<TaskPrintable>> overlappingTasks);
         void showErrorTaskInFuture();
         void showErrorStartTimeAfterEndTime();
@@ -47,14 +48,15 @@ public interface ModifyTaskContract {
 
         // Final
         void closeModifyTask();
+        void confirmModifyTask();
     }
 
     interface Presenter {
-        void validateTime(long startTime, long endTime);
+        boolean validateInput(int taskId, String taskName, String tag, long startTime, long endTime);
         void restoreViews(long startTime, long endTime);
 
         // Errors
-        boolean taskOverlapsOtherTasksError(long startTime, long endTime);
+        boolean taskOverlapsOtherTasksError(int taskId, long startTime, long endTime);
         boolean taskInFutureError(long startTime, long endTime);
         boolean taskStartTimeAfterEndTimeError(long startTime, long endTime);
         boolean taskHasNoDurationError(long startTime, long endTime);
@@ -67,6 +69,6 @@ public interface ModifyTaskContract {
         void getNearestTaskAfter(long startTime, long endTime);
 
         // Final
-        void saveTask(Task task);
+        void saveTask(int taskId, String taskName, String tag, long startDateTime, long endDateTime);
     }
 }
