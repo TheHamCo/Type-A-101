@@ -28,7 +28,7 @@ public class RealmTaskManager implements TaskManager {
         // (Live updates implemented separately)
         // Source: https://github.com/realm/realm-java/issues/2010
          return realm.where(Task.class)
-                 .findAllAsync()
+                 .findAll()
                  .asObservable()
                  .filter(RealmResults::isLoaded)
                  .first()

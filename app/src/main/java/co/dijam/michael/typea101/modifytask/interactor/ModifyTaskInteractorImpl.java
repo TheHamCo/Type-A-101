@@ -12,6 +12,7 @@ import rx.Observable;
  * Created by mdd23 on 9/13/2016.
  */
 public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
+    private static final String TAG = ModifyTaskInteractorImpl.class.getName();
 
     CurrentTaskManager currentTaskManager;
     TaskManager taskManager;
@@ -32,11 +33,11 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
         getOverlappingTasks(taskId, startTime, endTime)
                 .count()
                 .subscribe(numOverlappingTasks -> {
+//                    Log.d(TAG, "taskOverlapsOtherTasksError: " + numOverlappingTasks);
                     if (numOverlappingTasks > 0){
                         taskOverlaps[0] = true;
                     }
                 });
-
         return taskOverlaps[0];
     }
 
@@ -51,7 +52,9 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
                         (startTime < task.endTime && startTime > task.startTime)
                                 || (endTime > task.startTime && endTime < task.endTime))
                 .filter(task1 -> task1.id != taskId)
+//                .doOnNext(task -> Log.d(TAG, "getOverlappingTasks: " + task.taskName))
                 .map(TasktoTaskPrintableConverter::formatTask);
+
         if (taskOverlapsWithCurrentTask(endTime)){
             overlaps = overlaps
                     .concatWith(
