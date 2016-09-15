@@ -13,7 +13,7 @@ public interface ModifyTaskInteractor {
     Observable<TaskPrintable> getOverlappingTasks(long startTime, long endTime);
 
     // Data
-    Observable<TaskPrintable> getTaskDetails(int taskId);
+    Observable<Task> getTaskDetails(int taskId);
     Observable<TaskPrintable> getNearestTaskBefore(long startTime, long endTime);
     Observable<TaskPrintable> getNearestTaskAfter(long startTime, long endTime);
 

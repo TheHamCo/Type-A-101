@@ -1,19 +1,26 @@
 package co.dijam.michael.typea101.modifytask.view;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
+
+import org.joda.time.DateTime;
 
 import java.util.List;
 
@@ -97,7 +104,15 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     ModifyTaskContract.Presenter presenter;
 
-    private int mTaskId = 0;
+    private static final int NO_TASK_ID = -1;
+    private int mTaskId = NO_TASK_ID;
+    private static final long NO_START_TIME = -1;
+    private long mStartTime = NO_START_TIME;
+    private long mEndTime = 0;
+
+    private static final String STATE_TASKID = "STATE_TASKID";
+    private static final String STATE_STARTTIME = "STATE_STARTTIME";
+    private static final String STATE_ENDTIME = "END_STARTTIME";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
@@ -122,6 +137,32 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
                         ),
                         this
                 );
+
+        if (mTaskId != NO_TASK_ID && savedInstanceState == null){
+            presenter.getTaskDetails(mTaskId);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mTaskId = savedInstanceState.getInt(STATE_TASKID);
+        setStartTime(savedInstanceState.getLong(STATE_STARTTIME));
+        setEndTime(savedInstanceState.getLong(STATE_ENDTIME));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.restoreViews(mStartTime, mEndTime);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(STATE_TASKID, mTaskId);
+        outState.putLong(STATE_STARTTIME, mStartTime);
+        outState.putLong(STATE_ENDTIME, mEndTime);
+        super.onSaveInstanceState(outState);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,12 +170,14 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     @OnClick(R.id.day_edit_clickable)
     public void onDayEditClick() {
+        showDayPicker();
     }
 
     @OnClick({R.id.start_time_picker_clickable, R.id.start_time_existing_task_clickable})
     public void onStartTimeClick(View view) {
         switch (view.getId()) {
             case R.id.start_time_picker_clickable:
+                showTimePicker();
                 break;
             case R.id.start_time_existing_task_clickable:
                 break;
@@ -145,6 +188,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     public void onEndTimeClick(View view) {
         switch (view.getId()) {
             case R.id.end_time_picker_clickable:
+                showTimePicker();
                 break;
             case R.id.end_time_existing_task_clickable:
                 break;
@@ -164,24 +208,70 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // VIEW METHODS
 
+    // DATA
+    @Override
+    public void setStartTime(long startTime) {
+        mStartTime = startTime;
+    }
+
+    @Override
+    public void setEndTime(long endTime) {
+        mEndTime = endTime;
+    }
+
+    // PICKERS
+    @Override
+    public void showDayPicker() {
+        DateTime shown;
+        if (mStartTime == NO_START_TIME) {
+            shown = DateTime.now();
+        } else {
+            shown = new DateTime(mStartTime);
+        }
+        DatePickerDialog dpd = new DatePickerDialog(this, this::onDateSet, shown.getYear(), shown.getMonthOfYear(), shown.getDayOfMonth());
+        dpd.getDatePicker().setMaxDate(System.currentTimeMillis());
+        dpd.show();
+    }
+
+    public void showTimePicker() {
+        DateTime shown = new DateTime(mStartTime);
+        TimePickerDialog tpd = new TimePickerDialog(this, this::onTimeSet, shown.getHourOfDay(), shown.getMinuteOfHour(), DateFormat.is24HourFormat(this));
+        tpd.show();
+    }
+
     // VIEWS
     @Override
     public void showTaskName(String taskName) {
-        
+        taskNameEdit.setText(taskName);
     }
 
     @Override
     public void showTag(String tag) {
-
+        tagEdit.setText(tag);
     }
 
     @Override
     public void showStartTime(String startTime) {
-
+        starttimeTextView.setText(startTime);
     }
 
     @Override
     public void showEndTime(String endTime) {
+        endtimeTextView.setText(endTime);
+    }
+
+    @Override
+    public void showDay(String formattedDay) {
+        dateTextView.setText(formattedDay);
+    }
+
+    @Override
+    public void showDuration(String formattedDuration) {
+        durationTextView.setText(formattedDuration);
+    }
+
+    @Override
+    public void showPercentage(String formattedPercentage) {
 
     }
 
@@ -241,6 +331,17 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     // FINAL
     @Override
     public void closeModifyTask() {
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // CALLBACKS
+
+    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+
+    }
+
+    private void onTimeSet(TimePicker tp, int hour, int minute){
 
     }
 }

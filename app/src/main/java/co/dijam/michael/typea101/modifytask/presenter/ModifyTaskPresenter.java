@@ -1,8 +1,15 @@
 package co.dijam.michael.typea101.modifytask.presenter;
 
+import org.joda.time.Period;
+
 import co.dijam.michael.typea101.model.Task;
 import co.dijam.michael.typea101.modifytask.ModifyTaskContract;
 import co.dijam.michael.typea101.modifytask.interactor.ModifyTaskInteractor;
+
+import static co.dijam.michael.typea101.util.TimeFormattingUtil.dateFormatter;
+import static co.dijam.michael.typea101.util.TimeFormattingUtil.durationFormatter;
+import static co.dijam.michael.typea101.util.TimeFormattingUtil.percentageFormatter;
+import static co.dijam.michael.typea101.util.TimeFormattingUtil.timeFormatter;
 
 /**
  * Created by mdd23 on 9/13/2016.
@@ -31,6 +38,15 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
         } else if (taskHasNoDurationerror(startTime, endTime)) {
             view.showErrorNoDuration();
         }
+    }
+
+    @Override
+    public void restoreViews(long startTime, long endTime) {
+        view.showDay(dateFormatter.print(startTime));
+        view.showStartTime(timeFormatter.print(startTime));
+        view.showEndTime(timeFormatter.print(endTime));
+        view.showDuration(durationFormatter.print(new Period(startTime, endTime)));
+        view.showPercentage(percentageFormatter(startTime, endTime));
     }
 
     @Override
@@ -66,11 +82,17 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
     @Override
     public void getTaskDetails(int taskId) {
         interactor.getTaskDetails(taskId)
-                .subscribe(taskPrintable -> {
-                    view.showTaskName(taskPrintable.taskName);
-                    view.showTag(taskPrintable.tag);
-                    view.showStartTime(taskPrintable.formattedStartTime);
-                    view.showEndTime(taskPrintable.formattedEndTime);
+                .subscribe(task -> {
+                    view.showTaskName(task.taskName);
+                    view.showTag(task.tag);
+                    view.showDay(dateFormatter.print(task.startTime));
+                    view.showStartTime(timeFormatter.print(task.startTime));
+                    view.showEndTime(timeFormatter.print(task.endTime));
+                    view.showDuration(durationFormatter.print(new Period(task.startTime, task.endTime)));
+                    view.showPercentage(percentageFormatter(task.startTime, task.endTime));
+
+                    view.setStartTime(task.startTime);
+                    view.setEndTime(task.endTime);
                 });
     }
 

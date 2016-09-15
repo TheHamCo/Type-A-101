@@ -49,10 +49,9 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
     }
 
     @Override
-    public Observable<TaskPrintable> getTaskDetails(int taskId) {
+    public Observable<Task> getTaskDetails(int taskId) {
         return taskManager
-                .getTask(taskId)
-                .map(TasktoTaskPrintableConverter::formatTask);
+                .getTask(taskId);
     }
 
     @Override

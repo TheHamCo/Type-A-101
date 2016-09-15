@@ -11,11 +11,21 @@ import rx.Observable;
  */
 public interface ModifyTaskContract {
     interface View {
+        // Data
+        void setStartTime(long startTime);
+        void setEndTime(long endTime);
+
+        // Pickers
+        void showDayPicker();
+
         // Views
         void showTaskName(String taskName);
         void showTag(String tag);
         void showStartTime(String startTime);
         void showEndTime(String endTime);
+        void showDay(String formattedDay);
+        void showDuration(String formattedDuration);
+        void showPercentage(String formattedPercentage);
 
         // Errors
         void showErrorOverlappingTask(Observable<List<TaskPrintable>> overlappingTasks);
@@ -37,6 +47,7 @@ public interface ModifyTaskContract {
 
     interface Presenter {
         void validateTime(long startTime, long endTime);
+        void restoreViews(long startTime, long endTime);
 
         // Errors
         boolean taskOverlapsOtherTasksError(long startTime, long endTime);
