@@ -22,7 +22,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
+import co.dijam.michael.typea101.entities.RealmTaskManager;
+import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.modifytask.ModifyTaskContract;
+import co.dijam.michael.typea101.modifytask.interactor.ModifyTaskInteractorImpl;
+import co.dijam.michael.typea101.modifytask.presenter.ModifyTaskPresenter;
+import co.dijam.michael.typea101.taskdetail.view.TaskDetailActivity;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import rx.Observable;
 
 /**
@@ -90,6 +97,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     ModifyTaskContract.Presenter presenter;
 
+    private int mTaskId = 0;
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
     
@@ -98,6 +107,21 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_task);
         ButterKnife.bind(this);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            mTaskId = extras.getInt(TaskDetailActivity.BUNDLE_TASKID);
+        }
+
+        RealmConfiguration realmConfig = new RealmConfiguration.Builder(this).build();
+        Realm realm = Realm.getInstance(realmConfig);
+        presenter =
+                new ModifyTaskPresenter(
+                        new ModifyTaskInteractorImpl(
+                            new SharedPrefCurrentTaskManager(this), new RealmTaskManager(realmConfig, realm)
+                        ),
+                        this
+                );
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +167,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     // VIEWS
     @Override
     public void showTaskName(String taskName) {
-
+        
     }
 
     @Override

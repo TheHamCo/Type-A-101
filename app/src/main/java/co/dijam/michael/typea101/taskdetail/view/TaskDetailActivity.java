@@ -1,5 +1,6 @@
 package co.dijam.michael.typea101.taskdetail.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +16,7 @@ import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.dailylist.view.DailyListFragment;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.model.Note;
+import co.dijam.michael.typea101.modifytask.view.ModifyTaskActivity;
 import co.dijam.michael.typea101.taskdetail.TaskDetailContract;
 import co.dijam.michael.typea101.taskdetail.interactor.TaskDetailInteractorImpl;
 import co.dijam.michael.typea101.taskdetail.model.TaskDetail;
@@ -46,6 +48,7 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
     private int mTaskId = 0;
 
+    public static final String BUNDLE_TASKID = "BUNDLE_TASKID";
     private static final String STATE_TASKID = "STATE_TASKID";
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,6 +127,8 @@ public class TaskDetailActivity extends AppCompatActivity implements TaskDetailC
 
     @Override
     public void startEditNote(int id) {
-
+        Intent editTaskIntent = new Intent(this, ModifyTaskActivity.class);
+        editTaskIntent.putExtra(BUNDLE_TASKID, id);
+        startActivity(editTaskIntent);
     }
 }

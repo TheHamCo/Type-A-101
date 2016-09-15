@@ -32,6 +32,7 @@ import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.mainscreen.MainScreenContract;
 import co.dijam.michael.typea101.mainscreen.presenter.MainScreenPresenter;
 import co.dijam.michael.typea101.modifycurrenttask.view.ModifyCurrentTaskActivity;
+import co.dijam.michael.typea101.modifytask.view.ModifyTaskActivity;
 import co.dijam.michael.typea101.util.ConstantsUtil;
 import co.dijam.michael.typea101.util.TimeFormattingUtil;
 
@@ -267,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements MainScreenContrac
     public void onAddFabsClick(View view) {
         switch (view.getId()) {
             case R.id.add_past_fab:
+                startActivity(new Intent(this, ModifyTaskActivity.class));
                 break;
             case R.id.add_present_fab:
                 startActivity(new Intent(this, ModifyCurrentTaskActivity.class));
