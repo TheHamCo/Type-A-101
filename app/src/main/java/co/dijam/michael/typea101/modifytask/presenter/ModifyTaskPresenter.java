@@ -134,7 +134,9 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
 
     @Override
     public void getEndDayTasks(long endTime) {
-
+        interactor.getAllTasksForOneDay(endTime)
+                .toList()
+                .subscribe(taskPrintables -> view.showEndDayTasks(taskPrintables));
     }
 
     @Override

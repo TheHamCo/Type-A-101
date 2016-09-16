@@ -400,12 +400,14 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
 
     @Override
     public void showExpandableEndDayTasks() {
-        expandableEndTimeList.setVisibility(View.VISIBLE);
+        animator.toggleExpandCollapseAnimation(expandableEndTimeList, endTimeExistingTaskClickable);
+        animator.rotateButton(endTimeExistingTaskIcon);
     }
 
     @Override
     public void hideExpandableEndDayTasks() {
-        expandableEndTimeList.setVisibility(View.GONE);
+        animator.toggleExpandCollapseAnimation(expandableEndTimeList, endTimeExistingTaskClickable);
+        animator.rotateButton(endTimeExistingTaskIcon);
     }
 
     // ERRORS
@@ -473,15 +475,6 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
         this.startDayTasks.clear();
         this.startDayTasks.addAll(startDayTasks);
         startDayTasksAdapter.notifyDataSetChanged();
-//        startTimeTaskRecycler.setLayoutParams(new LinearLayout.LayoutParams(
-//                        ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT
-//                )
-//        );
-//        expandableStartTimeList.setLayoutParams(new LinearLayout.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT,
-//                startTimeTaskRecycler.computeVerticalScrollRange()
-//        ));
     }
 
     @Override
