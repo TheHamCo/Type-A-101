@@ -41,7 +41,7 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
     RecyclerView dayTasksRecyclerView;
 
     DailyListContract.Presenter presenter;
-    DailyListAdapter adapter;
+    TaskPrintableAdapter adapter;
     CompositeSubscription s;
 
     private long viewingDateTime = 0;
@@ -74,7 +74,7 @@ public class DailyListFragment extends Fragment implements DailyListContract.Vie
         presenter = new DailyListPresenter(this, new DailyListInteractorImpl(new RealmTaskManager(realmConfiguration, realm)));
 
         taskPrintables = new ArrayList<>();
-        adapter = new DailyListAdapter(getActivity(), taskPrintables);
+        adapter = new TaskPrintableAdapter(getActivity(), taskPrintables);
 
         setOnItemClickListener();
 

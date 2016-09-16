@@ -42,14 +42,14 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
 
         // Task Overlap is irrelevant if start time is before end time
         if (!taskStartTimeAfterEndTimeError(startTime, endTime)
-                && taskOverlapsOtherTasksError(taskId, startTime, endTime)){
+                && taskOverlapsOtherTasksError(taskId, startTime, endTime)) {
             view.showErrorOverlappingTask(
                     interactor.getOverlappingTasks(taskId, startTime, endTime).toList()
             );
             isValid = false;
         }
 
-        if (taskInFutureError(startTime, endTime)){
+        if (taskInFutureError(startTime, endTime)) {
             view.showErrorTaskInFuture();
             isValid = false;
         }
@@ -123,6 +123,18 @@ public class ModifyTaskPresenter implements ModifyTaskContract.Presenter {
                     view.setStartTime(task.startTime);
                     view.setEndTime(task.endTime);
                 });
+    }
+
+    @Override
+    public void getStartDayTasks(long startTime) {
+        interactor.getAllTasksForOneDay(startTime)
+                .toList()
+                .subscribe(taskPrintables -> view.showStartDayTasks(taskPrintables));
+    }
+
+    @Override
+    public void getEndDayTasks(long endTime) {
+
     }
 
     @Override

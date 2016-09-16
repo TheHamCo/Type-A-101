@@ -102,6 +102,12 @@ public class ModifyTaskInteractorImpl implements ModifyTaskInteractor {
     }
 
     @Override
+    public Observable<TaskPrintable> getAllTasksForOneDay(long dateTime) {
+        return taskManager.getAllTasksForOneDay(dateTime)
+                .map(TasktoTaskPrintableConverter::formatTask);
+    }
+
+    @Override
     public void saveTask(Task task) {
         taskManager.insertTask(task);
     }

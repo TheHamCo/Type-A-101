@@ -9,9 +9,11 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +34,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import co.dijam.michael.typea101.R;
 import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
+import co.dijam.michael.typea101.dailylist.view.TaskPrintableAdapter;
 import co.dijam.michael.typea101.entities.RealmTaskManager;
 import co.dijam.michael.typea101.entities.SharedPrefCurrentTaskManager;
 import co.dijam.michael.typea101.modifytask.ModifyTaskContract;
@@ -47,6 +51,7 @@ import static co.dijam.michael.typea101.modifytask.ModifyTaskConstants.NO_TASK_I
  * A simple {@link Fragment} subclass.
  */
 public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskContract.View {
+    private static final String TAG = ModifyTaskActivity.class.getName();
 
     // TASK NAME + TAG
     @BindView(R.id.task_name_edit)
@@ -123,14 +128,25 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     ImageButton cancelButton;
 
     ModifyTaskContract.Presenter presenter;
+    ModifyTaskAnimator animator;
 
     private int mTaskId = NO_TASK_ID;
     private long mStartTime = 0;
     private long mEndTime = 0;
+    private boolean startTimeTasksIsCollapsed = true;
+    private boolean endTimeTasksIsCollapsed = true;
 
     private static final String STATE_TASKID = "STATE_TASKID";
     private static final String STATE_STARTTIME = "STATE_STARTTIME";
     private static final String STATE_ENDTIME = "END_STARTTIME";
+    private static final String STATE_STARTTIMETASKS_ISCOLLAPSED = "STATE_STARTTIMETASKS_ISCOLLAPSED";
+    private static final String STATE_ENDTIMETASKS_ISCOLLAPSED = "STATE_ENDTIMETASKS_ISCOLLAPSED";
+
+    ArrayList<TaskPrintable> startDayTasks;
+    TaskPrintableAdapter startDayTasksAdapter;
+    ArrayList<TaskPrintable> endDayTasks;
+    TaskPrintableAdapter endDayTasksAdapter;
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // LIFECYCLE
@@ -162,6 +178,21 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
             mStartTime = System.currentTimeMillis();
             mEndTime = System.currentTimeMillis();
         }
+
+        startDayTasks = new ArrayList<>();
+        startDayTasksAdapter = new TaskPrintableAdapter(this, startDayTasks);
+        startTimeTaskRecycler.setAdapter(startDayTasksAdapter);
+        startTimeTaskRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        endDayTasks = new ArrayList<>();
+        endDayTasksAdapter = new TaskPrintableAdapter(this, endDayTasks);
+        endTimeTaskRecycler.setAdapter(endDayTasksAdapter);
+        endTimeTaskRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        presenter.getStartDayTasks(mStartTime);
+        presenter.getEndDayTasks(mEndTime);
+
+        animator = new ModifyTaskAnimator();
     }
 
     @Override
@@ -170,12 +201,23 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
         mTaskId = savedInstanceState.getInt(STATE_TASKID);
         setStartTime(savedInstanceState.getLong(STATE_STARTTIME));
         setEndTime(savedInstanceState.getLong(STATE_ENDTIME));
+        startTimeTasksIsCollapsed = savedInstanceState.getBoolean(STATE_STARTTIMETASKS_ISCOLLAPSED);
+        endTimeTasksIsCollapsed = savedInstanceState.getBoolean(STATE_ENDTIMETASKS_ISCOLLAPSED);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         presenter.restoreViews(mStartTime, mEndTime);
+        presenter.getStartDayTasks(mStartTime);
+        presenter.getEndDayTasks(mEndTime);
+        if (startTimeTasksIsCollapsed) {
+            expandableStartTimeList.setVisibility(View.GONE);
+        }
+
+        if (endTimeTasksIsCollapsed) {
+            expandableEndTimeList.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -183,6 +225,8 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
         outState.putInt(STATE_TASKID, mTaskId);
         outState.putLong(STATE_STARTTIME, mStartTime);
         outState.putLong(STATE_ENDTIME, mEndTime);
+        outState.putBoolean(STATE_STARTTIMETASKS_ISCOLLAPSED, !expandableStartTimeList.isShown());
+        outState.putBoolean(STATE_ENDTIMETASKS_ISCOLLAPSED, !expandableEndTimeList.isShown());
         super.onSaveInstanceState(outState);
     }
 
@@ -201,6 +245,11 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
                 showStartTimePicker();
                 break;
             case R.id.start_time_existing_task_clickable:
+                if (expandableStartTimeList.isShown()) {
+                    hideExpandableStartDayTasks();
+                } else {
+                    showExpandableStartDayTasks();
+                }
                 break;
         }
     }
@@ -217,6 +266,11 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
                 showEndTimePicker();
                 break;
             case R.id.end_time_existing_task_clickable:
+                if (expandableEndTimeList.isShown()) {
+                    hideExpandableEndDayTasks();
+                } else {
+                    showExpandableEndDayTasks();
+                }
                 break;
         }
     }
@@ -332,6 +386,28 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
         percentageTextView.setText(formattedPercentage);
     }
 
+    @Override
+    public void showExpandableStartDayTasks() {
+        animator.toggleExpandCollapseAnimation(expandableStartTimeList, startTimeExistingTaskClickable);
+        animator.rotateButton(startTimeExistingTaskIcon);
+    }
+
+    @Override
+    public void hideExpandableStartDayTasks() {
+        animator.toggleExpandCollapseAnimation(expandableStartTimeList, startTimeExistingTaskClickable);
+        animator.rotateButton(startTimeExistingTaskIcon);
+    }
+
+    @Override
+    public void showExpandableEndDayTasks() {
+        expandableEndTimeList.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideExpandableEndDayTasks() {
+        expandableEndTimeList.setVisibility(View.GONE);
+    }
+
     // ERRORS
     @Override
     public void showErrorList() {
@@ -392,6 +468,35 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
     }
 
     @Override
+    public void showStartDayTasks(List<TaskPrintable> startDayTasks) {
+        startTimeCountLabel.setText(Integer.toString(startDayTasks.size()));
+        this.startDayTasks.clear();
+        this.startDayTasks.addAll(startDayTasks);
+        startDayTasksAdapter.notifyDataSetChanged();
+//        startTimeTaskRecycler.setLayoutParams(new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT
+//                )
+//        );
+//        expandableStartTimeList.setLayoutParams(new LinearLayout.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                startTimeTaskRecycler.computeVerticalScrollRange()
+//        ));
+    }
+
+    @Override
+    public void showEndDayTasks(List<TaskPrintable> endDayTasks) {
+        endTimeCountLabel.setText(Integer.toString(endDayTasks.size()));
+        this.endDayTasks.clear();
+        this.endDayTasks.addAll(endDayTasks);
+        endDayTasksAdapter.notifyDataSetChanged();
+        expandableEndTimeList.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+    }
+
+    @Override
     public void suggestNearestTaskBefore(TaskPrintable taskBefore) {
 
     }
@@ -444,6 +549,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
                 .withDayOfMonth(day);
         mStartTime = startDateTime.getMillis();
         presenter.restoreViews(mStartTime, mEndTime);
+        presenter.getStartDayTasks(mStartTime);
     }
 
     private void onStartTimeSet(TimePicker tp, int hour, int minute) {
@@ -463,6 +569,7 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
                 .withDayOfMonth(day);
         mEndTime = endDateTime.getMillis();
         presenter.restoreViews(mStartTime, mEndTime);
+        presenter.getEndDayTasks(mEndTime);
     }
 
     private void onEndTimeSet(TimePicker tp, int hour, int minute) {

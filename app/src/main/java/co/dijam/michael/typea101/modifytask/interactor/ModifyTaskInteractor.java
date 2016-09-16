@@ -16,6 +16,7 @@ public interface ModifyTaskInteractor {
     Observable<Task> getTaskDetails(int taskId);
     Observable<TaskPrintable> getNearestTaskBefore(long startTime, long endTime);
     Observable<TaskPrintable> getNearestTaskAfter(long startTime, long endTime);
+    Observable<TaskPrintable> getAllTasksForOneDay(long dateTime);
 
     // Final
     void saveTask(Task task);

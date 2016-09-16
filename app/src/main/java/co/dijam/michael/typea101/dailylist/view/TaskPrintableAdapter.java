@@ -17,7 +17,7 @@ import co.dijam.michael.typea101.dailylist.model.TaskPrintable;
 /**
  * Created by mdd23 on 9/10/2016.
  */
-public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.ViewHolder> {
+public class TaskPrintableAdapter extends RecyclerView.Adapter<TaskPrintableAdapter.ViewHolder> {
 
     private List<TaskPrintable> taskPrintables;
     private Context context;
@@ -39,7 +39,7 @@ public class DailyListAdapter extends RecyclerView.Adapter<DailyListAdapter.View
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public DailyListAdapter(Context context, List<TaskPrintable> taskPrintables) {
+    public TaskPrintableAdapter(Context context, List<TaskPrintable> taskPrintables) {
         this.taskPrintables = taskPrintables;
         this.context = context;
     }

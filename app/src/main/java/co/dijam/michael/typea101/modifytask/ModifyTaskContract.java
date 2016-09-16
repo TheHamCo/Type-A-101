@@ -29,6 +29,11 @@ public interface ModifyTaskContract {
         void showEndTime(String endTime);
         void showDuration(String formattedDuration);
         void showPercentage(String formattedPercentage);
+        void showExpandableStartDayTasks();
+        void hideExpandableStartDayTasks();
+        void showExpandableEndDayTasks();
+        void hideExpandableEndDayTasks();
+
 
         // Errors
         void showErrorList();
@@ -43,6 +48,8 @@ public interface ModifyTaskContract {
         // Autocomplete
         void autocompleteTaskNames(List<String> taskNames);
         void autocompleteTags(List<String> tags);
+        void showStartDayTasks(List<TaskPrintable> startDayTasks);
+        void showEndDayTasks(List<TaskPrintable> endDayTasks);
         void suggestNearestTaskBefore(TaskPrintable taskBefore);
         void suggestNearestTaskAfter(TaskPrintable taskAfter);
 
@@ -65,6 +72,8 @@ public interface ModifyTaskContract {
 
         // Data
         void getTaskDetails(int taskId);
+        void getStartDayTasks(long startTime);
+        void getEndDayTasks(long endTime);
         void getNearestTaskBefore(long startTime, long endTime);
         void getNearestTaskAfter(long startTime, long endTime);
 
