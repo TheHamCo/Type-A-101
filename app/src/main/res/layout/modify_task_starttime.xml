@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/start_time_card_view"
     style="@style/DialogCardView"
     tools:showIn="@layout/activity_modify_task">
 
@@ -69,12 +70,14 @@
 
             <ImageView
                 android:id="@+id/start_time_existing_task_icon"
+                android:contentDescription="@string/open_existing_task_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:contentDescription="@string/open_existing_task_list"
                 android:gravity="end"
                 android:src="@drawable/ic_keyboard_arrow_down" />
+
+
         </LinearLayout>
 
         <View style="@style/CardViewDivider" />

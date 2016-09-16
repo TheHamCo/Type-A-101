@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/end_time_card_view"
     style="@style/DialogCardView"
     tools:showIn="@layout/activity_modify_task">
 
@@ -27,11 +28,11 @@
                 tools:text="12:32:34 AM" />
         </FrameLayout>
 
-
         <View style="@style/CardViewDivider" />
 
         <FrameLayout
-            android:id="@+id/end_time_picker_clickable" style="@style/ClickableCardViewSection">
+            android:id="@+id/end_time_picker_clickable"
+            style="@style/ClickableCardViewSection">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,7 +84,6 @@
 
         <LinearLayout
             android:id="@+id/expandable_end_time_list"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

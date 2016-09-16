@@ -475,6 +475,10 @@ public class ModifyTaskActivity extends AppCompatActivity implements ModifyTaskC
         this.startDayTasks.clear();
         this.startDayTasks.addAll(startDayTasks);
         startDayTasksAdapter.notifyDataSetChanged();
+        expandableStartTimeList.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
     }
 
     @Override
